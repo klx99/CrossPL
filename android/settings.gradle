@@ -1,4 +1,0 @@
-rootProject.name = 'CrossLangGenerator'
-
-include ':buildsrc'
-include ':test'
