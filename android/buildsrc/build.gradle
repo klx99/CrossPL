@@ -1,0 +1,32 @@
+if(!rootProject.ext.properties["javaVersion"]) {
+    return
+}
+
+apply plugin: "groovy"
+version rootProject.ext.versionName
+group rootProject.ext.group
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDir "src/main/groovy"
+        }
+
+        resources {
+            srcDir "src/main/resources"
+        }
+    }
+}
+
+project.ext {
+    dependsOn = "assemble"
+    artifact = "${buildDir}/libs/${project.name}-${project.versionName}.jar"
+    groupId = "org.elastos.tools.build"
+    artifactId = "crosslang-gradle-plugin"
+}
+apply from: "$rootProject.projectDir/gradle/publish.gradle"

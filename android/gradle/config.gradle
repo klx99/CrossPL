@@ -1,0 +1,15 @@
+ext {
+    minSdkVersion = 10
+    compileSdkVersion = 28
+    targetSdkVersion = 23
+    buildToolsVersion = "28.0.3"
+    javaVersion = JavaVersion.VERSION_1_8
+
+    versionCode = this.properties["versionCode"] ?: 9999
+    versionCode = versionCode as Integer
+    versionName = this.properties["versionName"] ?: "0.0.9999"
+    println "versionCode = $rootProject.ext.versionCode"
+    println "versionName = $rootProject.ext.versionName"
+
+    group = "org.elastos.tools.build"
+}
