@@ -16,6 +16,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url = uri(rootProject.buildDir.absolutePath + "/repo")
+        }
     }
 }
 

@@ -21,8 +21,9 @@ android {
         }
     }
 
+    sourceSets["main"].java.srcDirs("src/main/java", "src/main/kotlin")
     sourceSets["main"].withConvention(KotlinSourceSet::class) {
-        kotlin.srcDir(file("src/main/kotlin"))
+        kotlin.srcDir("src/main/kotlin")
     }
 }
 

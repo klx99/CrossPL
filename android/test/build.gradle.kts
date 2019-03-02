@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
@@ -16,14 +17,16 @@ android {
         versionName = rootProject.extra["versionName"] as String
     }
 
+    sourceSets["main"].java.srcDirs("src/main/java", "src/main/kotlin")
     sourceSets["main"].withConvention(KotlinSourceSet::class) {
-        kotlin.srcDir(file("src/main/kotlin"))
+        kotlin.srcDir("src/main/kotlin")
     }
 }
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar", "*.aar")))
-    implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
+    implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
+//    implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
 
     implementation(project(":lib"))
 }
