@@ -35,6 +35,6 @@ dependencies {
 extra["publishDependsOn"] = "assembleRelease"
 extra["publishArtifact"] = "${project.buildDir}/outputs/aar/lib.aar"
 extra["publishGroupId"] = rootProject.extra["groupId"]
-extra["publishArtifactId"] = "cross-lang-generator"
+extra["publishArtifactId"] = "crosspl"
 extra["publishVersion"] = rootProject.extra["versionName"]
 apply(from = rootProject.projectDir.absolutePath + "/gradle/publish.gradle.kts")

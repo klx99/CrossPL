@@ -1,4 +1,4 @@
-package org.elastos.tools.crosslang.test
+package org.elastos.tools.crosspl.test
 
 import android.app.Activity
 import android.os.Bundle

@@ -10,7 +10,7 @@ plugins {
 android {
     compileSdkVersion(rootProject.extra["compileSdkVersion"] as Int)
     defaultConfig {
-        applicationId = "org.elastos.tools.crosslang.test"
+        applicationId = "${rootProject.extra["groupId"]}.test"
         minSdkVersion(rootProject.extra["minSdkVersion"] as Int)
         targetSdkVersion(rootProject.extra["targetSdkVersion"] as Int)
         versionCode = rootProject.extra["versionCode"] as Int
@@ -31,4 +31,4 @@ dependencies {
     implementation(project(":lib"))
 }
 
-apply(plugin = rootProject.extra["groupId"] as String)
+apply(plugin = "${rootProject.extra["groupId"]}.gradleplugin")

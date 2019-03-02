@@ -1,9 +1,9 @@
-package org.elastos.tools.crosslang.test;
+package org.elastos.tools.crosspl.test;
 
 import android.util.Log;
 
-import org.elastos.tools.crosslang.annotation.NativeInterface;
-import org.elastos.tools.crosslang.NativeBase;
+import org.elastos.tools.crosspl.annotation.NativeInterface;
+import org.elastos.tools.crosspl.NativeBase;
 
 public final class NativeBridgeJava {
     private NativeBridgeJava() {}

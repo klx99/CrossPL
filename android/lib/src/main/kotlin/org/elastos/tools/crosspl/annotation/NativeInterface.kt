@@ -1,4 +1,4 @@
-package org.elastos.tools.crosslang.annotation
+package org.elastos.tools.crosspl.annotation
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
