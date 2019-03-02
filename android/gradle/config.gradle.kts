@@ -8,5 +8,5 @@ extra["buildToolsVersion"] = "28.0.3"
 
 extra["versionCode"] = this.properties["versionCode"] ?: 9999
 extra["versionName"] = this.properties["versionName"] ?: "0.0.9999"
-extra["groupId"] = "org.elastos.tools.build"
+extra["groupId"] = "org.elastos.tools.crosslang"
 
