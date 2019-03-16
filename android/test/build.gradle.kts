@@ -21,6 +21,11 @@ android {
     sourceSets["main"].withConvention(KotlinSourceSet::class) {
         kotlin.srcDir("src/main/kotlin")
     }
+
+    compileOptions {
+        sourceCompatibility = rootProject.extra["javaVersion"] as JavaVersion
+        targetCompatibility = rootProject.extra["javaVersion"] as JavaVersion
+    }
 }
 
 dependencies {

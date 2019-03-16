@@ -1,3 +1,4 @@
+extra["androidBuildVersion"] = "3.3.1"
 extra["kotlinVersion"] = "1.3.20"
 extra["javaVersion"] = JavaVersion.VERSION_1_8
 
