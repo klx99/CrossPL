@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
-    id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -32,41 +31,7 @@ android {
     }
 }
 
-// native build >>>
-android {
-    defaultConfig {
-        ndk {
-            abiFilters("armeabi-v7a", "arm64-v8a", "x86_64")
-        }
-
-    }
-    externalNativeBuild {
-        cmake {
-            setPath("CMakeLists.txt")
-        }
-    }
-}
-
-tasks {
-    val cleanNativeBuild by creating (Delete::class) {
-        delete(".externalNativeBuild")
-    }
-    clean {
-        dependsOn(cleanNativeBuild)
-    }
-}
-// native build <<<
-
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar", "*.aar")))
     implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
-
-    annotationProcessor(project(":anno"))
 }
-
-extra["publishDependsOn"] = "assembleRelease"
-extra["publishArtifact"] = "${project.buildDir}/outputs/aar/lib.aar"
-extra["publishGroupId"] = rootProject.extra["groupId"]
-extra["publishArtifactId"] = "lib"
-extra["publishVersion"] = rootProject.extra["versionName"]
-apply(from = rootProject.projectDir.absolutePath + "/gradle/publish.gradle.kts")
