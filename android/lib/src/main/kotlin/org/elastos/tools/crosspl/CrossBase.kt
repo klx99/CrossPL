@@ -2,10 +2,10 @@ package org.elastos.tools.crosspl
 
 import android.util.Log
 import org.elastos.tools.crosspl.annotation.CrossClass
-import org.elastos.tools.crosspl.annotation.NativeInterface
+import org.elastos.tools.crosspl.annotation.CrossInterface
 
-@CrossClass
-open class NativeBase
+//@CrossClass
+open class CrossBase
     protected constructor(private var nativeHandle: Long = 0) {
 
     init {
@@ -23,7 +23,8 @@ open class NativeBase
         Log.i(Utils.TAG, "deconstruct " + toString())
     }
 
-    @NativeInterface override fun toString(): String {
+    @CrossInterface
+    override fun toString(): String {
         return "${this.javaClass.name}{nativeHandle=${nativeHandle}}"
     }
 //

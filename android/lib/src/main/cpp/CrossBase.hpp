@@ -1,8 +1,8 @@
-#ifndef _CROSSPL_NATIVEBASE_HPP_
-#define _CROSSPL_NATIVEBASE_HPP_
+#ifndef _CROSSPL_CROSSBASE_HPP_
+#define _CROSSPL_CROSSBASE_HPP_
 
 namespace crosspl {
-class NativeBase {
+class CrossBase {
 public:
   /*** type define ***/
   typeof void* (NativeObjectFactro*)(const std::string& className);
@@ -22,7 +22,7 @@ private:
 
   /*** class function and variable ***/
 
-} // class NativeBase
+} // class CrossBase
 } // namespace crosspl
 
-#endif /* _CROSSPL_NATIVEBASE_HPP_ */
+#endif /* _CROSSPL_CROSSBASE_HPP_ */

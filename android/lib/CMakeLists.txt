@@ -10,7 +10,7 @@ target_sources( crosspl PRIVATE
                 ${crosspl-extends-HEADERS}
                 src/main/cpp/utils/Log.cpp
                 src/main/cpp/utils/JniUtils.cpp
-                src/main/cpp/NativeBase.cpp )
+                src/main/cpp/CrossBase.cpp )
 target_include_directories( crosspl PRIVATE )
 
 #file(GLOB Elastos.SDK.Keypair.C-Libraries "${PROJECT_SOURCE_DIR}/build/tmp/Elastos.SDK.Keypair.C/jni/${ANDROID_ABI}/*")

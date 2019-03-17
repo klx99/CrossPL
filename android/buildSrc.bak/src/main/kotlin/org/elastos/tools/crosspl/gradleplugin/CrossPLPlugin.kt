@@ -12,7 +12,7 @@ class CrossPLPlugin : Plugin<Project> {
         project.logger.warn("generator cross language...")
 
         val config = parseConfig(project)
-        project.logger.warn("filter NativeBase class with config: ${config}")
+        project.logger.warn("filter CrossBase class with config: ${config}")
 
         val sourceFiles = filterSourceFiles(project, config)
         val nativeClassInfoList = mutableListOf<NativeClassInfo>()
@@ -47,9 +47,9 @@ class CrossPLPlugin : Plugin<Project> {
         val mainSourceSets = androidExtension.sourceSets.findByName("main")
         val javaSrcDirs = mainSourceSets?.java?.srcDirs
 
-        val nativeBaseFiles = mutableListOf<File>()
+        val crossBaseFiles = mutableListOf<File>()
         javaSrcDirs?.forEach {
-            project.logger.warn("filter NativeBase class from: ${it.absolutePath}")
+            project.logger.warn("filter CrossBase class from: ${it.absolutePath}")
 
             it.walk().forEach javaSrc@ {
                 if(it.isDirectory) {
@@ -61,12 +61,12 @@ class CrossPLPlugin : Plugin<Project> {
                     return@javaSrc
                 }
 
-                project.logger.warn("add NativeBase class file: ${it.absolutePath}")
-                nativeBaseFiles.add(it)
+                project.logger.warn("add CrossBase class file: ${it.absolutePath}")
+                crossBaseFiles.add(it)
             }
         }
 
-        return nativeBaseFiles
+        return crossBaseFiles
     }
 
     private fun parseSourceFile(project: Project, config: Config, file: File): NativeClassInfo? {

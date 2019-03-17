@@ -64,14 +64,13 @@ tasks {
 }
 // native build <<<
 
-tasks.preBuild.dependsOn(":anno:publish")
+//tasks.preBuild.dependsOn(":anno:publish")
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar", "*.aar")))
     implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
 
-    compileOnly("${rootProject.extra["groupId"]}:anno:+")
-    kapt("${rootProject.extra["groupId"]}:anno:+")
-//    annotationProcessor(project(":anno"))
+    compileOnly(project(":anno"))
+    kapt(project(":anno"))
 }
 
 extra["publishDependsOn"] = "assembleRelease"
