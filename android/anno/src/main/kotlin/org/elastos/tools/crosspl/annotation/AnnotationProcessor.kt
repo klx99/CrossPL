@@ -5,16 +5,19 @@ import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 
+@Target(AnnotationTarget.CLASS)
+annotation class TestAnnotation
+
 @AutoService(Processor::class)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedAnnotationTypes("org.elastos.tools.crosspl.annotation.CrossClass")
+@SupportedOptions("kapt.kotlin.generated")
 class AnnotationProcessor : AbstractProcessor() {
-    companion object {
-        const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
-    }
-
-    override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latest()
-
-    override fun process(annotations: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment): Boolean {
-        return false
+    override fun process(annotations: MutableSet<out TypeElement>?,
+                         roundEnv: RoundEnvironment)
+            : Boolean {
+        System.out.println("==================================");
+        return true
     }
 }
 
