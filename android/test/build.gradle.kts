@@ -16,6 +16,8 @@ android {
         targetSdkVersion(rootProject.extra["targetSdkVersion"] as Int)
         versionCode = rootProject.extra["versionCode"] as Int
         versionName = rootProject.extra["versionName"] as String
+
+        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
 
     sourceSets["main"].java.srcDirs("src/main/java", "src/main/kotlin")
@@ -35,7 +37,7 @@ dependencies {
 //    implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
 
     compileOnly(project(":anno"))
-    kapt("${rootProject.extra["groupId"]}:anno:+")
+    kapt(project(":anno"))
 //    annotationProcessor(project(":anno"))
 
     implementation(project(":lib"))

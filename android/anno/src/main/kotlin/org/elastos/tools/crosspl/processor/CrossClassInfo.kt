@@ -17,10 +17,11 @@ class CrossClassInfo {
             classInfo.className = classElement.toString()
             classInfo.classSimpleName = classElement.simpleName.toString()
 
+            var isStaticClass = false
             classElement.enclosedElements.forEach { // for kotlin static class
                 if(it.kind == ElementKind.FIELD
                     && it.toString() == "INSTANCE") {
-                    classInfo.isStaticClass = true
+                    isStaticClass = true
                 }
             }
 
@@ -28,7 +29,7 @@ class CrossClassInfo {
             classElement.enclosedElements.forEach {
                 if(it.kind == ElementKind.METHOD
                 && it.getAnnotation(CrossInterface::class.java) != null) {
-                    val methodInfo = CrossMethodInfo.Parse(it as ExecutableElement, classInfo.isStaticClass)
+                    val methodInfo = CrossMethodInfo.Parse(it as ExecutableElement, isStaticClass)
                     classInfo.methodInfo.add(methodInfo);
                 } else if (it.kind == ElementKind.CLASS
                 && it.toString() == classElement.toString() + ".Companion") { // for kotlin companion object methods
@@ -50,6 +51,8 @@ class CrossClassInfo {
         }
 
         private fun isExtendsCrossBaseClass(element: Element): Boolean {
+//            val typeUtils = procEnv.typeUtils
+//            val crossBaseType = procEnv.elementUtils.getTypeElement(CrossBaseClass).asType()
             val typeElement = findEnclosingTypeElement(element);
             if(typeElement.superclass.toString() == CrossBaseClass) {
                 return true
@@ -74,12 +77,10 @@ class CrossClassInfo {
     override fun toString(): String {
         return  "ClassInfo{className=${className}," +
                 " classSimpleName=${classSimpleName}," +
-                " methodInfo=${methodInfo}," +
-                " isStaticClass=${isStaticClass}}"
+                " methodInfo=${methodInfo}}"
     }
 
     private lateinit var className: String
     private lateinit var classSimpleName: String
     private var methodInfo = mutableListOf<CrossMethodInfo>()
-    private var isStaticClass = false
 }
