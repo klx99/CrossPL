@@ -4,7 +4,9 @@ import android.util.Log
 import org.elastos.tools.crosspl.annotation.NativeInterface
 import org.elastos.tools.crosspl.NativeBase
 import org.elastos.tools.crosspl.Utils
+import org.elastos.tools.crosspl.annotation.CrossClass
 
+@CrossClass
 open class NativeBridgeKotlin private constructor() {
     open class Test1 : NativeBase {
         constructor() : super()

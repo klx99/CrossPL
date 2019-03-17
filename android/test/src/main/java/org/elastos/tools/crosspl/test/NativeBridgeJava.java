@@ -3,9 +3,11 @@ package org.elastos.tools.crosspl.test;
 import android.util.Log;
 
 import org.elastos.tools.crosspl.Utils;
+import org.elastos.tools.crosspl.annotation.CrossClass;
 import org.elastos.tools.crosspl.annotation.NativeInterface;
 import org.elastos.tools.crosspl.NativeBase;
 
+@CrossClass
 public final class NativeBridgeJava {
     private NativeBridgeJava() {}
 

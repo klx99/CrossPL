@@ -1,9 +1,11 @@
 package org.elastos.tools.crosspl
 
 import android.util.Log
+import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.annotation.NativeInterface
 
-abstract class NativeBase
+@CrossClass
+open class NativeBase
     protected constructor(private var nativeHandle: Long = 0) {
 
     init {

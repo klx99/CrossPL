@@ -14,13 +14,14 @@ sourceSets["main"].withConvention(KotlinSourceSet::class) {
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar", "*.aar")))
     implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
+    implementation(kotlin("reflect", rootProject.extra["kotlinVersion"] as String))
 
     compileOnly("com.google.auto.service:auto-service:+")
     kapt("com.google.auto.service:auto-service:+")
 }
 
-extra["publishDependsOn"] = "assembleRelease"
-extra["publishArtifact"] = "${project.buildDir}/libs/anno.aar"
+extra["publishDependsOn"] = "assemble"
+extra["publishArtifact"] = "${project.buildDir}/libs/anno.jar"
 extra["publishGroupId"] = rootProject.extra["groupId"]
 extra["publishArtifactId"] = "anno"
 extra["publishVersion"] = rootProject.extra["versionName"]

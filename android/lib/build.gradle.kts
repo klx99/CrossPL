@@ -1,9 +1,11 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -13,11 +15,16 @@ android {
         targetSdkVersion(rootProject.extra["targetSdkVersion"] as Int)
         versionCode = rootProject.extra["versionCode"] as Int
         versionName = rootProject.extra["versionName"] as String
+
+        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+        getByName("release") {
+            isMinifyEnabled = false
         }
     }
 
@@ -57,11 +64,14 @@ tasks {
 }
 // native build <<<
 
+tasks.preBuild.dependsOn(":anno:publish")
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar", "*.aar")))
     implementation(kotlin("stdlib-jdk7", rootProject.extra["kotlinVersion"] as String))
 
-    annotationProcessor(project(":anno"))
+    compileOnly("${rootProject.extra["groupId"]}:anno:+")
+    kapt("${rootProject.extra["groupId"]}:anno:+")
+//    annotationProcessor(project(":anno"))
 }
 
 extra["publishDependsOn"] = "assembleRelease"

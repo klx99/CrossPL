@@ -6,7 +6,7 @@ apply(plugin =  "maven-publish")
 configure<PublishingExtension> {
     repositories {
         maven {
-            url = uri(project.buildDir.absolutePath + "/repo")
+            url = uri(rootProject.buildDir.absolutePath + "/repo")
         }
     }
     publications {
