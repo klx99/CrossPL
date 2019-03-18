@@ -2,9 +2,13 @@ package org.elastos.tools.crosspl.processor
 
 import com.google.auto.service.AutoService
 import org.elastos.tools.crosspl.annotation.CrossClass
+import java.io.File
+import java.nio.file.Paths
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
+import javax.tools.StandardLocation
+
 
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -38,12 +42,49 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
         val classInfoList = mutableListOf<CrossClassInfo>()
         for (element in annotatedElements) {
             val classInfo = CrossClassInfo.Parse(element)
-
             classInfoList.add(classInfo!!)
+            Log.w("Found CrossPL Class: ${classInfo.className}")
+        }
+
+        val crossProxyDir = getCrossProxyDir()
+        if(crossProxyDir == null) {
+            val msg = "Failed to find cross proxy directory."
+            Log.e(msg)
+            throw CrossPLException(msg)
+        }
+        classInfoList.forEach {
+            val ret = CrossProxyGenerator.Generate(crossProxyDir, it)
+            if(! ret) {
+                val msg = "Failed to generate class: ${it}"
+                Log.e(msg)
+//                throw CrossPLException(msg)
+            }
         }
 
         Log.e("===========================================================")
         return true
+    }
+
+    private fun getCrossProxyDir(): File? {
+        val fileObject = processingEnv.filer.createResource(
+            StandardLocation.CLASS_OUTPUT,
+            "",
+            "dump")
+        var path = Paths.get(fileObject.toUri())
+        while(path != null
+        && path.fileName != null
+        && path.fileName.toString() != "tmp") {
+            path = path.parent
+        }
+        if(path == null || path.fileName == null) {
+            Log.e("Failed to find build directory.")
+            return null
+        }
+
+        path = path.resolve("CrossPL")
+        path = path.resolve("proxy")
+
+        return path.toFile()
     }
 }
 

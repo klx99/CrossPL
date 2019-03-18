@@ -1,0 +1,38 @@
+#ifndef _CROSSPL_%Namespace%_%ClassName%_HPP_
+#define _CROSSPL_%Namespace%_%ClassName%_HPP_
+
+#include <jni.h>
+
+namespace std {
+class string;
+class vector;
+}
+
+namespace crosspl {
+class CrossBase;
+}
+
+namespace %Namespace% {
+
+class %ClassName% {
+public:
+  /*** type define ***/
+
+  /*** static function and variable ***/
+%StaticFunction%
+
+  /*** class function and variable ***/
+%MemberFunction%
+
+private:
+  /*** type define ***/
+
+  /*** static function and variable ***/
+%NativeFunction%
+
+  /*** class function and variable ***/
+
+} // class %ClassName%
+} // namespace %Namespace%
+
+#endif /* _CROSSPL_%Namespace%_%ClassName%_HPP_ */

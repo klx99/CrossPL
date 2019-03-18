@@ -8,13 +8,22 @@ import java.nio.ByteBuffer;
 @CrossClass
 class JavaTestParams extends CrossBase {
     @CrossInterface
-    CrossBase crossMethod(int a,
-                          long b,
-                          double c,
-                          String d,
-                          ByteBuffer e,
-                          CrossBase f,
-                          JavaTestParams g) {
+    CrossBase crossMethod(boolean a,
+                          int b,
+                          long c,
+                          double d,
+                          String e,
+                          ByteBuffer f,
+                          CrossBase g) {
         return null;
     }
+
+    @CrossInterface
+    native CrossBase crossNativeMethod(boolean a,
+                                       int b,
+                                       long c,
+                                       double d,
+                                       String e,
+                                       ByteBuffer f,
+                                       CrossBase g);
 }

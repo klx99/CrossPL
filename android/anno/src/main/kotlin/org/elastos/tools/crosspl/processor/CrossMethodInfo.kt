@@ -1,13 +1,8 @@
 package org.elastos.tools.crosspl.processor
 
-import java.lang.RuntimeException
 import javax.lang.model.element.ExecutableElement
 import javax.lang.model.element.Modifier
-import javax.lang.model.element.TypeElement
-import javax.lang.model.type.DeclaredType
 import javax.lang.model.type.ExecutableType
-import javax.lang.model.type.TypeKind
-import javax.lang.model.type.TypeMirror
 
 class CrossMethodInfo {
     companion object {
@@ -17,21 +12,21 @@ class CrossMethodInfo {
 
             val methodType = methodElement.asType() as ExecutableType;
             methodType.parameterTypes.forEach {
-                val type = transferType(it)
+                val type = CrossVariableType.Parse(it)
                 if(type == null) {
                     val msg = "Unsupport param type `${it}` for method ${methodElement}"
                     Log.e(msg)
-                    throw RuntimeException(msg)
+                    throw CrossPLException(msg)
                 }
 
                 methodInfo.paramsType.add(type)
             }
 
-            val type = transferType(methodElement.returnType)
+            val type = CrossVariableType.Parse(methodElement.returnType)
             if(type == null) {
                 val msg = "Unsupport return type `${methodElement.returnType}` for method ${methodElement}"
                 Log.e(msg)
-                throw RuntimeException(msg)
+                throw CrossPLException(msg)
             }
             methodInfo.returnType = type
 
@@ -45,33 +40,6 @@ class CrossMethodInfo {
 
             return methodInfo
         }
-
-        private fun transferType(type: TypeMirror): String? {
-            if(supportedTypeKind.contains(type.kind)) {
-                return type.toString()
-            } else if(type is DeclaredType) {
-                val typeElement = type.asElement() as TypeElement
-                if(supportedTypeDeclared.contains(type.toString())
-                || supportedTypeDeclared.contains(typeElement.superclass.toString())) {
-                    return type.toString()
-                }
-            }
-
-            return null
-        }
-
-        private val supportedTypeKind = setOf(
-            TypeKind.BOOLEAN,
-            TypeKind.INT,
-            TypeKind.LONG,
-            TypeKind.DOUBLE,
-            TypeKind.VOID
-        )
-        private val supportedTypeDeclared = setOf(
-            "java.lang.String",
-            "java.nio.ByteBuffer",
-            "org.elastos.tools.crosspl.CrossBase"
-        )
     }
 
     override fun toString(): String {
@@ -81,8 +49,8 @@ class CrossMethodInfo {
     }
 
     lateinit var methodName: String
-    var paramsType = mutableListOf<String>()
-    lateinit var returnType: String
+    var paramsType = mutableListOf<CrossVariableType>()
+    lateinit var returnType: CrossVariableType
     var isStatic = false
     var isNative = false
 }

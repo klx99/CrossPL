@@ -14,6 +14,7 @@ class CrossClassInfo {
             }
 
             val classInfo = CrossClassInfo()
+            classInfo.namespace = "CrossPL"
             classInfo.className = classElement.toString()
             classInfo.classSimpleName = classElement.simpleName.toString()
 
@@ -46,7 +47,7 @@ class CrossClassInfo {
                 }
             }
 
-            Log.w("ClassInfo: ${classInfo}")
+            Log.d("ClassInfo: ${classInfo}")
             return classInfo
         }
 
@@ -75,12 +76,14 @@ class CrossClassInfo {
     }
 
     override fun toString(): String {
-        return  "ClassInfo{className=${className}," +
+        return  "ClassInfo{namespace=${namespace}," +
+                " className=${className}," +
                 " classSimpleName=${classSimpleName}," +
                 " methodInfo=${methodInfo}}"
     }
 
-    private lateinit var className: String
-    private lateinit var classSimpleName: String
-    private var methodInfo = mutableListOf<CrossMethodInfo>()
+    lateinit var namespace: String
+    lateinit var className: String
+    lateinit var classSimpleName: String
+    var methodInfo = mutableListOf<CrossMethodInfo>()
 }
