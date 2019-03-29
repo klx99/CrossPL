@@ -11,14 +11,32 @@ namespace %Namespace% {
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-%StaticFunction%
+int %ClassName%::registerNativeMethods(JNIEnv* jenv)
+{
+  const JNINativeMethod methodArray[] = {
+%JniNativeMethods%
+  };
+
+  jclass jclazz = jenv->FindClass(%JniJavaClass%);
+  if(jclazz == nullptr) {
+    return -1;
+  }
+
+  int ret = jenv->RegisterNatives(jclazz, methodArray, sizeof(methodArray)/sizeof(*gMethods));
+  if(ret < 0) {
+    return ret;
+  }
+
+  return 0;
+}
+
+%PlatformFunction%
 
 %NativeFunction%
 
 /***********************************************/
 /***** class public function implement  ********/
 /***********************************************/
-%MemberFunction%
 
 /***********************************************/
 /***** class protected function implement  *****/

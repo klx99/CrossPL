@@ -75,9 +75,28 @@ enum class CrossVariableType {
             CROSSBASE  to "jobject"
         )
 
-        var cppType = toString(primitiveTypeMap, classTypeMap, isConst)
+        var jniType = toString(primitiveTypeMap, classTypeMap, isConst)
 
-        return cppType
+        return jniType
+    }
+
+    fun toJavaChar(): String {
+        val primitiveTypeMap = mapOf(
+            BOOLEAN    to "Z",
+            INTEGER    to "I",
+            LONG       to "J",
+            DOUBLE     to "D",
+            VOID       to "V"
+        )
+        val classTypeMap = mapOf(
+            STRING     to "Ljava/lang/String;",
+            BYTEBUFFER to "Ljava.nio.ByteBuffer;",
+            CROSSBASE  to "Lorg.elastos.tools.crosspl.CrossBase;"
+        )
+
+        var javaChar = toString(primitiveTypeMap, classTypeMap)
+
+        return javaChar
     }
 
     fun toString(primitiveTypeMap: Map<CrossVariableType, String>,

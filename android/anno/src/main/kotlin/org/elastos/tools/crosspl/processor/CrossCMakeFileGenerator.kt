@@ -3,7 +3,7 @@ package org.elastos.tools.crosspl.processor
 import java.io.File
 import java.util.Scanner
 
-class CrossProxyGenerator {
+class CrossCMakeFileGenerator {
     companion object {
         fun Generate(crossProxyDir: File, classInfo: CrossClassInfo): Boolean {
             val proxyHeaderFile = File(crossProxyDir, classInfo.cppClassName + "Proxy.hpp")

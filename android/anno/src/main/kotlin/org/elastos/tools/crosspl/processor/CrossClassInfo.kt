@@ -14,9 +14,9 @@ class CrossClassInfo {
             }
 
             val classInfo = CrossClassInfo()
-            classInfo.namespace = "CrossPL"
-            classInfo.className = classElement.toString()
-            classInfo.classSimpleName = classElement.simpleName.toString()
+            classInfo.cppNamespace = "CrossPL"
+            classInfo.cppClassName = classElement.simpleName.toString()
+            classInfo.javaClassName = classElement.toString()
 
             var isStaticClass = false
             classElement.enclosedElements.forEach { // for kotlin static class
@@ -76,14 +76,14 @@ class CrossClassInfo {
     }
 
     override fun toString(): String {
-        return  "ClassInfo{namespace=${namespace}," +
-                " className=${className}," +
-                " classSimpleName=${classSimpleName}," +
+        return  "ClassInfo{cppNamespace=${cppNamespace}," +
+                " cppClassName=${cppClassName}," +
+                " javaClassName=${javaClassName}," +
                 " methodInfo=${methodInfo}}"
     }
 
-    lateinit var namespace: String
-    lateinit var className: String
-    lateinit var classSimpleName: String
+    lateinit var cppNamespace: String
+    lateinit var cppClassName: String
+    lateinit var javaClassName: String
     var methodInfo = mutableListOf<CrossMethodInfo>()
 }

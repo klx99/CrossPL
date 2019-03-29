@@ -43,7 +43,7 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
         for (element in annotatedElements) {
             val classInfo = CrossClassInfo.Parse(element)
             classInfoList.add(classInfo!!)
-            Log.w("Found CrossPL Class: ${classInfo.className}")
+            Log.w("Found CrossPL Class: ${classInfo.cppClassName}")
         }
 
         val crossProxyDir = getCrossProxyDir()
