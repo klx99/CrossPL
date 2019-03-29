@@ -1,0 +1,14 @@
+apply plugin: 'com.android.application'
+
+apply from: "$rootProject.projectDir/gradle/android.gradle"
+apply from: "$rootProject.projectDir/gradle/native.gradle"
+
+//        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+
+dependencies {
+    compileOnly(project(":anno"))
+    kapt(project(":anno"))
+//    annotationProcessor(project(":anno"))
+
+    implementation(project(":lib"))
+}

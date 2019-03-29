@@ -1,0 +1,5 @@
+rootProject.name = "CrossPL"
+
+include ":anno"
+include ":lib"
+include ":test"
