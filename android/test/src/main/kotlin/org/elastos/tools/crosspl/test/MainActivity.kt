@@ -9,12 +9,12 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var testJava1 = NativeBridgeJava.Test1()
-
-        var testJava2 = NativeBridgeJava.Test1(111)
-
-        var testKotlin1 = NativeBridgeKotlin.Test1()
-
-        var testKotlin2 = NativeBridgeKotlin.Test1(111)
+//        var testJava1 = NativeBridgeJava.Test1()
+//
+//        var testJava2 = NativeBridgeJava.Test1(111)
+//
+//        var testKotlin1 = NativeBridgeKotlin.Test1()
+//
+//        var testKotlin2 = NativeBridgeKotlin.Test1(111)
     }
 }

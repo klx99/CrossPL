@@ -43,4 +43,28 @@ dependencies {
     implementation(project(":lib"))
 }
 
-//apply(plugin = "${rootProject.extra["groupId"]}.gradleplugin")
+// native build >>>
+android {
+    defaultConfig {
+        ndk {
+            abiFilters("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
+
+    }
+    externalNativeBuild {
+        cmake {
+            setPath("src/main/cpp/CMakeLists.txt")
+        }
+    }
+}
+
+tasks {
+    val cleanNativeBuild by creating (Delete::class) {
+        delete(".externalNativeBuild")
+    }
+    clean {
+        dependsOn(cleanNativeBuild)
+    }
+}
+// native build <<<
+

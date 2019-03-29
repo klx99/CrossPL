@@ -46,34 +46,55 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             Log.w("Found CrossPL Class: ${classInfo.cppClassName}")
         }
 
-        val crossProxyDir = getCrossProxyDir()
-        if(crossProxyDir == null) {
-            val msg = "Failed to find cross proxy directory."
+        val crossPLDir = getCrossPLDir()
+        if(crossPLDir == null) {
+            val msg = "Failed to find crosspl  directory."
             Log.e(msg)
             throw CrossPLException(msg)
         }
+        val crossProxyDir = getCrossProxyDir()
+
+        val headerFileList = mutableListOf<File>()
+        val sourceFileList = mutableListOf<File>()
         classInfoList.forEach {
-            val ret = CrossProxyGenerator.Generate(crossProxyDir, it)
+            val ret = CrossProxyGenerator.Generate(crossProxyDir!!, it)
             if(! ret) {
                 val msg = "Failed to generate class: ${it}"
                 Log.e(msg)
-//                throw CrossPLException(msg)
+                throw CrossPLException(msg)
             }
+
+            val proxyHeaderFile = CrossProxyGenerator.GetHeaderFile(crossProxyDir, it)
+            val proxySourceFile = CrossProxyGenerator.GetSourceFile(crossProxyDir, it)
+            headerFileList.add(proxyHeaderFile)
+            sourceFileList.add(proxySourceFile)
         }
 
-        Log.e("===========================================================")
+        val ret = CrossCMakeFileGenerator.Generate(crossPLDir, headerFileList, sourceFileList)
+        if(! ret) {
+            val msg = "Failed to generate CMakeLists.txt."
+            Log.e(msg)
+            throw CrossPLException(msg)
+        }
+
+
+//        Log.e("===========================================================")
         return true
     }
 
-    private fun getCrossProxyDir(): File? {
+    private fun getCrossPLDir(): File? {
+        if(::crossplDir.isInitialized) {
+            return crossplDir
+        }
+
         val fileObject = processingEnv.filer.createResource(
             StandardLocation.CLASS_OUTPUT,
             "",
             "dump")
         var path = Paths.get(fileObject.toUri())
         while(path != null
-        && path.fileName != null
-        && path.fileName.toString() != "tmp") {
+            && path.fileName != null
+            && path.fileName.toString() != "tmp") {
             path = path.parent
         }
         if(path == null || path.fileName == null) {
@@ -82,9 +103,22 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
         }
 
         path = path.resolve("CrossPL")
-        path = path.resolve("proxy")
 
-        return path.toFile()
+        crossplDir =  path.toFile()
+        crossplDir.mkdirs()
+
+        return crossplDir
     }
+
+    private fun getCrossProxyDir(): File? {
+        val crossplDir: File? = getCrossPLDir() ?: return null
+
+        val proxyDir = File(crossplDir, "proxy")
+        proxyDir.mkdirs()
+
+        return proxyDir
+    }
+
+    private lateinit var crossplDir: File
 }
 

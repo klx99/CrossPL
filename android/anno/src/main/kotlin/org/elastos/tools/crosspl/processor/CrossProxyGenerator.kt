@@ -6,8 +6,8 @@ import java.util.Scanner
 class CrossProxyGenerator {
     companion object {
         fun Generate(crossProxyDir: File, classInfo: CrossClassInfo): Boolean {
-            val proxyHeaderFile = File(crossProxyDir, classInfo.cppClassName + "Proxy.hpp")
-            val proxySourceFile = File(crossProxyDir, classInfo.cppClassName + "Proxy.cpp")
+            val proxyHeaderFile = GetHeaderFile(crossProxyDir, classInfo)
+            val proxySourceFile = GetSourceFile(crossProxyDir, classInfo)
 
             var ret = GenerateHeader(proxyHeaderFile, classInfo)
             if(! ret) {
@@ -22,9 +22,17 @@ class CrossProxyGenerator {
             return true
         }
 
+        fun GetSourceFile(crossProxyDir: File, classInfo: CrossClassInfo): File {
+            return File(crossProxyDir, classInfo.cppClassName + "Proxy.cpp")
+        }
+
+        fun GetHeaderFile(crossProxyDir: File, classInfo: CrossClassInfo): File {
+            return File(crossProxyDir, classInfo.cppClassName + "Proxy.hpp")
+        }
+
         private fun GenerateHeader(proxyFile: File, classInfo: CrossClassInfo): Boolean {
             Log.w("Generate: ${proxyFile.absolutePath}")
-            val tmpl = ReadTmplContent(CrossClassProxyHeaderTmpl)
+            val tmpl = CrossTmplUtils.ReadTmplContent(CrossClassProxyHeaderTmpl)
             var content = ConvertCommonInfo(classInfo, tmpl)
 
             var nativeFuncList = ""
@@ -32,22 +40,22 @@ class CrossProxyGenerator {
             classInfo.methodInfo.forEach {
                 val functionDeclare = GenerateFunctionDeclare(it, null, it.isNative)
                 if(it.isNative) {
-                    nativeFuncList += "${TabSpace}static $functionDeclare;\n"
+                    nativeFuncList += "${CrossTmplUtils.TabSpace}static $functionDeclare;\n"
                 } else {
-                    platformFuncList += "${TabSpace}static $functionDeclare;\n"
+                    platformFuncList += "${CrossTmplUtils.TabSpace}static $functionDeclare;\n"
                 }
             }
             content = content
                 .replace(TmplKeyPlatformFunction, platformFuncList)
                 .replace(TmplKeyNativeFunction, nativeFuncList)
 
-            WriteContent(proxyFile, content)
+            CrossTmplUtils.WriteContent(proxyFile, content)
             return true
         }
 
         private fun GenerateSource(proxyFile: File, classInfo: CrossClassInfo): Boolean {
             Log.w("Generate: ${proxyFile.absolutePath}")
-            val tmpl = ReadTmplContent(CrossClassProxySourceTmpl)
+            val tmpl = CrossTmplUtils.ReadTmplContent(CrossClassProxySourceTmpl)
             var content = ConvertCommonInfo(classInfo, tmpl)
 
             var nativeFuncList = ""
@@ -59,7 +67,7 @@ class CrossProxyGenerator {
                     nativeFuncList += "$functionDeclare\n{\n}\n"
 
                     val methodContent = GenerateJniNativeMethod(it)
-                    jniNativeMethodList += "$TabSpace$TabSpace$methodContent,\n"
+                    jniNativeMethodList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}$methodContent,\n"
                 } else {
                     platformFuncList += "$functionDeclare\n{\n}\n"
                 }
@@ -70,7 +78,7 @@ class CrossProxyGenerator {
                 .replace(TmplKeyJniNativeMethods, jniNativeMethodList)
                 .replace(TmplKeyJniJavaClass, classInfo.javaClassName)
 
-            WriteContent(proxyFile, content)
+            CrossTmplUtils.WriteContent(proxyFile, content)
             return true
         }
 
@@ -139,21 +147,6 @@ class CrossProxyGenerator {
             return methodContent
         }
 
-        private fun ReadTmplContent(tmplName: String): String {
-            val istream = CrossClassAnnoProcessor::class.java.getResourceAsStream(tmplName)
-            val scanner = Scanner(istream)
-            val template = scanner.useDelimiter("\\A").next()
-
-            return template
-        }
-
-        private fun WriteContent(file: File, content: String) {
-            file.apply {
-                parentFile.mkdirs()
-                writeText(content)
-            }
-        }
-
         private const val CrossClassProxyHeaderTmpl = "/CrossPLClassProxy.hpp.tmpl"
         private const val CrossClassProxySourceTmpl = "/CrossPLClassProxy.cpp.tmpl"
 
@@ -165,7 +158,5 @@ class CrossProxyGenerator {
 
         private const val TmplKeyJniJavaClass = "%JniJavaClass%"
         private const val TmplKeyJniNativeMethods = "%JniNativeMethods%"
-
-        private const val TabSpace = "  "
     }
 }
