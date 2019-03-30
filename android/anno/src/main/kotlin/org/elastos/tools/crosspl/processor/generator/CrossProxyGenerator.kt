@@ -64,6 +64,7 @@ class CrossProxyGenerator {
             var nativeFuncList = ""
             var platformFuncList = ""
             var jniNativeMethodList = ""
+            var kotlinStaticNativeMethodList = ""
             classInfo.methodInfo.forEach {
                 val functionDeclare =
                     GenerateFunctionDeclare(it, classInfo.cppClassName, it.isNative)
@@ -71,7 +72,11 @@ class CrossProxyGenerator {
                     nativeFuncList += "$functionDeclare\n{\n}\n"
 
                     val methodContent = GenerateJniNativeMethod(it)
-                    jniNativeMethodList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}$methodContent,\n"
+                    if(classInfo.isKotlinCode && it.isStatic) {
+                        kotlinStaticNativeMethodList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}$methodContent,\n"
+                    } else {
+                        jniNativeMethodList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}$methodContent,\n"
+                    }
                 } else {
                     platformFuncList += "$functionDeclare\n{\n}\n"
                 }
@@ -80,7 +85,8 @@ class CrossProxyGenerator {
                 .replace(TmplKeyPlatformFunction, platformFuncList)
                 .replace(TmplKeyNativeFunction, nativeFuncList)
                 .replace(TmplKeyJniNativeMethods, jniNativeMethodList)
-                .replace(TmplKeyJniJavaClass, classInfo.javaClassName)
+                .replace(TmplKeyKotlinStaticNativeMethods, kotlinStaticNativeMethodList)
+                .replace(TmplKeyJniJavaClass, classInfo.javaClassName.replace(".", "/"))
 
             CrossTmplUtils.WriteContent(proxyFile, content)
             return true
@@ -162,5 +168,6 @@ class CrossProxyGenerator {
 
         private const val TmplKeyJniJavaClass = "%JniJavaClass%"
         private const val TmplKeyJniNativeMethods = "%JniNativeMethods%"
+        private const val TmplKeyKotlinStaticNativeMethods = "%KotlinStaticNativeMethods%"
     }
 }

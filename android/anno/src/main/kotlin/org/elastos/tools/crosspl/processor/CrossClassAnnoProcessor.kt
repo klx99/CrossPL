@@ -35,8 +35,7 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
     }
 
     override fun process(annotations: MutableSet<out TypeElement>?,
-                         roundEnv: RoundEnvironment)
-            : Boolean {
+                         roundEnv: RoundEnvironment) : Boolean {
         val annotatedElements = roundEnv.getElementsAnnotatedWith(CrossClass::class.java)
         if(annotatedElements.isEmpty()) {
             return false

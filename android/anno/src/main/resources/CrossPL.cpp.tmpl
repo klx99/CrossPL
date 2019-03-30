@@ -1,5 +1,6 @@
 #include "CrossPL.hpp"
 
+#include <android/log.h>
 %IncludeProxyHpp%
 
 namespace crosspl {
@@ -35,3 +36,29 @@ int CrossPL::OnLoad(JNIEnv* jenv)
 
 
 } // namespace crosspl
+
+extern "C"
+JNIEXPORT jint JNICALL
+%JniOnLoad%(JavaVM *jvm, void *jreserved)
+{
+  __android_log_print(ANDROID_LOG_INFO, "crosspl", "JNI_OnLoad() in CrossPL is running.");
+
+  jint jversion = JNI_VERSION_1_6;
+  JNIEnv* jenv;
+
+  int ret = jvm->GetEnv((void **) &jenv, jversion);
+  if(ret != JNI_OK) {
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to get jni env.");
+    return ret;
+  }
+
+  ret = crosspl::CrossPL::OnLoad(jenv);
+  if(ret != 0) {
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to .");
+    return JNI_ERR;
+  }
+
+  __android_log_print(ANDROID_LOG_INFO, "crosspl", "JNI_OnLoad() register CrossPL native methods.");
+
+  return jversion;
+}

@@ -21,7 +21,7 @@ class CrossClassInfo {
             var isStaticClass = false
             classElement.enclosedElements.forEach { // for kotlin static class
                 if(it.kind == ElementKind.FIELD
-                    && it.toString() == "INSTANCE") {
+                && it.toString() == "INSTANCE") {
                     isStaticClass = true
                 }
             }
@@ -38,6 +38,7 @@ class CrossClassInfo {
                 }
             }
             if(companionElement != null) {
+                classInfo.isKotlinCode = true
                 companionElement!!.enclosedElements.forEach {
                     if(it.kind == ElementKind.METHOD
                     && it.getAnnotation(CrossInterface::class.java) != null) {
@@ -79,11 +80,13 @@ class CrossClassInfo {
         return  "ClassInfo{cppNamespace=${cppNamespace}," +
                 " cppClassName=${cppClassName}," +
                 " javaClassName=${javaClassName}," +
-                " methodInfo=${methodInfo}}"
+                " methodInfo=${methodInfo}}" +
+                " isKotlinCode=${isKotlinCode}}"
     }
 
     lateinit var cppNamespace: String
     lateinit var cppClassName: String
     lateinit var javaClassName: String
+    var isKotlinCode: Boolean = false
     var methodInfo = mutableListOf<CrossMethodInfo>()
 }

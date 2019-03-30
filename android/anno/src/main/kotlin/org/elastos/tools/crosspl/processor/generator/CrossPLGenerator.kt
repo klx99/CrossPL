@@ -57,6 +57,7 @@ class CrossPLGenerator {
             content = content
                 .replace(TmplKeyIncludeProxyHpp, includeProxyList)
                 .replace(TmplKeyRegisterNativeMethods, regNativeMethodsList)
+                .replace(TmplKeyJniOnLoad, "JNI_OnLoad")
 
             CrossTmplUtils.WriteContent(sourceFile, content)
             return true
@@ -67,6 +68,6 @@ class CrossPLGenerator {
 
         private const val TmplKeyIncludeProxyHpp = "%IncludeProxyHpp%"
         private const val TmplKeyRegisterNativeMethods = "%RegisterNativeMethods%"
-
+        private const val TmplKeyJniOnLoad = "%JniOnLoad%"
     }
 }

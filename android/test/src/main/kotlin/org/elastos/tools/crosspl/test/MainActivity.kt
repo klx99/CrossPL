@@ -17,4 +17,10 @@ class MainActivity : Activity() {
 //
 //        var testKotlin2 = NativeBridgeKotlin.Test1(111)
     }
+
+    private companion object {
+        init {
+            System.loadLibrary("CrossPLTest")
+        }
+    }
 }
