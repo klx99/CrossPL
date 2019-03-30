@@ -2,6 +2,9 @@ package org.elastos.tools.crosspl.processor
 
 import com.google.auto.service.AutoService
 import org.elastos.tools.crosspl.annotation.CrossClass
+import org.elastos.tools.crosspl.processor.generator.CrossCMakeFileGenerator
+import org.elastos.tools.crosspl.processor.generator.CrossPLGenerator
+import org.elastos.tools.crosspl.processor.generator.CrossProxyGenerator
 import java.io.File
 import java.nio.file.Paths
 import javax.annotation.processing.*
@@ -46,13 +49,13 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             Log.w("Found CrossPL Class: ${classInfo.cppClassName}")
         }
 
-        val crossPLDir = getCrossPLDir()
-        if(crossPLDir == null) {
+        val crossplDir = getCrossPLDir()
+        if(crossplDir == null) {
             val msg = "Failed to find crosspl  directory."
             Log.e(msg)
             throw CrossPLException(msg)
         }
-        val crossProxyDir = getCrossProxyDir()
+        val crossProxyDir = getCrossProxyDir(crossplDir)
 
         val headerFileList = mutableListOf<File>()
         val sourceFileList = mutableListOf<File>()
@@ -70,7 +73,18 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             sourceFileList.add(proxySourceFile)
         }
 
-        val ret = CrossCMakeFileGenerator.Generate(crossPLDir, headerFileList, sourceFileList)
+        var ret = CrossPLGenerator.Generate(crossplDir, classInfoList, headerFileList)
+        if(! ret) {
+            val msg = "Failed to generate CrossPL.hpp or CrossPL.cpp."
+            Log.e(msg)
+            throw CrossPLException(msg)
+        }
+        val crossplHeaderFile = CrossPLGenerator.GetHeaderFile(crossplDir)
+        val crossplSourceFile = CrossPLGenerator.GetSourceFile(crossplDir)
+        headerFileList.add(crossplHeaderFile)
+        sourceFileList.add(crossplSourceFile)
+
+        ret = CrossCMakeFileGenerator.Generate(crossplDir, headerFileList, sourceFileList)
         if(! ret) {
             val msg = "Failed to generate CMakeLists.txt."
             Log.e(msg)
@@ -93,8 +107,8 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             "dump")
         var path = Paths.get(fileObject.toUri())
         while(path != null
-            && path.fileName != null
-            && path.fileName.toString() != "tmp") {
+        && path.fileName != null
+        && path.fileName.toString() != "tmp") {
             path = path.parent
         }
         if(path == null || path.fileName == null) {
@@ -110,9 +124,7 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
         return crossplDir
     }
 
-    private fun getCrossProxyDir(): File? {
-        val crossplDir: File? = getCrossPLDir() ?: return null
-
+    private fun getCrossProxyDir(crossplDir: File?): File? {
         val proxyDir = File(crossplDir, "proxy")
         proxyDir.mkdirs()
 

@@ -1,8 +1,12 @@
-#include "%ClassName%Proxy.hpp"
+//
+//  JavaTestMethods.cpp
+//
+//  Created by mengxk on 19/03/16.
+//  Copyright © 2016 mengxk. All rights reserved.
+//
 
-#include <%ClassName%.hpp>
+#include "JavaTestMethods.hpp"
 
-namespace crosspl {
 /***********************************************/
 /***** static variables initialize *************/
 /***********************************************/
@@ -11,32 +15,18 @@ namespace crosspl {
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-int %ClassName%::RegisterNativeMethods(JNIEnv* jenv)
+void JavaTestMethods::crossNativeStaticMethod()
 {
-  const JNINativeMethod methodArray[] = {
-%JniNativeMethods%
-  };
-
-  jclass jclazz = jenv->FindClass("%JniJavaClass%");
-  if(jclazz == nullptr) {
-    return -1;
-  }
-
-  int ret = jenv->RegisterNatives(jclazz, methodArray, sizeof(methodArray)/sizeof(*methodArray));
-  if(ret < 0) {
-    return ret;
-  }
-
-  return 0;
 }
 
-%PlatformFunction%
-
-%NativeFunction%
 
 /***********************************************/
 /***** class public function implement  ********/
 /***********************************************/
+void JavaTestMethods::crossNativeMethod()
+{
+}
+
 
 /***********************************************/
 /***** class protected function implement  *****/
@@ -47,5 +37,3 @@ int %ClassName%::RegisterNativeMethods(JNIEnv* jenv)
 /***** class private function implement  *******/
 /***********************************************/
 
-
-} // namespace crosspl

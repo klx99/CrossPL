@@ -1,15 +1,17 @@
-package org.elastos.tools.crosspl.processor
+package org.elastos.tools.crosspl.processor.generator
 
+import org.elastos.tools.crosspl.processor.CrossTmplUtils
+import org.elastos.tools.crosspl.processor.Log
 import java.io.File
-import java.util.Scanner
 
 class CrossCMakeFileGenerator {
     companion object {
-        fun Generate(crossPLDir: File, headerFileList: List<File>, sourceFileList: List<File>): Boolean {
-            val cmakefileFile = File(crossPLDir, "CMakeLists.txt")
+        fun Generate(crossplDir: File, headerFileList: List<File>, sourceFileList: List<File>): Boolean {
+            val cmakefileFile = File(crossplDir, "CMakeLists.txt")
 
             Log.w("Generate: ${cmakefileFile.absolutePath}")
-            var content = CrossTmplUtils.ReadTmplContent(CrossCMakeListsTmpl)
+            var content =
+                CrossTmplUtils.ReadTmplContent(CrossCMakeListsTmpl)
 
             var headerDirList = mutableListOf<String>()
             var headerContent = ""

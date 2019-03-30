@@ -1,5 +1,5 @@
-#ifndef _CROSSPL_%Namespace%_%ClassName%_HPP_
-#define _CROSSPL_%Namespace%_%ClassName%_HPP_
+#ifndef _crosspl_%ClassName%_HPP_
+#define _crosspl_%ClassName%_HPP_
 
 #include <jni.h>
 
@@ -12,14 +12,14 @@ namespace crosspl {
 class CrossBase;
 }
 
-namespace %Namespace% {
+namespace crosspl {
 
 class %ClassName% {
 public:
   /*** type define ***/
 
   /*** static function and variable ***/
-  static int registerNativeMethods(JNIEnv* jenv);
+  static int RegisterNativeMethods(JNIEnv* jenv);
 %PlatformFunction%
 
   /*** class function and variable ***/
@@ -33,6 +33,6 @@ private:
   /*** class function and variable ***/
 
 }; // class %ClassName%
-} // namespace %Namespace%
+} // namespace crosspl
 
-#endif /* _CROSSPL_%Namespace%_%ClassName%_HPP_ */
+#endif /* _CROSSPL_crosspl_%ClassName%_HPP_ */

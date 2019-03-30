@@ -1,7 +1,10 @@
-package org.elastos.tools.crosspl.processor
+package org.elastos.tools.crosspl.processor.generator
 
+import org.elastos.tools.crosspl.processor.CrossClassInfo
+import org.elastos.tools.crosspl.processor.CrossMethodInfo
+import org.elastos.tools.crosspl.processor.CrossTmplUtils
+import org.elastos.tools.crosspl.processor.Log
 import java.io.File
-import java.util.Scanner
 
 class CrossProxyGenerator {
     companion object {
@@ -11,12 +14,12 @@ class CrossProxyGenerator {
 
             var ret = GenerateHeader(proxyHeaderFile, classInfo)
             if(! ret) {
-                return ret;
+                return ret
             }
 
             ret = GenerateSource(proxySourceFile, classInfo)
             if(! ret) {
-                return ret;
+                return ret
             }
 
             return true
@@ -62,7 +65,8 @@ class CrossProxyGenerator {
             var platformFuncList = ""
             var jniNativeMethodList = ""
             classInfo.methodInfo.forEach {
-                val functionDeclare = GenerateFunctionDeclare(it, classInfo.cppClassName, it.isNative)
+                val functionDeclare =
+                    GenerateFunctionDeclare(it, classInfo.cppClassName, it.isNative)
                 if(it.isNative) {
                     nativeFuncList += "$functionDeclare\n{\n}\n"
 
@@ -101,7 +105,7 @@ class CrossProxyGenerator {
         }
 
         private fun GenerateJniFunctionDeclare(methodInfo: CrossMethodInfo,
-                                            cppClassName: String?): String {
+                                               cppClassName: String?): String {
             var className = (if(cppClassName != null) "$cppClassName::" else "")
             val returnType = methodInfo.returnType.toJniString(false)
             var content = "$returnType $className${methodInfo.methodName}($TmplKeyArguments)"
@@ -134,7 +138,7 @@ class CrossProxyGenerator {
             return content
         }
 
-        private fun GenerateJniNativeMethod(methodInfo: CrossMethodInfo ): String {
+        private fun GenerateJniNativeMethod(methodInfo: CrossMethodInfo): String {
             var funcType = "("
             methodInfo.paramsType.forEach {
                 funcType += it.toJavaChar()

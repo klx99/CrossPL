@@ -1,6 +1,6 @@
-#include "%ClassName%Proxy.hpp"
+#include "CrossPL.hpp"
 
-#include <%ClassName%.hpp>
+%IncludeProxyHpp%
 
 namespace crosspl {
 /***********************************************/
@@ -11,28 +11,14 @@ namespace crosspl {
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-int %ClassName%::RegisterNativeMethods(JNIEnv* jenv)
+int CrossPL::OnLoad(JNIEnv* jenv)
 {
-  const JNINativeMethod methodArray[] = {
-%JniNativeMethods%
-  };
+  int ret = 0;
 
-  jclass jclazz = jenv->FindClass("%JniJavaClass%");
-  if(jclazz == nullptr) {
-    return -1;
-  }
+%RegisterNativeMethods%
 
-  int ret = jenv->RegisterNatives(jclazz, methodArray, sizeof(methodArray)/sizeof(*methodArray));
-  if(ret < 0) {
-    return ret;
-  }
-
-  return 0;
+  return (ret == 0? 0 : -1);
 }
-
-%PlatformFunction%
-
-%NativeFunction%
 
 /***********************************************/
 /***** class public function implement  ********/

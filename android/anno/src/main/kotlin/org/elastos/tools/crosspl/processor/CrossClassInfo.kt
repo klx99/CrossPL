@@ -14,7 +14,7 @@ class CrossClassInfo {
             }
 
             val classInfo = CrossClassInfo()
-            classInfo.cppNamespace = "CrossPL"
+            classInfo.cppNamespace = "crosspl"
             classInfo.cppClassName = classElement.simpleName.toString()
             classInfo.javaClassName = classElement.toString()
 
