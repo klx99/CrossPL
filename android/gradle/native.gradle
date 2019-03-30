@@ -1,7 +1,7 @@
 android {
     defaultConfig {
         ndk {
-            abiFilters("armeabi-v7a", "arm64-v8a", "x86_64")
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
         }
         externalNativeBuild {
             cmake {
@@ -13,7 +13,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            setPath("src/main/cpp/CMakeLists.txt")
+            path "src/main/cpp/CMakeLists.txt"
         }
     }
 

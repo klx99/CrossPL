@@ -4,7 +4,7 @@ import org.elastos.tools.crosspl.CrossBase
 import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.annotation.CrossInterface
 
-@CrossClass
+//@CrossClass
 object KotlinTestStaticClass : CrossBase(0) {
     fun normalMethod(): String {
         return "${this.javaClass.name}{}"

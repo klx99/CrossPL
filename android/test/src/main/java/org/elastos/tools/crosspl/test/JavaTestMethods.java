@@ -6,7 +6,7 @@ import org.elastos.tools.crosspl.annotation.CrossClass;
 import org.elastos.tools.crosspl.annotation.CrossInterface;
 import org.elastos.tools.crosspl.CrossBase;
 
-@CrossClass
+//@CrossClass
 public final class JavaTestMethods extends CrossBase {
     private JavaTestMethods() {}
 

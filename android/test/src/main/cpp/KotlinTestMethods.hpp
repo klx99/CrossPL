@@ -18,6 +18,6 @@ private:
 
   /*** class function and variable ***/
 
-} // class KotlinTestMethods
+}; // class KotlinTestMethods
 
 #endif /* _KOTLIN_TEST_METHODS_HPP_ */

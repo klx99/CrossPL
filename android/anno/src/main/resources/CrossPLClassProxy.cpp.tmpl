@@ -17,12 +17,12 @@ int %ClassName%::registerNativeMethods(JNIEnv* jenv)
 %JniNativeMethods%
   };
 
-  jclass jclazz = jenv->FindClass(%JniJavaClass%);
+  jclass jclazz = jenv->FindClass("%JniJavaClass%");
   if(jclazz == nullptr) {
     return -1;
   }
 
-  int ret = jenv->RegisterNatives(jclazz, methodArray, sizeof(methodArray)/sizeof(*gMethods));
+  int ret = jenv->RegisterNatives(jclazz, methodArray, sizeof(methodArray)/sizeof(*methodArray));
   if(ret < 0) {
     return ret;
   }

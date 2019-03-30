@@ -5,7 +5,7 @@ import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.annotation.CrossInterface
 import java.nio.ByteBuffer
 
-@CrossClass
+//@CrossClass
 open class KotlinTestParams(nativeHandle: Long) : CrossBase(nativeHandle) {
     @CrossInterface
     fun crossMethod(a: Boolean,

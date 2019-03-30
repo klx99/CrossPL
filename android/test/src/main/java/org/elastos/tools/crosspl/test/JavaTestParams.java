@@ -5,7 +5,7 @@ import org.elastos.tools.crosspl.annotation.CrossClass;
 import org.elastos.tools.crosspl.annotation.CrossInterface;
 import java.nio.ByteBuffer;
 
-@CrossClass
+//@CrossClass
 class JavaTestParams extends CrossBase {
     @CrossInterface
     CrossBase crossMethod(boolean a,
