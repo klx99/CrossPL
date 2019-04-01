@@ -1,5 +1,6 @@
 #include "%ClassName%Proxy.hpp"
 
+#include <CrossPLUtils.hpp>
 #include <%ClassName%.hpp>
 
 namespace crosspl {
@@ -11,7 +12,7 @@ namespace crosspl {
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-int %ClassName%::RegisterNativeMethods(JNIEnv* jenv)
+int %ClassName%Proxy::RegisterNativeMethods(JNIEnv* jenv)
 {
   const JNINativeMethod methodArray[] = {
 %JniNativeMethods%

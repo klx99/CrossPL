@@ -4,6 +4,7 @@ import com.google.auto.service.AutoService
 import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.processor.generator.CrossCMakeFileGenerator
 import org.elastos.tools.crosspl.processor.generator.CrossPLGenerator
+import org.elastos.tools.crosspl.processor.generator.CrossPLUtilsGenerator
 import org.elastos.tools.crosspl.processor.generator.CrossProxyGenerator
 import java.io.File
 import java.nio.file.Paths
@@ -82,6 +83,17 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
         val crossplSourceFile = CrossPLGenerator.GetSourceFile(crossplDir)
         headerFileList.add(crossplHeaderFile)
         sourceFileList.add(crossplSourceFile)
+
+        ret = CrossPLUtilsGenerator.Generate(crossplDir)
+        if(! ret) {
+            val msg = "Failed to generate CrossPLUtils.hpp or CrossPLUtils.cpp."
+            Log.e(msg)
+            throw CrossPLException(msg)
+        }
+        val crossplUtilsHeaderFile = CrossPLUtilsGenerator.GetHeaderFile(crossplDir)
+        val crossplUtilsSourceFile = CrossPLUtilsGenerator.GetSourceFile(crossplDir)
+        headerFileList.add(crossplUtilsHeaderFile)
+        sourceFileList.add(crossplUtilsSourceFile)
 
         ret = CrossCMakeFileGenerator.Generate(crossplDir, headerFileList, sourceFileList)
         if(! ret) {

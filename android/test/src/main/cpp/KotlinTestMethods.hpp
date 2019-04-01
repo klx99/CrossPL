@@ -6,7 +6,7 @@ public:
   /*** type define ***/
 
   /*** static function and variable ***/
-  void crossNativeStaticMethod();
+  static void crossNativeStaticMethod();
 
   /*** class function and variable ***/
   void crossNativeMethod();

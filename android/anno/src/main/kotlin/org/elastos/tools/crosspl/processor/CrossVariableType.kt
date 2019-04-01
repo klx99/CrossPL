@@ -90,8 +90,8 @@ enum class CrossVariableType {
         )
         val classTypeMap = mapOf(
             STRING     to "Ljava/lang/String;",
-            BYTEBUFFER to "Ljava.nio.ByteBuffer;",
-            CROSSBASE  to "Lorg.elastos.tools.crosspl.CrossBase;"
+            BYTEBUFFER to "Ljava/nio/ByteBuffer;",
+            CROSSBASE  to "Lorg/elastos/tools/crosspl/CrossBase;"
         )
 
         var javaChar = toString(primitiveTypeMap, classTypeMap)

@@ -1,9 +1,6 @@
 package org.elastos.tools.crosspl.processor.generator
 
-import org.elastos.tools.crosspl.processor.CrossClassInfo
-import org.elastos.tools.crosspl.processor.CrossMethodInfo
-import org.elastos.tools.crosspl.processor.CrossTmplUtils
-import org.elastos.tools.crosspl.processor.Log
+import org.elastos.tools.crosspl.processor.*
 import java.io.File
 
 class CrossProxyGenerator {
@@ -66,10 +63,11 @@ class CrossProxyGenerator {
             var jniNativeMethodList = ""
             var kotlinStaticNativeMethodList = ""
             classInfo.methodInfo.forEach {
-                val functionDeclare =
-                    GenerateFunctionDeclare(it, classInfo.cppClassName, it.isNative)
+                val functionDeclare = GenerateFunctionDeclare(it, classInfo.cppClassName, it.isNative)
                 if(it.isNative) {
-                    nativeFuncList += "$functionDeclare\n{\n}\n"
+                    val emptyFunc = "$functionDeclare\n{\n$TmplKeyFuncBody\n}\n"
+                    val funcBody = GenerateFunctionBody(it, classInfo, it.isNative)
+                    nativeFuncList += emptyFunc.replace(TmplKeyFuncBody, funcBody)
 
                     val methodContent = GenerateJniNativeMethod(it)
                     if(classInfo.isKotlinCode && it.isStatic) {
@@ -112,16 +110,21 @@ class CrossProxyGenerator {
 
         private fun GenerateJniFunctionDeclare(methodInfo: CrossMethodInfo,
                                                cppClassName: String?): String {
-            var className = (if(cppClassName != null) "$cppClassName::" else "")
+            var className = (if(cppClassName != null) "${cppClassName}Proxy::" else "")
             val returnType = methodInfo.returnType.toJniString(false)
             var content = "$returnType $className${methodInfo.methodName}($TmplKeyArguments)"
 
-            var arguments = "JNIEnv* jenv, jclass jtype, "
+            var arguments = "JNIEnv* jenv"
+            if(methodInfo.isStatic) {
+                arguments += ", jclass jtype"
+            } else {
+                arguments += ", jobject jobj"
+            }
             for(idx in methodInfo.paramsType.indices) {
                 val type = methodInfo.paramsType[idx].toJniString(true)
-                arguments += "${type} jvar$idx, "
+                arguments += ", ${type} jvar$idx"
             }
-            arguments = arguments.removeSuffix(", ")
+//            arguments = arguments.removeSuffix(", ")
             content = content.replace(TmplKeyArguments, arguments)
 
             return content
@@ -129,7 +132,7 @@ class CrossProxyGenerator {
 
         private fun GenerateCppFunctionDeclare(methodInfo: CrossMethodInfo,
                                                cppClassName: String?): String {
-            var className = (if(cppClassName != null) "$cppClassName::" else "")
+            var className = (if(cppClassName != null) "${cppClassName}Proxy::" else "")
             val returnType = methodInfo.returnType.toCppString(false)
             var content = "$returnType $className${methodInfo.methodName}($TmplKeyArguments)"
 
@@ -142,6 +145,58 @@ class CrossProxyGenerator {
             content = content.replace(TmplKeyArguments, arguments)
 
             return content
+        }
+
+        private fun GenerateFunctionBody(methodInfo: CrossMethodInfo,
+                                         classInfo: CrossClassInfo,
+                                         isNativeFunc: Boolean): String {
+            return if(isNativeFunc) {
+                GenerateNativeFunctionBody(methodInfo, classInfo)
+            } else {
+                GeneratePlatformFunctionBody(methodInfo, classInfo)
+            }
+        }
+
+        private fun GenerateNativeFunctionBody(methodInfo: CrossMethodInfo,
+                                               classInfo: CrossClassInfo): String {
+            var prefixContent = ""
+            if(! methodInfo.isStatic) {
+                prefixContent = "${CrossTmplUtils.TabSpace}auto obj = CrossPLUtils::CastObject<${classInfo.cppClassName}>(jenv, jobj);"
+            }
+
+
+            var funcContent: String
+            if(! methodInfo.isStatic) {
+                funcContent = "obj->"
+            } else {
+                var cppClassName = classInfo.cppClassName
+                funcContent = "$cppClassName::"
+            }
+
+            var argusContent = ""
+            for(idx in methodInfo.paramsType.indices) {
+                argusContent += "var$idx, "
+            }
+            argusContent = argusContent.removeSuffix(", ")
+
+            var retContent = ""
+            if(methodInfo.returnType != CrossVariableType.VOID) {
+                val returnType = methodInfo.returnType.toCppString(false)
+                retContent = "$returnType ret = "
+            }
+            var content = "$prefixContent\n"
+            content += "${CrossTmplUtils.TabSpace}$retContent$funcContent${methodInfo.methodName}($argusContent);"
+
+            return content
+
+
+            return ""
+        }
+
+        private fun GeneratePlatformFunctionBody(methodInfo: CrossMethodInfo,
+                                                 classInfo: CrossClassInfo): String {
+
+            return ""
         }
 
         private fun GenerateJniNativeMethod(methodInfo: CrossMethodInfo): String {
@@ -165,6 +220,7 @@ class CrossProxyGenerator {
         private const val TmplKeyPlatformFunction = "%PlatformFunction%"
         private const val TmplKeyNativeFunction = "%NativeFunction%"
         private const val TmplKeyArguments = "%Arguments%"
+        private const val TmplKeyFuncBody = "%FunctionBody%"
 
         private const val TmplKeyJniJavaClass = "%JniJavaClass%"
         private const val TmplKeyJniNativeMethods = "%JniNativeMethods%"

@@ -46,7 +46,7 @@ class CrossPLGenerator {
 
             var regNativeMethodsList = ""
             classInfoList.forEach {
-                regNativeMethodsList += "${CrossTmplUtils.TabSpace}ret |= ${it.cppClassName}::RegisterNativeMethods(jenv);\n"
+                regNativeMethodsList += "${CrossTmplUtils.TabSpace}ret |= ${it.cppClassName}Proxy::RegisterNativeMethods(jenv);\n"
             }
 
             var includeProxyList = ""
