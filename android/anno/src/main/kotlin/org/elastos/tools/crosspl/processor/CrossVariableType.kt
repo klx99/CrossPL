@@ -1,6 +1,7 @@
 package org.elastos.tools.crosspl.processor
 
 import javax.lang.model.element.TypeElement
+import javax.lang.model.type.ArrayType
 import javax.lang.model.type.DeclaredType
 import javax.lang.model.type.TypeKind
 import javax.lang.model.type.TypeMirror
@@ -11,7 +12,10 @@ enum class CrossVariableType {
     LONG,
     DOUBLE,
     VOID,
+
     STRING,
+    BYTEARRAY,
+    STRINGBUFFER,
     BYTEBUFFER,
     CROSSBASE;
 
@@ -22,6 +26,9 @@ enum class CrossVariableType {
             } else if(type is DeclaredType) {
                 val typeElement = type.asElement() as TypeElement
                 val typeStr = typeElement.toString()
+                return supportedTypeDeclared[typeStr]
+            } else if(type is ArrayType) {
+                val typeStr = type.toString()
                 return supportedTypeDeclared[typeStr]
             }
 
@@ -37,9 +44,23 @@ enum class CrossVariableType {
         )
         private val supportedTypeDeclared = mapOf(
             "java.lang.String"                    to STRING,
+            "byte[]"                              to BYTEARRAY,
+            "java.lang.StringBuffer"              to STRINGBUFFER,
             "java.nio.ByteBuffer"                 to BYTEBUFFER,
             "org.elastos.tools.crosspl.CrossBase" to CROSSBASE
         )
+    }
+
+    fun isPrimitiveType(): Boolean {
+        val primitiveTypeSet = setOf(
+            BOOLEAN,
+            INTEGER,
+            LONG,
+            DOUBLE,
+            VOID
+        )
+
+        return primitiveTypeSet.contains(this)
     }
 
     fun toCppString(isConst: Boolean = false): String {
@@ -51,9 +72,11 @@ enum class CrossVariableType {
             VOID       to "void"
         )
         val classTypeMap = mapOf(
-            STRING     to "std::string",
-            BYTEBUFFER to "std::vector<int8_t>",
-            CROSSBASE  to "crosspl::CrossBase"
+            STRING       to "const char*",
+            BYTEARRAY    to "std::span<int8_t>",
+            STRINGBUFFER to "std::stringstream",
+            BYTEBUFFER   to "std::vector<int8_t>",
+            CROSSBASE    to "crosspl::CrossBase"
         )
 
         var cppType = toString(primitiveTypeMap, classTypeMap, isConst)
@@ -70,9 +93,11 @@ enum class CrossVariableType {
             VOID       to "void"
         )
         val classTypeMap = mapOf(
-            STRING     to "jstring",
-            BYTEBUFFER to "jbytebuffer",
-            CROSSBASE  to "jobject"
+            STRING       to "jstring",
+            BYTEARRAY    to "jbyteArray",
+            STRINGBUFFER to "jobject",
+            BYTEBUFFER   to "jobject",
+            CROSSBASE    to "jobject"
         )
 
         var jniType = toString(primitiveTypeMap, classTypeMap, isConst)
@@ -89,9 +114,11 @@ enum class CrossVariableType {
             VOID       to "V"
         )
         val classTypeMap = mapOf(
-            STRING     to "Ljava/lang/String;",
-            BYTEBUFFER to "Ljava/nio/ByteBuffer;",
-            CROSSBASE  to "Lorg/elastos/tools/crosspl/CrossBase;"
+            STRING       to "Ljava/lang/String;",
+            BYTEARRAY    to "[B",
+            STRINGBUFFER to "Ljava/lang/StringBuffer;",
+            BYTEBUFFER   to "Ljava/nio/ByteBuffer;",
+            CROSSBASE    to "Lorg/elastos/tools/crosspl/CrossBase;"
         )
 
         var javaChar = toString(primitiveTypeMap, classTypeMap)
@@ -108,10 +135,29 @@ enum class CrossVariableType {
         }
 
         if(isConst
-        && ! primitiveTypeMap.contains(this)) {
+        && ! primitiveTypeMap.contains(this)
+        && this != STRING) {
             cppType = "const ${cppType!!}&"
         }
 
         return cppType!!
+    }
+
+    override
+    fun toString(): String {
+        val stringMap = mapOf(
+            BOOLEAN      to "Boolean",
+            INTEGER      to "Integer",
+            LONG         to "Long",
+            DOUBLE       to "Double",
+            VOID         to "Void",
+            STRING       to "String",
+            BYTEARRAY    to "ByteArray",
+            STRINGBUFFER to "StringBuffer",
+            BYTEBUFFER   to "ByteBuffer",
+            CROSSBASE    to "CrossBase"
+        )
+
+        return stringMap.getValue(this)
     }
 }

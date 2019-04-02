@@ -2,6 +2,7 @@ package org.elastos.tools.crosspl.processor.generator
 
 import org.elastos.tools.crosspl.processor.*
 import java.io.File
+import java.nio.ByteBuffer
 
 class CrossProxyGenerator {
     companion object {
@@ -121,7 +122,7 @@ class CrossProxyGenerator {
                 arguments += ", jobject jobj"
             }
             for(idx in methodInfo.paramsType.indices) {
-                val type = methodInfo.paramsType[idx].toJniString(true)
+                val type = methodInfo.paramsType[idx].toJniString()
                 arguments += ", ${type} jvar$idx"
             }
 //            arguments = arguments.removeSuffix(", ")
@@ -136,7 +137,8 @@ class CrossProxyGenerator {
             val returnType = methodInfo.returnType.toCppString(false)
             var content = "$returnType $className${methodInfo.methodName}($TmplKeyArguments)"
 
-            var arguments = "uint64_t platformHandle"
+//            var arguments = "uint64_t platformHandle"
+            var arguments = ""
             for(idx in methodInfo.paramsType.indices) {
                 val type = methodInfo.paramsType[idx].toCppString(true)
                 arguments += "${type} var$idx, "
@@ -160,13 +162,22 @@ class CrossProxyGenerator {
         private fun GenerateNativeFunctionBody(methodInfo: CrossMethodInfo,
                                                classInfo: CrossClassInfo): String {
             var prefixContent = ""
-            if(! methodInfo.isStatic) {
-                prefixContent = "${CrossTmplUtils.TabSpace}auto obj = CrossPLUtils::CastObject<${classInfo.cppClassName}>(jenv, jobj);"
+            for(idx in methodInfo.paramsType.indices) {
+                var type = methodInfo.paramsType[idx]
+                val isPrimitiveType = type.isPrimitiveType()
+                if(isPrimitiveType) {
+                    prefixContent += "${CrossTmplUtils.TabSpace}${type.toCppString()} var$idx = jvar$idx;\n"
+                } else if(type != CrossVariableType.CROSSBASE) {
+                    prefixContent += "${CrossTmplUtils.TabSpace}auto var$idx = CrossPLUtils::SafeCast${type.toString()}(jenv, jvar$idx);\n"
+                } else {
+                    prefixContent += "${CrossTmplUtils.TabSpace}auto var$idx = CrossPLUtils::SafeCastCrossObject<${classInfo.cppClassName}>(jenv, jvar$idx);\n"
+                }
             }
-
+            prefixContent += "\n"
 
             var funcContent: String
             if(! methodInfo.isStatic) {
+                prefixContent += "${CrossTmplUtils.TabSpace}auto obj = CrossPLUtils::SafeCastCrossObject<${classInfo.cppClassName}>(jenv, jobj);\n"
                 funcContent = "obj->"
             } else {
                 var cppClassName = classInfo.cppClassName
@@ -175,17 +186,40 @@ class CrossProxyGenerator {
 
             var argusContent = ""
             for(idx in methodInfo.paramsType.indices) {
-                argusContent += "var$idx, "
+                var type = methodInfo.paramsType[idx]
+                val isPrimitiveType = type.isPrimitiveType()
+                if(isPrimitiveType) {
+                    argusContent += "var$idx, "
+                } else if(type == CrossVariableType.STRING) {
+                    argusContent += "var$idx.get(), "
+                } else {
+                    argusContent += "*var$idx, "
+                }
             }
             argusContent = argusContent.removeSuffix(", ")
 
             var retContent = ""
-            if(methodInfo.returnType != CrossVariableType.VOID) {
-                val returnType = methodInfo.returnType.toCppString(false)
-                retContent = "$returnType ret = "
+            var suffixContent = "\n"
+            val retType = methodInfo.returnType
+            if(retType != CrossVariableType.VOID) {
+                val cppType = retType.toCppString(false)
+                retContent = "$cppType ret = "
+
+                val isPrimitiveType = retType.isPrimitiveType()
+                if(isPrimitiveType) {
+                    suffixContent += "${CrossTmplUtils.TabSpace}${retType.toJniString()} jret = ret;\n"
+                    suffixContent += "${CrossTmplUtils.TabSpace}return jret;"
+                } else if(retType != CrossVariableType.CROSSBASE) {
+                    suffixContent += "${CrossTmplUtils.TabSpace}auto jret = CrossPLUtils::SafeCast${retType.toString()}(jenv, ret);\n"
+                    suffixContent += "${CrossTmplUtils.TabSpace}return jret.get();"
+                } else {
+                    suffixContent += "${CrossTmplUtils.TabSpace}auto jret = CrossPLUtils::SafeCastCrossObject<${classInfo.cppClassName}>(jenv, ret);\n"
+                    suffixContent += "${CrossTmplUtils.TabSpace}return jret.get();"
+                }
             }
-            var content = "$prefixContent\n"
-            content += "${CrossTmplUtils.TabSpace}$retContent$funcContent${methodInfo.methodName}($argusContent);"
+            var content = "$prefixContent"
+            content += "${CrossTmplUtils.TabSpace}$retContent$funcContent${methodInfo.methodName}($argusContent);\n"
+            content += "$suffixContent"
 
             return content
 

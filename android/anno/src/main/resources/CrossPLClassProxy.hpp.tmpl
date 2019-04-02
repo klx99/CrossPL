@@ -1,16 +1,12 @@
-#ifndef _crosspl_%ClassName%_HPP_
-#define _crosspl_%ClassName%_HPP_
+#ifndef _CROSSPL_%ClassName%_HPP_
+#define _CROSSPL_%ClassName%_HPP_
 
 #include <jni.h>
+#include <string>
+#include <sstream>
+#include <vector>
 
-namespace std {
-class string;
-class vector;
-}
-
-namespace crosspl {
-class CrossBase;
-}
+#include <experimental-span.hpp>
 
 namespace crosspl {
 
@@ -35,4 +31,4 @@ private:
 }; // class %ClassName%
 } // namespace crosspl
 
-#endif /* _CROSSPL_crosspl_%ClassName%_HPP_ */
+#endif /* _CROSSPL_%ClassName%_HPP_ */

@@ -5,6 +5,7 @@ include( "${CROSSPL_CMAKEFILE}" )
 add_library( CrossPLTest SHARED )
 target_sources( CrossPLTest PRIVATE
         "JavaTestMethods.cpp"
+        "JavaTestMethods.cpp"
         "KotlinTestMethods.cpp"
         ${CROSSPL_PROXY_SOURCES}
 )

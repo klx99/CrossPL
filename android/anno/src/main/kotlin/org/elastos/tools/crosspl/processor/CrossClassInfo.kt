@@ -1,6 +1,7 @@
 package org.elastos.tools.crosspl.processor
 
 import org.elastos.tools.crosspl.annotation.CrossInterface
+import java.nio.ByteBuffer
 import javax.lang.model.element.Element
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.ExecutableElement

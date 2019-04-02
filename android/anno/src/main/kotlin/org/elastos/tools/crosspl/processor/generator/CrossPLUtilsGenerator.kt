@@ -10,12 +10,18 @@ class CrossPLUtilsGenerator {
             val headerFile = GetHeaderFile(crossplDir)
             val sourceFile = GetSourceFile(crossplDir)
 
-            var ret = GenerateHeader(headerFile)
+            var ret = GenerateFile(CrossPLUtilsHeaderTmpl, headerFile)
             if(! ret) {
                 return ret
             }
 
-            ret = GenerateSource(sourceFile)
+            ret = GenerateFile(CrossPLUtilsSourceTmpl, sourceFile)
+            if(! ret) {
+                return ret
+            }
+
+            var spanFile = GetFile(crossplDir, ExperimentalSpanTmpl)
+            ret = GenerateFile(ExperimentalSpanTmpl, spanFile)
             if(! ret) {
                 return ret
             }
@@ -24,30 +30,27 @@ class CrossPLUtilsGenerator {
         }
 
         fun GetSourceFile(crossplDir: File): File {
-            return File(crossplDir, "CrossPLUtils.cpp")
+            return GetFile(crossplDir, CrossPLUtilsSourceTmpl)
         }
 
         fun GetHeaderFile(crossplDir: File): File {
-            return File(crossplDir, "CrossPLUtils.hpp")
+            return GetFile(crossplDir, CrossPLUtilsHeaderTmpl)
         }
 
-        private fun GenerateHeader(headerFile: File): Boolean {
-            Log.w("Generate: ${headerFile.absolutePath}")
-            val content = CrossTmplUtils.ReadTmplContent(CrossPLUtilsHeaderTmpl)
+        private fun GenerateFile(from: String, to: File): Boolean {
+            Log.w("Generate: ${to.absolutePath}")
+            val content = CrossTmplUtils.ReadTmplContent(from)
 
-            CrossTmplUtils.WriteContent(headerFile, content)
+            CrossTmplUtils.WriteContent(to, content)
             return true
         }
 
-        private fun GenerateSource(sourceFile: File): Boolean {
-            Log.w("Generate: ${sourceFile.absolutePath}")
-            val content = CrossTmplUtils.ReadTmplContent(CrossPLUtilsSourceTmpl)
-
-            CrossTmplUtils.WriteContent(sourceFile, content)
-            return true
+        fun GetFile(crossplDir: File, fileName: String): File {
+            return File(crossplDir, fileName)
         }
 
         private const val CrossPLUtilsHeaderTmpl = "/CrossPLUtils.hpp"
         private const val CrossPLUtilsSourceTmpl = "/CrossPLUtils.cpp"
+        private const val ExperimentalSpanTmpl = "/experimental-span.hpp"
     }
 }
