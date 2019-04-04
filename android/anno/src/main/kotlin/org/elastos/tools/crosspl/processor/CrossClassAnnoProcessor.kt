@@ -2,17 +2,13 @@ package org.elastos.tools.crosspl.processor
 
 import com.google.auto.service.AutoService
 import org.elastos.tools.crosspl.annotation.CrossClass
-import org.elastos.tools.crosspl.processor.generator.CrossCMakeFileGenerator
-import org.elastos.tools.crosspl.processor.generator.CrossPLGenerator
-import org.elastos.tools.crosspl.processor.generator.CrossPLUtilsGenerator
-import org.elastos.tools.crosspl.processor.generator.CrossProxyGenerator
+import org.elastos.tools.crosspl.processor.generator.*
 import java.io.File
 import java.nio.file.Paths
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import javax.tools.StandardLocation
-
 
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -73,14 +69,14 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             sourceFileList.add(proxySourceFile)
         }
 
-        var ret = CrossPLGenerator.Generate(crossplDir, classInfoList, headerFileList)
+        var ret = CrossPLFactoryGenerator.Generate(crossplDir, classInfoList, headerFileList)
         if(! ret) {
             val msg = "Failed to generate CrossPL.hpp or CrossPL.cpp."
             Log.e(msg)
             throw CrossPLException(msg)
         }
-        val crossplHeaderFile = CrossPLGenerator.GetHeaderFile(crossplDir)
-        val crossplSourceFile = CrossPLGenerator.GetSourceFile(crossplDir)
+        val crossplHeaderFile = CrossPLFactoryGenerator.GetHeaderFile(crossplDir)
+        val crossplSourceFile = CrossPLFactoryGenerator.GetSourceFile(crossplDir)
         headerFileList.add(crossplHeaderFile)
         sourceFileList.add(crossplSourceFile)
 

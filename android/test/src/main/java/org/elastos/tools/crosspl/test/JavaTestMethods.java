@@ -5,25 +5,23 @@ import org.elastos.tools.crosspl.annotation.CrossInterface;
 import org.elastos.tools.crosspl.CrossBase;
 
 @CrossClass
-public final class JavaTestMethods extends CrossBase {
-    private JavaTestMethods() {}
-
-    String normalMethod() {
+public class JavaTestMethods extends CrossBase {
+    public String normalMethod() {
         return null;
     }
 
     @CrossInterface
-    void crossMethod() {
+    public void crossMethod() {
     }
 
     @CrossInterface
-    static void crossStaticMethod() {
+    public static void crossStaticMethod() {
     }
 
     @CrossInterface
-    private native void crossNativeMethod();
+    public native void crossNativeMethod();
 
     @CrossInterface
-    private static native void crossNativeStaticMethod();
+    public static native void crossNativeStaticMethod();
 
 }

@@ -5,14 +5,12 @@ namespace crosspl {
 class CrossBase {
 public:
   /*** type define ***/
-  typeof void* (NativeObjectFactro*)(const std::string& className);
 
   /*** static function and variable ***/
-  static void RegisterNativeObjectFactroy(const std::string& className, NativeObjectFactroy factroy);
 
   /*** class function and variable ***/
-  uint64_t createNativeObject(const std::string& className);
-  void destroyNativeObject(uint64_t nativeHandle);
+  static uint64_t CreateNativeObject(const char* javaClassName);
+  static void DestroyNativeObject(const char* javaClassName, uint64_t nativeHandle);
 
 private:
   /*** type define ***/

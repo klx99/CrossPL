@@ -6,7 +6,6 @@
 //
 
 #include "JavaTestMethods.hpp"
-#include <android/log.h>
 
 /***********************************************/
 /***** static variables initialize *************/
@@ -18,7 +17,6 @@
 /***********************************************/
 void JavaTestMethods::crossNativeStaticMethod()
 {
-    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s", __PRETTY_FUNCTION__);
 }
 
 
@@ -27,7 +25,6 @@ void JavaTestMethods::crossNativeStaticMethod()
 /***********************************************/
 void JavaTestMethods::crossNativeMethod()
 {
-    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s", __PRETTY_FUNCTION__);
 }
 
 

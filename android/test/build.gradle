@@ -10,9 +10,6 @@ android {
                 arguments "-DCROSSPL_CMAKEFILE='${buildDir}/tmp/CrossPL/CMakeLists.txt'"
             }
         }
-//        ndk {
-//            stl "gnustl_static"
-//        }
     }
 }
 

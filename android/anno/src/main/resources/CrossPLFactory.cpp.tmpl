@@ -1,6 +1,7 @@
-#include "CrossPL.hpp"
+#include "CrossPLFactory.hpp"
 
 #include <android/log.h>
+#include <cstring>
 %IncludeProxyHpp%
 
 namespace crosspl {
@@ -12,13 +13,42 @@ namespace crosspl {
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-int CrossPL::OnLoad(JNIEnv* jenv)
+int CrossPLFactory::OnLoad(JNIEnv* jenv)
 {
+  __android_log_print(ANDROID_LOG_FATAL, "crosspl", "%s", __PRETTY_FUNCTION__);
   int ret = 0;
 
 %RegisterNativeMethods%
 
   return (ret == 0? 0 : -1);
+}
+
+int64_t CreateCppObject(const char* javaClassName)
+{
+  __android_log_print(ANDROID_LOG_FATAL, "crosspl", "%s", __PRETTY_FUNCTION__);
+  void* ptr = nullptr;
+
+%CreateCppObject%
+
+  if(ptr == nullptr) {
+    throw std::runtime_error("CrossPL: Failed to create cpp object.");
+  }
+
+  auto cppHandle = reinterpret_cast<int64_t>(ptr);
+  return cppHandle;
+}
+
+void DestroyCppObject(const char* javaClassName, int64_t cppHandle)
+{
+  if(cppHandle == 0) {
+    return;
+  }
+  __android_log_print(ANDROID_LOG_FATAL, "crosspl", "%s", __PRETTY_FUNCTION__);
+
+%DestroyCppObject%
+
+  // need return before here.
+  throw std::runtime_error("CrossPL: Failed to destroy cpp object.");
 }
 
 /***********************************************/
@@ -52,7 +82,7 @@ JNIEXPORT jint JNICALL
     return ret;
   }
 
-  ret = crosspl::CrossPL::OnLoad(jenv);
+  ret = crosspl::CrossPLFactory::OnLoad(jenv);
   if(ret != 0) {
     __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to .");
     return JNI_ERR;

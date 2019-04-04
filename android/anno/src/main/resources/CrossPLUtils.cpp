@@ -28,7 +28,7 @@ void CrossPLUtils::EnsureRunOnThread(std::thread::id threadId)
     std::thread::id currThreadId = std::this_thread::get_id();
     if(currThreadId != threadId) {
         __android_log_print(ANDROID_LOG_FATAL, "crosspl", "Running on incorrect thread!!!");
-        throw std::runtime_error("Running on incorrect thread");
+        throw std::runtime_error("CrossPL: Running on incorrect thread");
     }
 }
 

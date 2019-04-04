@@ -56,8 +56,9 @@ class CrossClassInfo {
         private fun isExtendsCrossBaseClass(element: Element): Boolean {
 //            val typeUtils = procEnv.typeUtils
 //            val crossBaseType = procEnv.elementUtils.getTypeElement(CrossBaseClass).asType()
-            val typeElement = findEnclosingTypeElement(element);
-            if(typeElement.superclass.toString() == CrossBaseClass) {
+            val typeElement = findEnclosingTypeElement(element)
+            if(typeElement.toString() == CrossBaseClass
+            || typeElement.superclass.toString() == CrossBaseClass) {
                 return true
             }
 

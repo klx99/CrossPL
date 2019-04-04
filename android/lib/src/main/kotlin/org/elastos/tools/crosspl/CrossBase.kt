@@ -4,13 +4,13 @@ import android.util.Log
 import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.annotation.CrossInterface
 
-//@CrossClass
+@CrossClass
 open class CrossBase
     protected constructor(private var nativeHandle: Long = 0) {
 
     init {
         if(nativeHandle.equals(0)) {
-            nativeHandle = createNativeObject(this.javaClass.name)
+            nativeHandle = CreateNativeObject(this.javaClass.name)
         }
         Log.i(Utils.TAG, "construct " + toString())
         if(nativeHandle.equals(0)) {
@@ -19,7 +19,7 @@ open class CrossBase
     }
 
     protected fun finalize() {
-        destroyNativeObject(nativeHandle)
+        DestroyNativeObject(this.javaClass.name, nativeHandle)
         Log.i(Utils.TAG, "deconstruct " + toString())
     }
 
@@ -31,10 +31,10 @@ open class CrossBase
 //    private var nativeHandle: Long = 0
     private companion object {
         init {
-            System.load("crosspl")
+            System.loadLibrary("CrossPLTest")
         }
     }
-    private external fun createNativeObject(className: String): Long
-    private external fun destroyNativeObject(nativeHandle: Long)
+    private external fun CreateNativeObject(className: String): Long
+    private external fun DestroyNativeObject(className: String, nativeHandle: Long)
 
 }
