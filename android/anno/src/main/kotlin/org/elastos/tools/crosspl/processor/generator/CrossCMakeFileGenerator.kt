@@ -7,7 +7,7 @@ import java.io.File
 class CrossCMakeFileGenerator {
     companion object {
         fun Generate(crossplDir: File, headerFileList: List<File>, sourceFileList: List<File>): Boolean {
-            val cmakefileFile = File(crossplDir, "CMakeLists.txt")
+            val cmakefileFile = File(crossplDir, "crosspl.cmake")
 
             Log.w("Generate: ${cmakefileFile.absolutePath}")
             var content =
@@ -40,7 +40,7 @@ class CrossCMakeFileGenerator {
             return true
         }
 
-        private const val CrossCMakeListsTmpl = "/CrossPLCMakeLists.txt.tmpl"
+        private const val CrossCMakeListsTmpl = "/crosspl.cmake.tmpl"
 
         private const val TmplKeyProxyHeaders = "%CrossProxyHeaders%"
         private const val TmplKeyProxySources = "%CrossProxySources%"
