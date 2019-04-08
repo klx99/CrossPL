@@ -63,7 +63,7 @@ class CrossPLFactoryGenerator {
 
                 destroyCppObjectList += "${CrossTmplUtils.TabSpace}if(std::strcmp(javaClassName, \"${it.javaClassName}\") == 0) {\n"
                 destroyCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}delete reinterpret_cast<${it.cppClassName}*>(cppHandle);\n"
-                destroyCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}return;\n"
+                destroyCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}return 0;\n"
                 destroyCppObjectList += "${CrossTmplUtils.TabSpace}}\n"
             }
 

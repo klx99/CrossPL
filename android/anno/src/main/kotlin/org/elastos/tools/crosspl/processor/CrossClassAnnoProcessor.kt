@@ -33,6 +33,7 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
 
     override fun process(annotations: MutableSet<out TypeElement>?,
                          roundEnv: RoundEnvironment) : Boolean {
+        Log.w("==============================================")
         val annotatedElements = roundEnv.getElementsAnnotatedWith(CrossClass::class.java)
         if(annotatedElements.isEmpty()) {
             return false
@@ -97,7 +98,6 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             Log.e(msg)
             throw CrossPLException(msg)
         }
-
 
 //        Log.e("===========================================================")
         return true

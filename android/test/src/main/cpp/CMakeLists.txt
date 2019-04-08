@@ -4,10 +4,10 @@ include( "${CROSSPL_CMAKEFILE}" )
 
 add_library( CrossPLTest SHARED )
 target_sources( CrossPLTest PRIVATE
+        ${CROSSPL_PROXY_SOURCES}
         "JavaTestMethods.cpp"
         "JavaTestMethods.cpp"
         "KotlinTestMethods.cpp"
-        ${CROSSPL_PROXY_SOURCES}
 )
 target_include_directories( CrossPLTest PRIVATE )
 

@@ -2,9 +2,11 @@
 
 #include <android/log.h>
 #include <cstring>
+#include <dlfcn.h>
 %IncludeProxyHpp%
 
 namespace crosspl {
+
 /***********************************************/
 /***** static variables initialize *************/
 /***********************************************/
@@ -15,40 +17,69 @@ namespace crosspl {
 /***********************************************/
 int CrossPLFactory::OnLoad(JNIEnv* jenv)
 {
-  __android_log_print(ANDROID_LOG_FATAL, "crosspl", "%s", __PRETTY_FUNCTION__);
+  __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "%s", __PRETTY_FUNCTION__);
   int ret = 0;
 
 %RegisterNativeMethods%
+  if(ret == 0) {
+    __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "JNI_OnLoad(): Success to register jni methods.");
+  } else {
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to register jni methods.");
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): dlerror=%s", dlerror());
+    throw std::runtime_error("Failed to register jni methods.");
+  }
 
-  return (ret == 0? 0 : -1);
+  void* dylib  = dlopen("libcrosspl.so", RTLD_LAZY | RTLD_GLOBAL);
+  if(dylib) {
+    __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "JNI_OnLoad(): Success to load library crosspl.");
+  } else {
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to load library crosspl.");
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): dlerror=%s", dlerror());
+    throw std::runtime_error("Failed to load library crosspl.");
+  }
+
+  const char* methodName = "RegCreateCppObjFunc";
+  auto methodRegCreateCppObjFunc = (void(*)(int64_t(*)(const char*)))dlsym(dylib, methodName);
+  if(methodRegCreateCppObjFunc == nullptr) {
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to load function %s.", methodName);
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): dlerror=%s", dlerror());
+    throw std::runtime_error("Failed to load function.");
+  }
+  methodRegCreateCppObjFunc(crosspl::CrossPLFactory::createCppObject);
+
+  methodName = "RegDestroyCppObjFunc";
+  auto methodRegDestroyCppObjFunc = (void(*)(int(*)(const char*,int64_t)))dlsym(dylib, methodName);
+  if(methodRegDestroyCppObjFunc == nullptr) {
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to load function %s.", methodName);
+    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): dlerror=%s", dlerror());
+    throw std::runtime_error("Failed to load function.");
+  }
+  methodRegDestroyCppObjFunc(crosspl::CrossPLFactory::destroyCppObject);
+
+  return 0;
 }
 
-int64_t CreateCppObject(const char* javaClassName)
+int64_t CrossPLFactory::createCppObject(const char* javaClassName)
 {
-  __android_log_print(ANDROID_LOG_FATAL, "crosspl", "%s", __PRETTY_FUNCTION__);
+  __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "%s %s", __PRETTY_FUNCTION__, javaClassName);
   void* ptr = nullptr;
 
 %CreateCppObject%
-
-  if(ptr == nullptr) {
-    throw std::runtime_error("CrossPL: Failed to create cpp object.");
-  }
 
   auto cppHandle = reinterpret_cast<int64_t>(ptr);
   return cppHandle;
 }
 
-void DestroyCppObject(const char* javaClassName, int64_t cppHandle)
+int CrossPLFactory::destroyCppObject(const char* javaClassName, int64_t cppHandle)
 {
   if(cppHandle == 0) {
-    return;
+    return -1;
   }
-  __android_log_print(ANDROID_LOG_FATAL, "crosspl", "%s", __PRETTY_FUNCTION__);
+  __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "%s %s", __PRETTY_FUNCTION__, javaClassName);
 
 %DestroyCppObject%
 
-  // need return before here.
-  throw std::runtime_error("CrossPL: Failed to destroy cpp object.");
+  return -1;
 }
 
 /***********************************************/

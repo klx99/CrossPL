@@ -1,26 +1,33 @@
 #ifndef _CROSSPL_CROSSBASE_HPP_
 #define _CROSSPL_CROSSBASE_HPP_
 
-namespace crosspl {
+#include <cstdint>
+#include <memory>
+#include <CrossPLFactory.hpp>
+
+extern "C" {
+void RegCreateCppObjFunc(int64_t(*func)(const char*));
+void RegDestroyCppObjFunc(int(*func)(const char*,int64_t));
+} // extern "C"
+
 class CrossBase {
 public:
   /*** type define ***/
 
   /*** static function and variable ***/
 
+  static int64_t CreateNativeObject(const char* javaClassName);
+  static void DestroyNativeObject(const char* javaClassName, int64_t nativeHandle);
+
   /*** class function and variable ***/
-  static uint64_t CreateNativeObject(const char* javaClassName);
-  static void DestroyNativeObject(const char* javaClassName, uint64_t nativeHandle);
 
 private:
   /*** type define ***/
 
   /*** static function and variable ***/
-  static std::map<std::string, NativeObjectFactroy> _NativeObjectFactroyMap;
 
   /*** class function and variable ***/
 
-} // class CrossBase
-} // namespace crosspl
+}; // class CrossBase
 
 #endif /* _CROSSPL_CROSSBASE_HPP_ */

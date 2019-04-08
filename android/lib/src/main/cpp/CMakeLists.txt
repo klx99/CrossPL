@@ -4,10 +4,10 @@ include( "${CROSSPL_CMAKEFILE}" )
 
 add_library( crosspl SHARED )
 target_sources( crosspl PRIVATE
+        ${CROSSPL_PROXY_SOURCES}
         utils/Log.cpp
         utils/JniUtils.cpp
-#        CrossBase.cpp
-#        ${CROSSPL_PROXY_SOURCES}
+        CrossBase.cpp
 )
 target_include_directories( crosspl PRIVATE )
 

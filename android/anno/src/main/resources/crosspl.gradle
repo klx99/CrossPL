@@ -1,0 +1,10 @@
+android {
+    defaultConfig {
+        externalNativeBuild {
+            cmake {
+                arguments "-DCROSSPL_CMAKEFILE='${buildDir}/tmp/CrossPL/CMakeLists.txt'"
+                arguments "-DCROSSPL_PROXY_SOURCES"
+            }
+        }
+    }
+}
