@@ -137,7 +137,7 @@ enum class CrossVariableType {
         if(isConst
         && ! primitiveTypeMap.contains(this)
         && this != STRING) {
-            cppType = "const ${cppType!!}&"
+            cppType = "const ${cppType!!}*"
         }
 
         return cppType!!

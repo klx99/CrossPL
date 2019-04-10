@@ -6,7 +6,7 @@ add_library( CrossPLTest SHARED )
 target_sources( CrossPLTest PRIVATE
         ${CROSSPL_PROXY_SOURCES}
         "JavaTestMethods.cpp"
-        "JavaTestMethods.cpp"
+        "JavaTestParams.cpp"
         "KotlinTestMethods.cpp"
 )
 target_include_directories( CrossPLTest PRIVATE )

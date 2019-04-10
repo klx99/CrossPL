@@ -193,7 +193,7 @@ class CrossProxyGenerator {
                 } else if(type == CrossVariableType.STRING) {
                     argusContent += "var$idx.get(), "
                 } else {
-                    argusContent += "*var$idx, "
+                    argusContent += "var$idx.get(), "
                 }
             }
             argusContent = argusContent.removeSuffix(", ")
