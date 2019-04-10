@@ -3,7 +3,9 @@ package org.elastos.tools.crosspl.test;
 import org.elastos.tools.crosspl.CrossBase;
 import org.elastos.tools.crosspl.annotation.CrossClass;
 import org.elastos.tools.crosspl.annotation.CrossInterface;
-import java.nio.ByteBuffer;
+
+import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 @CrossClass
 class JavaTestParams extends CrossBase {
@@ -15,7 +17,7 @@ class JavaTestParams extends CrossBase {
                     String e,
                     byte f[],
                     StringBuffer g,
-                    ByteBuffer h) {
+                    ByteArrayOutputStream h) {
         return -1;
     }
 
@@ -26,7 +28,7 @@ class JavaTestParams extends CrossBase {
                             String e,
                             byte f[],
                             StringBuffer g,
-                            ByteBuffer h,
+                            ByteArrayOutputStream h,
                             CrossBase i) {
         return null;
     }
@@ -39,7 +41,7 @@ class JavaTestParams extends CrossBase {
                                  String e,
                                  byte[] f,
                                  StringBuffer g,
-                                 ByteBuffer h);
+                                 ByteArrayOutputStream h);
 
     @CrossInterface
     native boolean crossNativeMethod0(boolean a);
@@ -56,7 +58,7 @@ class JavaTestParams extends CrossBase {
     @CrossInterface
     native StringBuffer crossNativeMethod6(StringBuffer a);
     @CrossInterface
-    native ByteBuffer crossNativeMethod7(ByteBuffer a);
+    native ByteArrayOutputStream crossNativeMethod7(ByteArrayOutputStream a);
 
     native CrossBase crossNativeMethodEx(boolean a,
                                          int b,
@@ -65,6 +67,6 @@ class JavaTestParams extends CrossBase {
                                          String e,
                                          byte f[],
                                          StringBuffer g,
-                                         ByteBuffer h,
+                                         ByteArrayOutputStream h,
                                          CrossBase i);
 }

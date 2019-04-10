@@ -3,7 +3,7 @@ package org.elastos.tools.crosspl.test
 import org.elastos.tools.crosspl.CrossBase
 import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.annotation.CrossInterface
-import java.nio.ByteBuffer
+import java.io.ByteArrayOutputStream
 
 //@CrossClass
 open class KotlinTestParams(nativeHandle: Long) : CrossBase(nativeHandle) {
@@ -13,7 +13,7 @@ open class KotlinTestParams(nativeHandle: Long) : CrossBase(nativeHandle) {
                     c: Long,
                     d: Double,
                     e: String,
-                    f: ByteBuffer,
+                    f: ByteArrayOutputStream,
                     g: CrossBase
     ): CrossBase? {
         return null
@@ -25,7 +25,7 @@ open class KotlinTestParams(nativeHandle: Long) : CrossBase(nativeHandle) {
                           c: Long,
                           d: Double,
                           e: String,
-                          f: ByteBuffer,
+                          f: ByteArrayOutputStream,
                           g: CrossBase
     ): CrossBase?
 }

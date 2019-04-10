@@ -2,7 +2,6 @@ package org.elastos.tools.crosspl.processor.generator
 
 import org.elastos.tools.crosspl.processor.*
 import java.io.File
-import java.nio.ByteBuffer
 
 class CrossProxyGenerator {
     companion object {
@@ -162,18 +161,25 @@ class CrossProxyGenerator {
         private fun GenerateNativeFunctionBody(methodInfo: CrossMethodInfo,
                                                classInfo: CrossClassInfo): String {
             var prefixContent = ""
+            var suffixContent = ""
             for(idx in methodInfo.paramsType.indices) {
                 var type = methodInfo.paramsType[idx]
                 val isPrimitiveType = type.isPrimitiveType()
                 if(isPrimitiveType) {
                     prefixContent += "${CrossTmplUtils.TabSpace}${type.toCppString()} var$idx = jvar$idx;\n"
-                } else if(type != CrossVariableType.CROSSBASE) {
-                    prefixContent += "${CrossTmplUtils.TabSpace}auto var$idx = CrossPLUtils::SafeCast${type.toString()}(jenv, jvar$idx);\n"
-                } else {
+                } else if(type == CrossVariableType.CROSSBASE) {
                     prefixContent += "${CrossTmplUtils.TabSpace}auto var$idx = CrossPLUtils::SafeCastCrossObject<${classInfo.cppClassName}>(jenv, jvar$idx);\n"
+                } else {
+                    prefixContent += "${CrossTmplUtils.TabSpace}auto var$idx = CrossPLUtils::SafeCast${type.toString()}(jenv, jvar$idx);\n"
+
+                    if(type == CrossVariableType.STRINGBUFFER
+                    || type == CrossVariableType.BYTEBUFFER) {
+                        suffixContent += "${CrossTmplUtils.TabSpace}CrossPLUtils::SafeCopy${type.toString()}(jenv, jvar$idx, var$idx.get());\n"
+                    }
                 }
             }
             prefixContent += "\n"
+            suffixContent += "\n"
 
             var funcContent: String
             if(! methodInfo.isStatic) {
@@ -199,7 +205,6 @@ class CrossProxyGenerator {
             argusContent = argusContent.removeSuffix(", ")
 
             var retContent = ""
-            var suffixContent = "\n"
             val retType = methodInfo.returnType
             if(retType != CrossVariableType.VOID) {
                 val cppType = retType.toCppString(false)
@@ -209,16 +214,19 @@ class CrossProxyGenerator {
                 if(isPrimitiveType) {
                     suffixContent += "${CrossTmplUtils.TabSpace}${retType.toJniString()} jret = ret;\n"
                     suffixContent += "${CrossTmplUtils.TabSpace}return jret;"
-                } else if(retType != CrossVariableType.CROSSBASE) {
+                } else if(retType == CrossVariableType.STRING) {
                     suffixContent += "${CrossTmplUtils.TabSpace}auto jret = CrossPLUtils::SafeCast${retType.toString()}(jenv, ret);\n"
                     suffixContent += "${CrossTmplUtils.TabSpace}return jret.get();"
-                } else {
+                } else if(retType == CrossVariableType.CROSSBASE) {
                     suffixContent += "${CrossTmplUtils.TabSpace}auto jret = CrossPLUtils::SafeCastCrossObject<${classInfo.cppClassName}>(jenv, ret);\n"
+                    suffixContent += "${CrossTmplUtils.TabSpace}return jret.get();"
+                } else {
+                    suffixContent += "${CrossTmplUtils.TabSpace}auto jret = CrossPLUtils::SafeCast${retType.toString()}(jenv, &ret);\n"
                     suffixContent += "${CrossTmplUtils.TabSpace}return jret.get();"
                 }
             }
             var content = "$prefixContent"
-            content += "${CrossTmplUtils.TabSpace}$retContent$funcContent${methodInfo.methodName}($argusContent);\n"
+            content += "${CrossTmplUtils.TabSpace}$retContent$funcContent${methodInfo.methodName}($argusContent);\n\n"
             content += "$suffixContent"
 
             return content

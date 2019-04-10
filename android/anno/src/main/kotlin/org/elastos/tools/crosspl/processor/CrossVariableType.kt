@@ -46,7 +46,7 @@ enum class CrossVariableType {
             "java.lang.String"                    to STRING,
             "byte[]"                              to BYTEARRAY,
             "java.lang.StringBuffer"              to STRINGBUFFER,
-            "java.nio.ByteBuffer"                 to BYTEBUFFER,
+            "java.io.ByteArrayOutputStream"       to BYTEBUFFER,
             "org.elastos.tools.crosspl.CrossBase" to CROSSBASE
         )
     }
@@ -117,7 +117,7 @@ enum class CrossVariableType {
             STRING       to "Ljava/lang/String;",
             BYTEARRAY    to "[B",
             STRINGBUFFER to "Ljava/lang/StringBuffer;",
-            BYTEBUFFER   to "Ljava/nio/ByteBuffer;",
+            BYTEBUFFER   to "Ljava/io/ByteArrayOutputStream;",
             CROSSBASE    to "Lorg/elastos/tools/crosspl/CrossBase;"
         )
 

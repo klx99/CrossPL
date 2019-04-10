@@ -71,7 +71,7 @@ int JavaTestParams::crossNativeMethod(bool a,
 
     if(g != nullptr) {
         g->str(""); // clear g
-        *g << "set from native;";
+        *g << "set from native native;";
     } else {
         __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::stringstream* g=null, ignore to set out value", __PRETTY_FUNCTION__);
     }

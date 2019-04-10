@@ -19,13 +19,17 @@ namespace crosspl {
 
         /*** static function and variable ***/
         static std::shared_ptr<const char> SafeCastString(JNIEnv* jenv, jstring jdata);
-        static std::shared_ptr<_jstring> SafeCastString(JNIEnv* jenv, const char* data);
         static std::shared_ptr<std::span<int8_t>> SafeCastByteArray(JNIEnv* jenv, jbyteArray jdata);
-        static std::shared_ptr<_jbyteArray> SafeCastByteArray(JNIEnv* jenv, const std::span<int8_t>& data);
         static std::shared_ptr<std::stringstream> SafeCastStringBuffer(JNIEnv* jenv, jobject jdata);
-        static std::shared_ptr<_jobject> SafeCastStringBuffer(JNIEnv* jenv, const std::stringstream& data);
         static std::shared_ptr<std::vector<int8_t>> SafeCastByteBuffer(JNIEnv* jenv, jobject jdata);
-        static std::shared_ptr<_jobject> SafeCastByteBuffer(JNIEnv* jenv, const std::vector<int8_t>& data);
+
+        static std::shared_ptr<_jstring> SafeCastString(JNIEnv* jenv, const char* data);
+        static std::shared_ptr<_jbyteArray> SafeCastByteArray(JNIEnv* jenv, const std::span<int8_t>* data);
+        static std::shared_ptr<_jobject> SafeCastStringBuffer(JNIEnv* jenv, const std::stringstream* data);
+        static std::shared_ptr<_jobject> SafeCastByteBuffer(JNIEnv* jenv, const std::vector<int8_t>* data);
+
+        static int SafeCopyStringBuffer(JNIEnv* jenv, jobject jcopyTo, const std::stringstream* data);
+        static int SafeCopyByteBuffer(JNIEnv* jenv, jobject jcopyTo, const std::vector<int8_t>* data);
 
         template <class T>
         static T* SafeCastCrossObject(JNIEnv* jenv, jobject jdata) {
@@ -51,7 +55,7 @@ namespace crosspl {
         static const char* JavaClassNameString;
         static const char* JavaClassNameByteArray;
         static const char* JavaClassNameStringBuffer;
-        static const char* JavaClassNameByteBuffer;
+        static const char* JavaClassNameByteArrayOutputStream;
         static std::map<const char*, jclass> sJavaClassCache;
 
         /*** class function and variable ***/
