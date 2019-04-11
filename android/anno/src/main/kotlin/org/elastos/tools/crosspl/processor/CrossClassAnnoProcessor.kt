@@ -42,8 +42,9 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
         for (element in annotatedElements) {
             val classInfo = CrossClassInfo.Parse(element)
             classInfoList.add(classInfo!!)
-            Log.w("Found CrossPL Class: ${classInfo.cppClassName}")
+            Log.w("Found CrossPL Class: ${classInfo.cppInfo.className}")
         }
+        Log.w("CrossPL Classes Info: $classInfoList")
 
         val crossplDir = getCrossPLDir()
         if(crossplDir == null) {

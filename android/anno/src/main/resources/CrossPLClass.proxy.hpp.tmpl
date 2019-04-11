@@ -1,5 +1,5 @@
-#ifndef _CROSSPL_%ClassName%_HPP_
-#define _CROSSPL_%ClassName%_HPP_
+#ifndef _CROSSPL_PROXY_%ClassName%_HPP_
+#define _CROSSPL_PROXY_%ClassName%_HPP_
 
 #include <jni.h>
 #include <string>
@@ -9,8 +9,9 @@
 #include <experimental-span.hpp>
 
 namespace crosspl {
+namespace proxy {
 
-class %ClassName%Proxy {
+class %ClassName% {
 public:
   /*** type define ***/
 
@@ -29,6 +30,8 @@ private:
   /*** class function and variable ***/
 
 }; // class %ClassName%
+
+} // namespace proxy
 } // namespace crosspl
 
-#endif /* _CROSSPL_%ClassName%_HPP_ */
+#endif /* _CROSSPL_PROXY_%ClassName%_HPP_ */

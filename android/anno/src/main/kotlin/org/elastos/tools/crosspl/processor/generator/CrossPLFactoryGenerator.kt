@@ -53,16 +53,16 @@ class CrossPLFactoryGenerator {
             var createCppObjectList = ""
             var destroyCppObjectList = ""
             classInfoList.forEach {
-                includeProxyList += "#include <${it.cppClassName}.hpp>\n"
+                includeProxyList += "#include <${it.cppInfo.className}.hpp>\n"
 
-                regNativeMethodsList += "${CrossTmplUtils.TabSpace}ret |= ${it.cppClassName}Proxy::RegisterNativeMethods(jenv);\n"
+                regNativeMethodsList += "${CrossTmplUtils.TabSpace}ret |= proxy::${it.cppInfo.className}::RegisterNativeMethods(jenv);\n"
 
-                createCppObjectList += "${CrossTmplUtils.TabSpace}if(std::strcmp(javaClassName, \"${it.javaClassName}\") == 0) {\n"
-                createCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace} ptr = new ${it.cppClassName}();\n"
+                createCppObjectList += "${CrossTmplUtils.TabSpace}if(std::strcmp(javaClassName, \"${it.javaInfo.className}\") == 0) {\n"
+                createCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace} ptr = new ${it.cppInfo.className}();\n"
                 createCppObjectList += "${CrossTmplUtils.TabSpace}}\n"
 
-                destroyCppObjectList += "${CrossTmplUtils.TabSpace}if(std::strcmp(javaClassName, \"${it.javaClassName}\") == 0) {\n"
-                destroyCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}delete reinterpret_cast<${it.cppClassName}*>(cppHandle);\n"
+                destroyCppObjectList += "${CrossTmplUtils.TabSpace}if(std::strcmp(javaClassName, \"${it.javaInfo.className}\") == 0) {\n"
+                destroyCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}delete reinterpret_cast<${it.cppInfo.className}*>(cppHandle);\n"
                 destroyCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace}return 0;\n"
                 destroyCppObjectList += "${CrossTmplUtils.TabSpace}}\n"
             }
