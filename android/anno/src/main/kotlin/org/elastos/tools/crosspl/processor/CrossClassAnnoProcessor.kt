@@ -44,7 +44,7 @@ class CrossClassAnnoProcessor : AbstractProcessor() {
             classInfoList.add(classInfo!!)
             Log.w("Found CrossPL Class: ${classInfo.cppInfo.className}")
         }
-        Log.w("CrossPL Classes Info: $classInfoList")
+//        Log.w("CrossPL Classes Info: $classInfoList")
 
         val crossplDir = getCrossPLDir()
         if(crossplDir == null) {

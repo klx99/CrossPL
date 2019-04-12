@@ -20,21 +20,22 @@ class MainActivity : Activity() {
         JavaTestMethods().crossNativeMethod()
 
         Log.i(Utils.TAG, "======================")
-        JavaTestParams().crossNativeMethod(true, 0, 0, 0.0, null, null, null, null);
+        JavaTestParams().crossNativeMethod(true, 0, 0, 0.0, null, null, null, null, null);
         Log.i(Utils.TAG, "======================")
         val f = byteArrayOf(0, 128.toByte(), 255.toByte())
-        val g = StringBuffer("set from platform")
-        val h = ByteArrayOutputStream()
-        h.write(f.reversedArray())
+        val g = Runnable { Log.d(Utils.TAG, "Runnable callback") }
+        val h = StringBuffer("set from platform")
+        val i = ByteArrayOutputStream()
+        i.write(f.reversedArray())
         val ret = JavaTestParams().crossNativeMethod(true, Int.MAX_VALUE, Long.MAX_VALUE, Double.MAX_VALUE,
             "set from platform",
-            f, g, h)
+            f, g, h, i)
         Log.i(Utils.TAG, "return value: $ret")
         Log.i(Utils.TAG, "out value g: $g")
 
         val sb = StringBuffer()
 
-        for(b in h.toByteArray()) {
+        for(b in i.toByteArray()) {
             sb.append(String.format("%02x ", b))
         }
         Log.i(Utils.TAG, "out value h: $sb")

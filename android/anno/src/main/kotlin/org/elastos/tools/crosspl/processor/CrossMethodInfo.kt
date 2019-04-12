@@ -58,7 +58,7 @@ class CrossMethodInfo {
         }
     }
 
-    fun makeProxySource(cppClassName: String): String {
+    fun makeProxySource(cppClassName: String, javaClassPath: String): String {
         val funcDeclare = when {
             isNative -> makeNativeFunctionDeclare(cppClassName)
             else     -> makePlatformFunctionDeclare(cppClassName)
@@ -67,7 +67,7 @@ class CrossMethodInfo {
 
         val funcBody = when {
             isNative -> makeNativeFunctionBody(cppClassName)
-            else     -> makePlatformFunctionBody(cppClassName)
+            else     -> makePlatformFunctionBody(cppClassName, javaClassPath)
         }
 
         val content = emptyFunc.replace(TmplKeyFuncBody, funcBody)
@@ -102,8 +102,14 @@ class CrossMethodInfo {
 
     private fun makePlatformFunctionDeclare(cppClassName: String?): String {
         var className = (if(cppClassName != null) "$cppClassName::" else "")
-        val returnType = returnType.toCppString(false)
-        var content = "$returnType $className$methodName($TmplKeyArguments)"
+        var retTypeStr = returnType.toCppString(false).removeSuffix("*")
+        retTypeStr =
+            when {
+                returnType == CrossVariableType.CROSSBASE ->  "$retTypeStr*"
+                ! returnType.isPrimitiveType()            ->  "std::shared_ptr<$retTypeStr>"
+                else -> retTypeStr
+            }
+        var content = "$retTypeStr $className$methodName($TmplKeyArguments)"
 
         var arguments = "uint64_t platformHandle"
         for(idx in paramsType.indices) {
@@ -129,7 +135,7 @@ class CrossMethodInfo {
 
             if(type == CrossVariableType.STRINGBUFFER
             || type == CrossVariableType.BYTEBUFFER) {
-                suffixContent += "${CrossTmplUtils.TabSpace}CrossPLUtils::SafeCopy$type(jenv, jvar$idx, var$idx.get());\n"
+                suffixContent += "${CrossTmplUtils.TabSpace}CrossPLUtils::SafeCopy${type}ToJava(jenv, jvar$idx, var$idx.get());\n"
             }
         }
         prefixContent += "\n"
@@ -187,8 +193,92 @@ class CrossMethodInfo {
         return content
     }
 
-    private fun makePlatformFunctionBody(cppClassName: String): String {
+    private fun makePlatformFunctionBody(cppClassName: String, javaClassPath: String): String {
+        var prefixContent = ""
+        var suffixContent = ""
 
-        return ""
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jenv = CrossPLUtils::SafeGetEnv();\n"
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jobj = reinterpret_cast<jobject>(platformHandle);\n"
+        for(idx in paramsType.indices) {
+            var type = paramsType[idx]
+            val isPrimitiveType = type.isPrimitiveType()
+            prefixContent += when {
+                isPrimitiveType                     -> "${CrossTmplUtils.TabSpace}${type.toJniString()} jvar$idx = var$idx;\n"
+                type == CrossVariableType.CROSSBASE -> "${CrossTmplUtils.TabSpace}auto jvar$idx = CrossPLUtils::SafeCastCrossObject<${type.toCppString()}>(jenv.get(), var$idx);\n"
+                else                                -> "${CrossTmplUtils.TabSpace}auto jvar$idx = CrossPLUtils::SafeCast$type(jenv.get(), var$idx);\n"
+            }
+
+            if(type == CrossVariableType.STRINGBUFFER
+            || type == CrossVariableType.BYTEBUFFER) {
+                suffixContent += "${CrossTmplUtils.TabSpace}CrossPLUtils::SafeCopy${type}ToCpp(jenv.get(), const_cast<${type.toCppString()}*>(var$idx), jvar$idx.get());\n"
+            }
+        }
+        prefixContent += "\n"
+        suffixContent += "\n"
+
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jclazz = CrossPLUtils::FindJavaClass(jenv.get(), \"$javaClassPath\");\n"
+
+        var jniSigContent = "("
+        for(idx in paramsType.indices) {
+            var type = paramsType[idx]
+            jniSigContent += "${type.toJniSigChar()}"
+        }
+        jniSigContent += ")${returnType.toJniSigChar()}"
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jmethod$methodName = jenv->GetMethodID(jclazz, \"$methodName\", \"$jniSigContent\");\n"
+
+        var funcContent = "jenv->Call"
+        funcContent +=
+            when {
+                isStatic -> "Static"
+                else     -> ""
+            }
+        funcContent +=
+            when {
+                returnType.isPrimitiveType() -> returnType.toString()
+                else                         -> "Object"
+            }
+
+        val objContent =
+            when {
+                isStatic -> "jclazz"
+                else     -> "jobj"
+            }
+        funcContent += "Method"
+
+        var argusContent = ""
+        for(idx in paramsType.indices) {
+            var type = paramsType[idx]
+            val isPrimitiveType = type.isPrimitiveType()
+            argusContent += when {
+                isPrimitiveType                     -> ", jvar$idx"
+                type == CrossVariableType.CROSSBASE -> ", jvar$idx"
+                else                                -> ", jvar$idx.get()"
+            }
+        }
+
+        var retContent = ""
+        if(returnType != CrossVariableType.VOID) {
+            val jniType = returnType.toJniString(false)
+            retContent = "$jniType jret = ($jniType)"
+
+            val isPrimitiveType = returnType.isPrimitiveType()
+            when {
+                isPrimitiveType -> {
+                    suffixContent += "${CrossTmplUtils.TabSpace}${returnType.toJniString()} ret = jret;\n"
+                }
+                returnType == CrossVariableType.CROSSBASE -> {
+                    suffixContent += "${CrossTmplUtils.TabSpace}auto ret = CrossPLUtils::SafeCastCrossObject<${returnType.toCppString()}>(jenv.get(), jret);\n"
+                }
+                else -> {
+                    suffixContent += "${CrossTmplUtils.TabSpace}auto ret = CrossPLUtils::SafeCast$returnType(jenv.get(), jret);\n"
+                }
+            }
+            suffixContent += "${CrossTmplUtils.TabSpace}return ret;"
+        }
+        var content = "$prefixContent"
+        content += "${CrossTmplUtils.TabSpace}$retContent$funcContent($objContent, jmethod$methodName $argusContent);\n\n"
+        content += "$suffixContent"
+
+        return content
     }
 }

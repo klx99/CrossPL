@@ -14,22 +14,48 @@ namespace crosspl {
 //const char* CrossPLUtils::JavaClassNameDouble       = "java/lang/Double";
 const char* CrossPLUtils::JavaClassNameString                  = "java/lang/String";
 const char* CrossPLUtils::JavaClassNameByteArray               = "[B";
+const char* CrossPLUtils::JavaClassNameRunnable                = "java/lang/Runnable";
 const char* CrossPLUtils::JavaClassNameStringBuffer            = "java/lang/StringBuffer";
 const char* CrossPLUtils::JavaClassNameByteArrayOutputStream   = "java/io/ByteArrayOutputStream";
 
 std::map<const char*, jclass> CrossPLUtils::sJavaClassCache {};
+JavaVM* CrossPLUtils::sJVM = nullptr;
 
 
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-void CrossPLUtils::EnsureRunOnThread(std::thread::id threadId)
+void CrossPLUtils::SetJavaVM(JavaVM* jvm)
 {
-    std::thread::id currThreadId = std::this_thread::get_id();
-    if(currThreadId != threadId) {
-        __android_log_print(ANDROID_LOG_FATAL, "crosspl", "Running on incorrect thread!!!");
-        throw std::runtime_error("CrossPL: Running on incorrect thread");
+    sJVM = jvm;
+}
+
+std::unique_ptr<JNIEnv, std::function<void(JNIEnv*)>> CrossPLUtils::SafeGetEnv()
+{
+    std::unique_ptr<JNIEnv, std::function<void(JNIEnv*)>> ret;
+    bool needDetach = false;
+    std::thread::id threadId = std::this_thread::get_id();
+
+    JNIEnv* jenv;
+    jint jret = sJVM->GetEnv((void **) &jenv, JNI_VERSION_1_6);
+    if (jret != JNI_OK) {
+        jret = sJVM->AttachCurrentThread(&jenv, nullptr);
+        if (jret != JNI_OK) {
+            throw std::runtime_error("CrossPL: Failed to get jni env, AttachCurrentThread return error");
+        }
+        needDetach = true;
     }
+
+    auto deleter = [=](JNIEnv* jenv) -> void {
+        EnsureRunOnThread(threadId);
+        if (needDetach == true) {
+            sJVM->DetachCurrentThread();
+        }
+    };
+
+    ret = std::unique_ptr<JNIEnv, std::function<void(JNIEnv*)>>(jenv, deleter);
+
+    return ret;
 }
 
 jclass CrossPLUtils::FindJavaClass(JNIEnv* jenv, const char* className)
@@ -44,6 +70,15 @@ jclass CrossPLUtils::FindJavaClass(JNIEnv* jenv, const char* className)
 
 
     return sJavaClassCache.at(className);
+}
+
+void CrossPLUtils::EnsureRunOnThread(std::thread::id threadId)
+{
+    std::thread::id currThreadId = std::this_thread::get_id();
+    if(currThreadId != threadId) {
+        __android_log_print(ANDROID_LOG_FATAL, "crosspl", "Running on incorrect thread!!!");
+        throw std::runtime_error("CrossPL: Running on incorrect thread");
+    }
 }
 
 std::shared_ptr<const char> CrossPLUtils::SafeCastString(JNIEnv* jenv, jstring jdata)
@@ -66,6 +101,35 @@ std::shared_ptr<const char> CrossPLUtils::SafeCastString(JNIEnv* jenv, jstring j
     };
 
     ret = std::shared_ptr<const char>(creater(), deleter);
+
+    return ret;
+}
+
+std::shared_ptr<std::function<void()>> CrossPLUtils::SafeCastFunction(JNIEnv* jenv, jobject jdata)
+{
+    std::shared_ptr<std::function<void()>> ret;
+    std::thread::id threadId = std::this_thread::get_id();
+
+    if(jdata == nullptr) {
+        return ret; // nullptr
+    }
+
+    auto creater = [=]() -> std::function<void()>* {
+        EnsureRunOnThread(threadId);
+
+        auto ptr = new std::function<void()>([=]() {
+            jclass jclazz = FindJavaClass(jenv, JavaClassNameRunnable);
+            jmethodID jmethod = jenv->GetMethodID(jclazz, "run", "()V");
+            jenv->CallVoidMethod(jdata, jmethod);
+        });
+        return ptr;
+    };
+    auto deleter = [=](std::function<void()>* ptr) -> void {
+        EnsureRunOnThread(threadId);
+        delete ptr;
+    };
+
+    ret = std::shared_ptr<std::function<void()>>(creater(), deleter);
 
     return ret;
 }
@@ -159,17 +223,6 @@ std::shared_ptr<std::vector<int8_t>> CrossPLUtils::SafeCastByteBuffer(JNIEnv* je
     return ret;
 }
 
-void* CrossPLUtils::SafeCastCrossObject(JNIEnv* jenv, jobject jdata)
-{
-    jclass jclazz = jenv->GetObjectClass(jdata);
-
-    jfieldID jfield = jenv->GetFieldID(jclazz, "nativeHandle", "J");
-
-    jlong jnativeHandle = jenv->GetLongField(jdata, jfield);
-
-    return reinterpret_cast<void*>(jnativeHandle);
-}
-
 std::shared_ptr<_jstring> CrossPLUtils::SafeCastString(JNIEnv* jenv, const char* data)
 {
     std::shared_ptr<_jstring> ret;
@@ -220,7 +273,7 @@ std::shared_ptr<_jbyteArray> CrossPLUtils::SafeCastByteArray(JNIEnv* jenv, const
     return ret;
 }
 
-std::shared_ptr<_jobject> CrossPLUtils::SafeCastStringBuffer(JNIEnv* jenv, const std::stringstream* data)
+std::shared_ptr<_jobject> CrossPLUtils::SafeCastFunction(JNIEnv* jenv, const std::function<void()>* data)
 {
     std::shared_ptr<_jobject> ret;
     std::thread::id threadId = std::this_thread::get_id();
@@ -232,12 +285,41 @@ std::shared_ptr<_jobject> CrossPLUtils::SafeCastStringBuffer(JNIEnv* jenv, const
     auto creater = [&]() -> jobject {
         EnsureRunOnThread(threadId);
 
+        jclass jclazz = FindJavaClass(jenv, JavaClassNameRunnable);
+
+//        jmethodID jconstructor  = jenv->GetMethodID(jclazz, "<init>", "()V");
+//        jobject jobj = jenv->NewObject(jclazz, jconstructor);
+
+ //       return jobj;
+    };
+    auto deleter = [=](jobject ptr) -> void {
+        EnsureRunOnThread(threadId);
+//        jenv->DeleteLocalRef(ptr);
+    };
+
+    ret = std::shared_ptr<_jobject>(creater(), deleter);
+
+    return ret;
+}
+
+std::shared_ptr<_jobject> CrossPLUtils::SafeCastStringBuffer(JNIEnv* jenv, const std::stringstream* data)
+{
+    std::shared_ptr<_jobject> ret;
+    std::thread::id threadId = std::this_thread::get_id();
+
+    if(data == nullptr) {
+        return ret; // nullptr
+    }
+
+    auto creater = [=]() -> jobject {
+        EnsureRunOnThread(threadId);
+
         jclass jclazz = FindJavaClass(jenv, JavaClassNameStringBuffer);
 
         jmethodID jconstructor  = jenv->GetMethodID(jclazz, "<init>", "()V");
         jobject jobj = jenv->NewObject(jclazz, jconstructor);
 
-        SafeCopyStringBuffer(jenv, jobj, data);
+        SafeCopyStringBufferToJava(jenv, jobj, data);
 
         return jobj;
     };
@@ -260,7 +342,7 @@ std::shared_ptr<_jobject> CrossPLUtils::SafeCastByteBuffer(JNIEnv* jenv, const s
         return ret; // nullptr
     }
 
-    auto creater = [&]() -> jobject {
+    auto creater = [=]() -> jobject {
         EnsureRunOnThread(threadId);
 
         jclass jclazz = FindJavaClass(jenv, JavaClassNameByteArrayOutputStream);
@@ -268,7 +350,7 @@ std::shared_ptr<_jobject> CrossPLUtils::SafeCastByteBuffer(JNIEnv* jenv, const s
         jmethodID jconstructor  = jenv->GetMethodID(jclazz, "<init>", "()V");
         jobject jobj = jenv->NewObject(jclazz, jconstructor);
 
-        SafeCopyByteBuffer(jenv, jobj, data);
+        SafeCopyByteBufferToJava(jenv, jobj, data);
 
         return jobj;
     };
@@ -282,7 +364,32 @@ std::shared_ptr<_jobject> CrossPLUtils::SafeCastByteBuffer(JNIEnv* jenv, const s
     return ret;
 }
 
-int CrossPLUtils::SafeCopyStringBuffer(JNIEnv* jenv, jobject jcopyTo, const std::stringstream* data)
+int CrossPLUtils::SafeCopyStringBufferToCpp(JNIEnv* jenv, std::stringstream* copyTo, jobject jdata)
+{
+    if(copyTo == nullptr) {
+        return 0; // nullptr
+    }
+
+    auto tmpPtr = SafeCastStringBuffer(jenv, jdata);
+    copyTo->str(""); // clear stringstream
+    copyTo->swap(*tmpPtr);
+
+    return 0;
+}
+
+int CrossPLUtils::SafeCopyByteBufferToCpp(JNIEnv* jenv, std::vector<int8_t>* copyTo, jobject jdata)
+{
+    if(copyTo == nullptr) {
+        return 0; // nullptr
+    }
+
+    auto tmpPtr = SafeCastByteBuffer(jenv, jdata);
+    copyTo->swap(*tmpPtr);
+
+    return 0;
+}
+
+int CrossPLUtils::SafeCopyStringBufferToJava(JNIEnv* jenv, jobject jcopyTo, const std::stringstream* data)
 {
     if(jcopyTo == nullptr) {
         return 0; // nullptr
@@ -304,7 +411,7 @@ int CrossPLUtils::SafeCopyStringBuffer(JNIEnv* jenv, jobject jcopyTo, const std:
     return 0;
 }
 
-int CrossPLUtils::SafeCopyByteBuffer(JNIEnv* jenv, jobject jcopyTo, const std::vector<int8_t>* data)
+int CrossPLUtils::SafeCopyByteBufferToJava(JNIEnv* jenv, jobject jcopyTo, const std::vector<int8_t>* data)
 {
     if(jcopyTo == nullptr) {
         return 0; // nullptr
@@ -325,6 +432,17 @@ int CrossPLUtils::SafeCopyByteBuffer(JNIEnv* jenv, jobject jcopyTo, const std::v
     jenv->CallVoidMethod(jcopyTo, jmethodWrite, jbytesPtr.get());
 
     return 0;
+}
+
+void* CrossPLUtils::SafeCastCrossObject(JNIEnv* jenv, jobject jdata)
+{
+    jclass jclazz = jenv->GetObjectClass(jdata);
+
+    jfieldID jfield = jenv->GetFieldID(jclazz, "nativeHandle", "J");
+
+    jlong jnativeHandle = jenv->GetLongField(jdata, jfield);
+
+    return reinterpret_cast<void*>(jnativeHandle);
 }
 
 

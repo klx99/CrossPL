@@ -3,6 +3,8 @@
 #include <android/log.h>
 #include <cstring>
 #include <dlfcn.h>
+#include <CrossPLUtils.hpp>
+
 %IncludeProxyHpp%
 
 namespace crosspl {
@@ -15,10 +17,13 @@ namespace crosspl {
 /***********************************************/
 /***** static function implement ***************/
 /***********************************************/
-int CrossPLFactory::OnLoad(JNIEnv* jenv)
+int CrossPLFactory::OnLoad(JavaVM* jvm)
 {
   __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "%s", __PRETTY_FUNCTION__);
   int ret = 0;
+
+  CrossPLUtils::SetJavaVM(jvm);
+  auto jenv = CrossPLUtils::SafeGetEnv();
 
 %RegisterNativeMethods%
   if(ret == 0) {
@@ -104,16 +109,7 @@ JNIEXPORT jint JNICALL
 {
   __android_log_print(ANDROID_LOG_INFO, "crosspl", "JNI_OnLoad() in CrossPL is running.");
 
-  jint jversion = JNI_VERSION_1_6;
-  JNIEnv* jenv;
-
-  int ret = jvm->GetEnv((void **) &jenv, jversion);
-  if(ret != JNI_OK) {
-    __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to get jni env.");
-    return ret;
-  }
-
-  ret = crosspl::CrossPLFactory::OnLoad(jenv);
+  int ret = crosspl::CrossPLFactory::OnLoad(jvm);
   if(ret != 0) {
     __android_log_print(ANDROID_LOG_ERROR, "crosspl", "JNI_OnLoad(): Failed to .");
     return JNI_ERR;
@@ -121,5 +117,5 @@ JNIEXPORT jint JNICALL
 
   __android_log_print(ANDROID_LOG_INFO, "crosspl", "JNI_OnLoad() register CrossPL native methods.");
 
-  return jversion;
+  return JNI_VERSION_1_6;
 }

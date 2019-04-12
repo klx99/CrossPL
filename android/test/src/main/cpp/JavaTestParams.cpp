@@ -29,8 +29,9 @@ int JavaTestParams::crossNativeMethod(bool a,
                                       double d,
                                       const char* e,
                                       const std::span<int8_t>* f,
-                                      std::stringstream* g,
-                                      std::vector<int8_t>* h)
+                                      const std::function<void()>* g,
+                                      std::stringstream* h,
+                                      std::vector<int8_t>* i)
 {
     std::stringstream sstream;
 
@@ -50,39 +51,41 @@ int JavaTestParams::crossNativeMethod(bool a,
     }
     __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s const std::span<int8_t>* f=%s", __PRETTY_FUNCTION__, sstream.str().c_str());
 
-    sstream.str(""); // clear sstream
-    if(g != nullptr) {
-            sstream << g->str();
-    } else {
-            sstream << "nullptr";
-    }
-    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::stringstream* g=%s", __PRETTY_FUNCTION__, sstream.str().c_str());
+    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::function<void()>* g=%p", __PRETTY_FUNCTION__, g);
 
     sstream.str(""); // clear sstream
     if(h != nullptr) {
-        for(int idx = 0; idx < h->size(); idx++) {
-            int8_t data = h->at(idx);
+            sstream << h->str();
+    } else {
+            sstream << "nullptr";
+    }
+    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::stringstream* h=%s", __PRETTY_FUNCTION__, sstream.str().c_str());
+
+    sstream.str(""); // clear sstream
+    if(i != nullptr) {
+        for(int idx = 0; idx < i->size(); idx++) {
+            int8_t data = i->at(idx);
             sstream << std::setw(2) << std::hex << (data & 0xFF) << ' ';
         }
     } else {
             sstream << "nullptr";
     }
-    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::vector<int8_t>* h=%s", __PRETTY_FUNCTION__, sstream.str().c_str());
-
-    if(g != nullptr) {
-        g->str(""); // clear g
-        *g << "set from native native;";
-    } else {
-        __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::stringstream* g=null, ignore to set out value", __PRETTY_FUNCTION__);
-    }
+    __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::vector<int8_t>* i=%s", __PRETTY_FUNCTION__, sstream.str().c_str());
 
     if(h != nullptr) {
-        h->clear();
+        h->str(""); // clear h
+        *h << "set from native native;";
+    } else {
+        __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::stringstream* h=null, ignore to set out value", __PRETTY_FUNCTION__);
+    }
+
+    if(i != nullptr) {
+        i->clear();
         for(int idx = 0; idx < 256; idx+=5) {
-            h->push_back(idx);
+            i->push_back(idx);
         }
     } else {
-        __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::vector<int8_t>* h=null, ignore to set out value", __PRETTY_FUNCTION__);
+        __android_log_print(ANDROID_LOG_INFO, "crosspl", "%s std::vector<int8_t>* i=null, ignore to set out value", __PRETTY_FUNCTION__);
     }
 
     return 0;
@@ -118,12 +121,17 @@ std::span<int8_t> JavaTestParams::crossNativeMethod5(const std::span<int8_t>* a)
     return std::span<int8_t>(nullptr, 0);
 }
 
-std::stringstream JavaTestParams::crossNativeMethod6(std::stringstream* a)
+std::function<void()> JavaTestParams::crossNativeMethod6(const std::function<void()>* a)
+{
+
+}
+
+std::stringstream JavaTestParams::crossNativeMethod7(std::stringstream* a)
 {
     return std::stringstream();
 }
 
-std::vector<int8_t> JavaTestParams::crossNativeMethod7(std::vector<int8_t>* a)
+std::vector<int8_t> JavaTestParams::crossNativeMethod8(std::vector<int8_t>* a)
 {
     return std::vector<int8_t>();
 }

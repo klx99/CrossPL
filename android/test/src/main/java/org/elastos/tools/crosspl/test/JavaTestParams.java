@@ -16,8 +16,9 @@ class JavaTestParams extends CrossBase {
                     double d,
                     String e,
                     byte f[],
-                    StringBuffer g,
-                    ByteArrayOutputStream h) {
+                    Runnable g,
+                    StringBuffer h,
+                    ByteArrayOutputStream i) {
         return -1;
     }
 
@@ -27,9 +28,10 @@ class JavaTestParams extends CrossBase {
                             double d,
                             String e,
                             byte f[],
-                            StringBuffer g,
-                            ByteArrayOutputStream h,
-                            CrossBase i) {
+                            Runnable g,
+                            StringBuffer h,
+                            ByteArrayOutputStream i,
+                            CrossBase j) {
         return null;
     }
 
@@ -40,8 +42,9 @@ class JavaTestParams extends CrossBase {
                                  double d,
                                  String e,
                                  byte[] f,
-                                 StringBuffer g,
-                                 ByteArrayOutputStream h);
+                                 Runnable g,
+                                 StringBuffer h,
+                                 ByteArrayOutputStream i);
 
     @CrossInterface
     native boolean crossNativeMethod0(boolean a);
@@ -55,10 +58,12 @@ class JavaTestParams extends CrossBase {
     native String crossNativeMethod4(String a);
     @CrossInterface
     native byte[] crossNativeMethod5(byte[] a);
+//    @CrossInterface
+//    native Runnable crossNativeMethod6(Runnable a);
     @CrossInterface
-    native StringBuffer crossNativeMethod6(StringBuffer a);
+    native StringBuffer crossNativeMethod7(StringBuffer a);
     @CrossInterface
-    native ByteArrayOutputStream crossNativeMethod7(ByteArrayOutputStream a);
+    native ByteArrayOutputStream crossNativeMethod8(ByteArrayOutputStream a);
 
     native CrossBase crossNativeMethodEx(boolean a,
                                          int b,
@@ -66,7 +71,8 @@ class JavaTestParams extends CrossBase {
                                          double d,
                                          String e,
                                          byte f[],
-                                         StringBuffer g,
-                                         ByteArrayOutputStream h,
-                                         CrossBase i);
+                                         Runnable g,
+                                         StringBuffer h,
+                                         ByteArrayOutputStream i,
+                                         CrossBase j);
 }

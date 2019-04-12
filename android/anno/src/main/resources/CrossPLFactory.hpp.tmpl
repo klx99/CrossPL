@@ -12,7 +12,7 @@ public:
   /*** type define ***/
 
   /*** static function and variable ***/
-  static int OnLoad(JNIEnv* jenv);
+  static int OnLoad(JavaVM* jvm);
 
   /*** class function and variable ***/
   static int64_t createCppObject(const char* javaClassName);

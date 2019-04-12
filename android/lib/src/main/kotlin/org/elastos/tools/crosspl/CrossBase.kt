@@ -3,6 +3,8 @@ package org.elastos.tools.crosspl
 import android.util.Log
 import org.elastos.tools.crosspl.annotation.CrossClass
 import org.elastos.tools.crosspl.annotation.CrossInterface
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
 @CrossClass
 open class CrossBase
@@ -32,6 +34,18 @@ open class CrossBase
     private companion object {
         init {
             System.loadLibrary("crosspl")
+        }
+
+        @CrossInterface
+        private fun CreatePlatformObject(className: String, nativeHandle: Long): CrossBase {
+            val clazz = Class.forName(className).kotlin as KClass<out CrossBase>
+            val platformObject = clazz.primaryConstructor!!.call(nativeHandle)
+            return platformObject
+        }
+
+        @CrossInterface
+        private fun DestroyPlatformObject(className: String, platformObject: CrossBase) {
+            platformObject.finalize()
         }
 
         @CrossInterface

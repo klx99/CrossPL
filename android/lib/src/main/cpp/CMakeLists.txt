@@ -8,6 +8,7 @@ target_sources( crosspl PRIVATE
         utils/Log.cpp
         utils/JniUtils.cpp
         CrossBase.cpp
+        CrossRunnable.cpp
 )
 target_include_directories( crosspl PRIVATE )
 

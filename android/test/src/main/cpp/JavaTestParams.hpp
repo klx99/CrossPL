@@ -20,8 +20,9 @@ public:
                         double d,
                         const char* e,
                         const std::span<int8_t>* f,
-                        std::stringstream* g,
-                        std::vector<int8_t>* h);
+                        const std::function<void()>* g,
+                        std::stringstream* h,
+                        std::vector<int8_t>* i);
 
   bool crossNativeMethod0(bool a);
   int32_t crossNativeMethod1(int32_t a);
@@ -29,8 +30,9 @@ public:
   double crossNativeMethod3(double a);
   const char* crossNativeMethod4(const char* a);
   std::span<int8_t> crossNativeMethod5(const std::span<int8_t>* a);
-  std::stringstream crossNativeMethod6(std::stringstream* a);
-  std::vector<int8_t> crossNativeMethod7(std::vector<int8_t>* a);
+  std::function<void()> crossNativeMethod6(const std::function<void()>* a);
+  std::stringstream crossNativeMethod7(std::stringstream* a);
+  std::vector<int8_t> crossNativeMethod8(std::vector<int8_t>* a);
 
 private:
   /*** type define ***/

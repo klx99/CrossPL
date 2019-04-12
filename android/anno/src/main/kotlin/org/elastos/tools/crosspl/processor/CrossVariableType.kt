@@ -15,8 +15,11 @@ enum class CrossVariableType {
 
     STRING,
     BYTEARRAY,
+    FUNCTION,
+
     STRINGBUFFER,
     BYTEBUFFER,
+
     CROSSBASE;
 
     companion object {
@@ -45,6 +48,7 @@ enum class CrossVariableType {
         private val supportedTypeDeclared = mapOf(
             "java.lang.String"                    to STRING,
             "byte[]"                              to BYTEARRAY,
+            "java.lang.Runnable"                  to FUNCTION,
             "java.lang.StringBuffer"              to STRINGBUFFER,
             "java.io.ByteArrayOutputStream"       to BYTEBUFFER,
             "org.elastos.tools.crosspl.CrossBase" to CROSSBASE
@@ -74,9 +78,10 @@ enum class CrossVariableType {
         val classTypeMap = mapOf(
             STRING       to "const char*",
             BYTEARRAY    to "std::span<int8_t>",
+            FUNCTION     to "std::function<void()>",
             STRINGBUFFER to "std::stringstream",
             BYTEBUFFER   to "std::vector<int8_t>",
-            CROSSBASE    to "crosspl::CrossBase"
+            CROSSBASE    to "::CrossBase"
         )
 
         var cppType = toString(primitiveTypeMap, classTypeMap, isConst)
@@ -95,6 +100,7 @@ enum class CrossVariableType {
         val classTypeMap = mapOf(
             STRING       to "jstring",
             BYTEARRAY    to "jbyteArray",
+            FUNCTION     to "jobject",
             STRINGBUFFER to "jobject",
             BYTEBUFFER   to "jobject",
             CROSSBASE    to "jobject"
@@ -105,7 +111,7 @@ enum class CrossVariableType {
         return jniType
     }
 
-    fun toJavaChar(): String {
+    fun toJniSigChar(): String {
         val primitiveTypeMap = mapOf(
             BOOLEAN    to "Z",
             INTEGER    to "I",
@@ -116,6 +122,7 @@ enum class CrossVariableType {
         val classTypeMap = mapOf(
             STRING       to "Ljava/lang/String;",
             BYTEARRAY    to "[B",
+            FUNCTION     to "Ljava/lang/Runnable;",
             STRINGBUFFER to "Ljava/lang/StringBuffer;",
             BYTEBUFFER   to "Ljava/io/ByteArrayOutputStream;",
             CROSSBASE    to "Lorg/elastos/tools/crosspl/CrossBase;"
@@ -147,12 +154,13 @@ enum class CrossVariableType {
     fun toString(): String {
         val stringMap = mapOf(
             BOOLEAN      to "Boolean",
-            INTEGER      to "Integer",
+            INTEGER      to "Int",
             LONG         to "Long",
             DOUBLE       to "Double",
             VOID         to "Void",
             STRING       to "String",
             BYTEARRAY    to "ByteArray",
+            FUNCTION     to "Function",
             STRINGBUFFER to "StringBuffer",
             BYTEBUFFER   to "ByteBuffer",
             CROSSBASE    to "CrossBase"

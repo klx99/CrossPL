@@ -156,7 +156,7 @@ class CrossClassInfo {
         var jniNativeMethodList = ""
         var kotlinStaticNativeMethodList = ""
         methodInfo.forEach {
-            val funcSource = it.makeProxySource(cppInfo.className)
+            val funcSource = it.makeProxySource(cppInfo.className, javaInfo.classPath)
             if(it.isNative) {
                 nativeFuncList += funcSource
 
@@ -185,10 +185,10 @@ class CrossClassInfo {
     private fun makeJniNativeMethod(methodInfo: CrossMethodInfo): String {
         var funcType = "("
         methodInfo.paramsType.forEach {
-            funcType += it.toJavaChar()
+            funcType += it.toJniSigChar()
         }
         funcType += ")"
-        funcType += methodInfo.returnType.toJavaChar()
+        funcType += methodInfo.returnType.toJniSigChar()
 
         val methodContent = "{\"${methodInfo.methodName}\", \"$funcType\", (void*)${methodInfo.methodName}}"
 

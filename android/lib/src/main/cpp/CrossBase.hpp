@@ -20,6 +20,7 @@ public:
   static void DestroyNativeObject(const char* javaClassName, int64_t nativeHandle);
 
   /*** class function and variable ***/
+  uint64_t getPlatformHandle() const;
 
 private:
   /*** type define ***/

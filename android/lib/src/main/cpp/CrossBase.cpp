@@ -67,6 +67,10 @@ void CrossBase::DestroyNativeObject(const char* javaClassName, int64_t nativeHan
 /***********************************************/
 /***** class public function implement  ********/
 /***********************************************/
+uint64_t CrossBase::getPlatformHandle() const
+{
+    return 0;
+}
 
 
 /***********************************************/

@@ -55,7 +55,7 @@ class CrossPLFactoryGenerator {
             classInfoList.forEach {
                 includeProxyList += "#include <${it.cppInfo.className}.hpp>\n"
 
-                regNativeMethodsList += "${CrossTmplUtils.TabSpace}ret |= proxy::${it.cppInfo.className}::RegisterNativeMethods(jenv);\n"
+                regNativeMethodsList += "${CrossTmplUtils.TabSpace}ret |= proxy::${it.cppInfo.className}::RegisterNativeMethods(jenv.get());\n"
 
                 createCppObjectList += "${CrossTmplUtils.TabSpace}if(std::strcmp(javaClassName, \"${it.javaInfo.className}\") == 0) {\n"
                 createCppObjectList += "${CrossTmplUtils.TabSpace}${CrossTmplUtils.TabSpace} ptr = new ${it.cppInfo.className}();\n"
