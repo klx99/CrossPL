@@ -11,8 +11,8 @@
 @interface CrossBaseProxy : NSObject
 + (int)registerNativeMethods;
 
-+ (UInt64)createNativeObject:(NSString*)swiftClassName;
-+ (void)destroyNativeObject: (NSString*)swiftClassName: (UInt64)nativeHandle;
++ (Int64)createNativeObject:(NSString*)swiftClassName;
++ (void)destroyNativeObject: (NSString*)swiftClassName: (Int64)nativeHandle;
 
 
 @end
