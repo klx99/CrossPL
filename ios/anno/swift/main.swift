@@ -5,7 +5,7 @@ func main()
 {
   print("CrossPL: anno start...")
   
-  if(CommandLine.argc < 3) {
+  if(CommandLine.argc < 5) {
     print("Bad Arguments");
     exit(1)
   }
@@ -13,6 +13,9 @@ func main()
   let swiftSrcDir = NSURL.fileURL(withPath: CommandLine.arguments[1])
   let proxyDir = NSURL.fileURL(withPath: CommandLine.arguments[2])
   let bundleId = CommandLine.argc > 3 ? CommandLine.arguments[3] : "UnknownBundleIdentifier"
+  let resDir = NSURL.fileURL(withPath: CommandLine.arguments[4])
+  
+  CrossTmplUtils.resourcesDir = resDir
   
   if(FileManager.default.fileExists(atPath: swiftSrcDir.path) == false) {
     print("[\(swiftSrcDir.path)] not exists.")

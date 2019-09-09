@@ -35,6 +35,16 @@ class CrossMethodInfo {
     return methodInfo
   }
   
+  func makeProxyDeclare() -> String {
+    if self.isNative! {
+      return makeNativeFunctionDeclare(cppClassName: nil)
+    } else {
+      return makePlatformFunctionDeclare(cppClassName: nil)
+    }
+  }
+
+  
+  
   func toString() -> String {
     var dump = String()
     dump += "MethodInfo{methodName=\(methodName!),"
@@ -55,5 +65,51 @@ class CrossMethodInfo {
   var returnType: CrossVariableType?
   var isStatic: Bool?
   var isNative: Bool?
+  
+  private func makeNativeFunctionDeclare(cppClassName: String?) -> String {
+    let className = ((cppClassName != nil) ? "\(cppClassName!)::" : "")
+    let returnType = self.returnType!.toObjcString(isConst: false)
+    var content = "(\(returnType)) \(className)\(self.methodName!)\(CrossMethodInfo.TmplKeyArguments)"
+    
+    var arguments = ""
+    if isStatic == false {
+      arguments += ": (int64_t)nativeHandle"
+    }
 
+    for idx in 0..<paramsType.count {
+      let type = paramsType[idx].toObjcString()
+      arguments += ": (\(type))ocvar\(idx)"
+    }
+    content = content.replacingOccurrences(of: CrossMethodInfo.TmplKeyArguments, with: arguments)
+    
+    return content
+  }
+  
+  private func makePlatformFunctionDeclare(cppClassName: String?) -> String {
+    let className = ((cppClassName != nil) ? "\(cppClassName!)::" : "")
+    var retTypeStr = self.returnType!.toCppString(isConst: false)//.removeSuffix("*")
+    if returnType!.type! == .CROSSBASE {
+      retTypeStr = "\(retTypeStr)*"
+    } else if self.returnType!.isPrimitiveType() == false {
+      retTypeStr = "std::shared_ptr<\(retTypeStr)>"
+    }
+    var content = "\(retTypeStr) \(className)\(self.methodName!)\(CrossMethodInfo.TmplKeyArguments)"
+
+    var arguments = ""
+    if isStatic == false {
+      arguments += ": (int64_t)platformHandle"
+    }
+    for idx in 0..<paramsType.count {
+      let type = paramsType[idx].toCppString(isConst: true)
+      arguments += ": (\(type))var\(idx)"
+    }
+    content = content.replacingOccurrences(of: CrossMethodInfo.TmplKeyArguments, with: arguments)
+
+    return content
+  }
+
+
+  private static let TmplKeyArguments = "%Arguments%"
+  private static let TmplKeyFuncBody = "%FunctionBody%"
+  
 }

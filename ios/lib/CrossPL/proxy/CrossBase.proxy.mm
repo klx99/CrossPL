@@ -16,16 +16,17 @@
   return 0;
 }
 
-+ (Int64)createNativeObject:(NSString*)swiftClassName
++ (int64_t)createNativeObject:(NSString*)swiftClassName
 {
-    const char *swiftClassNamePtr = [swiftClassName UTF8String];
-  
-    Int64 nativeHandle = CrossBase::CreateNativeObject(swiftClassNamePtr);
-  
-    return nativeHandle;
+  const char *swiftClassNamePtr = [swiftClassName UTF8String];
+
+  int64_t nativeHandle = CrossBase::CreateNativeObject(swiftClassNamePtr);
+
+  return nativeHandle;
+//  return 0;
 }
 
-+ (void)destroyNativeObject: (NSString*)swiftClassName: (Int64)nativeHandle
++ (void)destroyNativeObject: (NSString*)swiftClassName: (int64_t)nativeHandle
 {
   const char *swiftClassNamePtr = [swiftClassName UTF8String];
   

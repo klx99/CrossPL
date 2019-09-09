@@ -65,7 +65,7 @@ class CrossClassInfo {
        
         if isCrossInterface == true {
           let methodInfo = CrossMethodInfo.Parse(sourceContent: line, methodName: methodName, isNative: isNative!)
-          print("~~~~~ \(methodInfo.toString())")
+          print("  \(methodInfo.toString())")
           
           classInfo.methodInfoList.append(methodInfo)
         }
@@ -89,7 +89,7 @@ class CrossClassInfo {
   }
 
   
-  private class CppInfo {
+  class CppInfo {
     var className: String?
     
     func toString() -> String {
@@ -97,7 +97,7 @@ class CrossClassInfo {
     }
   }
   
-  private class SwiftInfo {
+  class SwiftInfo {
     var className: String?
     var classPath: String?
     
@@ -121,7 +121,36 @@ class CrossClassInfo {
     return output
   }
   
-  private var cppInfo = CppInfo()
-  private var swiftInfo = SwiftInfo()
+  func makeProxyDeclare(tmpl: String) -> String {
+    var nativeFuncList = ""
+    var platformFuncList = ""
+    methodInfoList.forEach { (it) in
+      let functionDeclare = it.makeProxyDeclare()
+      
+      if it.isNative! {
+        nativeFuncList += "+ \(functionDeclare);\n"
+      } else {
+        platformFuncList += "+ \(functionDeclare);\n"
+      }
+    }
+  
+    let content = tmpl
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyClassName, with: cppInfo.className!)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyPlatformFunction, with: platformFuncList)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyNativeFunction, with: nativeFuncList)
+  
+    return content
+  }
+
+  
+  var cppInfo = CppInfo()
+  var swiftInfo = SwiftInfo()
   private var methodInfoList = [CrossMethodInfo]()
+  
+  
+  private static let CrossBaseClass = "org.elastos.tools.crosspl.CrossBase"
+  
+  private static let TmplKeyClassName: String = "%ClassName%"
+  private static let TmplKeyPlatformFunction = "%PlatformFunction%"
+  private static let TmplKeyNativeFunction = "%NativeFunction%"
 }

@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface CrossBaseProxy : NSObject
-+ (int)registerNativeMethods;
+//+ (int)registerNativeMethods;
 
-+ (Int64)createNativeObject:(NSString*)swiftClassName;
-+ (void)destroyNativeObject: (NSString*)swiftClassName: (Int64)nativeHandle;
++ (int64_t)createNativeObject:(NSString*)swiftClassName;
++ (void)destroyNativeObject: (NSString*)swiftClassName: (int64_t)nativeHandle;
 
 
 @end
