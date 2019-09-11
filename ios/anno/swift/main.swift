@@ -5,15 +5,17 @@ func main()
 {
   print("CrossPL: anno start...")
   
-  if(CommandLine.argc < 5) {
+  if(CommandLine.argc < 6) {
     print("Bad Arguments");
     exit(1)
   }
-  
-  let swiftSrcDir = NSURL.fileURL(withPath: CommandLine.arguments[1])
-  let proxyDir = NSURL.fileURL(withPath: CommandLine.arguments[2])
-  let bundleId = CommandLine.argc > 3 ? CommandLine.arguments[3] : "UnknownBundleIdentifier"
-  let resDir = NSURL.fileURL(withPath: CommandLine.arguments[4])
+
+  let resDir = NSURL.fileURL(withPath: CommandLine.arguments[1])
+  let productName = CommandLine.arguments[2]
+  let bundleId = CommandLine.arguments[3]
+  let swiftSrcDir = NSURL.fileURL(withPath: CommandLine.arguments[4])
+  let crossplDir = NSURL.fileURL(withPath: CommandLine.arguments[5])
+
   
   CrossTmplUtils.resourcesDir = resDir
   
@@ -34,15 +36,16 @@ func main()
     print("  \(src)")
   }
   
-  print("Make proxy target dir: \(proxyDir.path)")
+  print("Make proxy target dir: \(crossplDir.path)")
   do {
-    try FileManager.default.createDirectory(at: proxyDir, withIntermediateDirectories: true)
+    try FileManager.default.createDirectory(at: crossplDir, withIntermediateDirectories: true)
+    try FileManager.default.createDirectory(at: crossplDir.appendingPathComponent("proxy"), withIntermediateDirectories: true)
   } catch {
-    print("Failed to create proxy target dir: \(proxyDir.path)")
+    print("Failed to create proxy target dir: \(crossplDir.path)")
     exit(1)
   }
   
-  let ret = CrossClassAnnoProcessor.process(swiftSrcList: swiftSrcList, proxyDir: proxyDir, bundleId: bundleId)
+  let ret = CrossClassAnnoProcessor.process(swiftSrcList: swiftSrcList, crossplDir: crossplDir, productName: productName, bundleId: bundleId)
   if(ret == false) {
     print("Failed to process crosspl anno.")
     exit(1)

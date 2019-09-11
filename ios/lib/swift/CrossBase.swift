@@ -1,22 +1,28 @@
 import Foundation
 
 /* @CrossClass */
-open class CrossBase : CrossBaseProxy {
+open class CrossBase : NSObject {
   public init(className: String, nativeHandle: Int64) {
     CrossBase.initializer
     
     self.className = className
     self.nativeHandle = nativeHandle
 
-    super.init()
-    
     if(self.nativeHandle == 0) {
-      self.nativeHandle = CrossBase.createNativeObject(swiftClassName: self.className)
+      self.nativeHandle = CrossBase.CreateNativeObject(swiftClassName: self.className)
     }
   }
   
   deinit {
-    CrossBase.destroyNativeObject(swiftClassName: self.className, nativeHandle: self.nativeHandle)
+    CrossBase.DestroyNativeObject(swiftClassName: self.className, nativeHandle: self.nativeHandle)
+  }
+  
+  func bind() {
+    CrossBase.BindPlatformHandle(thisObj: self)
+  }
+  
+  func unbind() {
+    CrossBase.UnbindPlatformHandle(thisObj: self)
   }
   
   private let className: String
@@ -27,14 +33,25 @@ open class CrossBase : CrossBaseProxy {
   }()
   
   /* @CrossNativeInterface */
-  private static func createNativeObject(swiftClassName: String) -> Int64{
+  private static func CreateNativeObject(swiftClassName: String) -> Int64{
     return CrossBaseProxy.createNativeObject(swiftClassName)
 //    return 0
   }
   
   /* @CrossNativeInterface */
-  private static func destroyNativeObject(swiftClassName: String, nativeHandle: Int64) {
+  private static func DestroyNativeObject(swiftClassName: String, nativeHandle: Int64) {
     CrossBaseProxy.destroyNativeObject(swiftClassName, nativeHandle)
 //    return
   }
+  
+  /* @CrossNativeInterface */
+  private static func BindPlatformHandle(thisObj: CrossBase) {
+    CrossBaseProxy.bindPlatformHandle(thisObj)
+  }
+  
+  /* @CrossNativeInterface */
+  private static func UnbindPlatformHandle(thisObj: CrossBase) {
+    CrossBaseProxy.unbindPlatformHandle(thisObj)
+  }
+
 }

@@ -36,14 +36,35 @@ class CrossMethodInfo {
   }
   
   func makeProxyDeclare() -> String {
-    if self.isNative! {
+    if self.isNative! == true {
       return makeNativeFunctionDeclare(cppClassName: nil)
     } else {
       return makePlatformFunctionDeclare(cppClassName: nil)
     }
   }
 
+  func makeProxySource(cppClassName: String, javaClassPath: String) -> String {
+    var funcDeclare: String
+    if self.isNative! == true {
+      funcDeclare = makeNativeFunctionDeclare(cppClassName: cppClassName)
+    } else {
+      funcDeclare = makePlatformFunctionDeclare(cppClassName: cppClassName)
+    }
+    let emptyFunc = "\(funcDeclare)\n{\n\(CrossMethodInfo.TmplKeyFuncBody)\n}\n"
   
+    
+    var funcBody: String
+    if self.isNative! == true {
+      funcBody = makeNativeFunctionBody(cppClassName: cppClassName)
+    } else {
+      funcBody = makePlatformFunctionBody(cppClassName: cppClassName, javaClassPath: javaClassPath)
+    }
+  
+    let content = emptyFunc.replacingOccurrences(of: CrossMethodInfo.TmplKeyFuncBody, with: funcBody)
+  
+    return content
+  }
+
   
   func toString() -> String {
     var dump = String()
@@ -69,7 +90,7 @@ class CrossMethodInfo {
   private func makeNativeFunctionDeclare(cppClassName: String?) -> String {
     let className = ((cppClassName != nil) ? "\(cppClassName!)::" : "")
     let returnType = self.returnType!.toObjcString(isConst: false)
-    var content = "(\(returnType)) \(className)\(self.methodName!)\(CrossMethodInfo.TmplKeyArguments)"
+    var content = "(\(returnType)) \(self.methodName!)\(CrossMethodInfo.TmplKeyArguments)"
     
     var arguments = ""
     if isStatic == false {
@@ -105,6 +126,171 @@ class CrossMethodInfo {
     }
     content = content.replacingOccurrences(of: CrossMethodInfo.TmplKeyArguments, with: arguments)
 
+    return content
+  }
+
+  
+  private func makeNativeFunctionBody(cppClassName: String) -> String {
+    var prefixContent = ""
+    var suffixContent = ""
+    for idx in 0..<paramsType.count {
+      let type = self.paramsType[idx]
+      let isPrimitiveType = type.isPrimitiveType()
+      if isPrimitiveType == true {
+        prefixContent += "\(CrossTmplUtils.TabSpace)\(type.toCppString()) var\(idx) = ocvar\(idx);\n"
+      } else if type.type! == .CROSSBASE {
+        prefixContent += "\(CrossTmplUtils.TabSpace)auto var\(idx) = CrossPLUtils::SafeCastCrossObject<\(cppClassName)>(ocvar\(idx));\n"
+      } else {
+        prefixContent += "\(CrossTmplUtils.TabSpace)auto var\(idx) = CrossPLUtils::SafeCast\(type.toString())(ocvar\(idx));\n"
+      }
+   
+      if(type.type! == .STRINGBUFFER
+      || type.type! == .BYTEBUFFER) {
+        suffixContent += "\(CrossTmplUtils.TabSpace)CrossPLUtils::SafeCopy\(type)ToJava(ocvar\(idx), var\(idx).get());\n"
+      }
+    }
+    prefixContent += "\n"
+    suffixContent += "\n"
+  
+    var funcContent: String
+    if self.isStatic == false {
+      prefixContent += "\(CrossTmplUtils.TabSpace)auto obj = CrossPLUtils::SafeCastCrossObject<::\(cppClassName)>(ocobj);\n"
+      funcContent = "obj->"
+    } else {
+      funcContent = "::\(cppClassName)::"
+    }
+  
+    var argusContent = ""
+    for idx in 0..<paramsType.count {
+      let type = paramsType[idx]
+      let isPrimitiveType = type.isPrimitiveType()
+      if isPrimitiveType == true {
+        argusContent += "var\(idx), "
+      } else if type.type! == .STRING {
+        argusContent += "var\(idx).get(), "
+      } else {
+        argusContent += "var\(idx).get(), "
+      }
+    }
+    if argusContent.isEmpty == false {
+      let endIndex = argusContent.index(argusContent.endIndex, offsetBy: -2)
+      argusContent = argusContent.substring(to: endIndex)
+    }
+//    argusContent = argusContent.removeSuffix(", ")
+    
+    var retContent = ""
+    if(returnType!.type! != .VOID) {
+      let cppType = returnType!.toCppString(isConst: false)
+      retContent = "\(cppType) ret = "
+    
+      let isPrimitiveType = returnType!.isPrimitiveType()
+      if isPrimitiveType == true {
+        suffixContent += "\(CrossTmplUtils.TabSpace)\(returnType!.toObjcString()) ocret = ret;\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)return ocret;"
+      } else if returnType!.type == .STRING {
+        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = CrossPLUtils::SafeCast\(returnType!.toCppString())(ret);\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)return ocret.get();"
+      } else if returnType!.type == .CROSSBASE {
+        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = CrossPLUtils::SafeCastCrossObject<\(cppClassName)>(ret);\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)return ocret.get();"
+      } else {
+        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = CrossPLUtils::SafeCast\(returnType!)(&ret);\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)return ocret.get();"
+      }
+    }
+    var content = "\(prefixContent)"
+    content += "\(CrossTmplUtils.TabSpace)\(retContent)\(funcContent)\(methodName!)(\(argusContent));\n\n"
+    content += "\(suffixContent)"
+    
+    return content
+  }
+  
+  private func makePlatformFunctionBody(cppClassName: String, javaClassPath: String) -> String {
+    var prefixContent = ""
+    var suffixContent = ""
+  
+    prefixContent += "${CrossTmplUtils.TabSpace}auto jenv = CrossPLUtils::SafeGetEnv();\n"
+    prefixContent += "${CrossTmplUtils.TabSpace}auto jobj = reinterpret_cast<jobject>(platformHandle);\n"
+    for idx in 0..<paramsType.count {
+      let type = paramsType[idx]
+      let isPrimitiveType = type.isPrimitiveType()
+      if isPrimitiveType == true {
+        prefixContent += "${CrossTmplUtils.TabSpace}${type.toJniString()} jvar$idx = var$idx;\n"
+      } else if type.type! == .CROSSBASE {
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jvar$idx = CrossPLUtils::SafeCastCrossObject<${type.toCppString()}>(jenv.get(), var$idx);\n"
+      } else {
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jvar$idx = CrossPLUtils::SafeCast$type(jenv.get(), var$idx);\n"
+      }
+  
+      if(type.type! == .STRINGBUFFER
+      || type.type! == .BYTEBUFFER) {
+        suffixContent += "${CrossTmplUtils.TabSpace}CrossPLUtils::SafeCopy${type}ToCpp(jenv.get(), const_cast<${type.toCppString()}*>(var$idx), jvar$idx.get());\n"
+      }
+    }
+    prefixContent += "\n"
+    suffixContent += "\n"
+  
+    prefixContent += "${CrossTmplUtils.TabSpace}auto jclazz = CrossPLUtils::FindJavaClass(jenv.get(), \"$javaClassPath\");\n"
+  
+    var jniSigContent = "("
+    for idx in 0..<paramsType.count {
+      let type = paramsType[idx]
+      jniSigContent += "${type.toJniSigChar()}"
+    }
+    jniSigContent += ")${returnType.toJniSigChar()}"
+    prefixContent += "${CrossTmplUtils.TabSpace}auto jmethod$methodName = jenv->GetMethodID(jclazz, \"$methodName\", \"$jniSigContent\");\n"
+  
+    var funcContent = "jenv->Call"
+    if self.isStatic == true {
+      funcContent += "Static"
+    }
+    
+    if returnType!.isPrimitiveType() {
+      funcContent += returnType!.toString()
+    } else {
+      funcContent += "Object"
+    }
+  
+    var objContent: String
+    if self.isStatic == true {
+      objContent = "jclazz"
+    } else {
+      objContent = "jobj"
+    }
+    funcContent += "Method"
+  
+    var argusContent = ""
+    for idx in 0..<paramsType.count {
+      let type = paramsType[idx]
+      let isPrimitiveType = type.isPrimitiveType()
+      if isPrimitiveType == true {
+        argusContent += ", jvar$idx"
+      } else if type.type! == .CROSSBASE {
+        argusContent += ", jvar$idx"
+      } else {
+        argusContent += ", jvar$idx.get()"
+      }
+    }
+  
+    var retContent = ""
+    if returnType!.type! != .VOID {
+      let jniType = returnType!.toObjcString(isConst: false)
+      retContent = "$jniType jret = ($jniType)"
+  
+      let isPrimitiveType = returnType!.isPrimitiveType()
+      if isPrimitiveType == true {
+        suffixContent += "${CrossTmplUtils.TabSpace}${returnType.toJniString()} ret = jret;\n"
+      } else if returnType!.type! == .CROSSBASE {
+        suffixContent += "${CrossTmplUtils.TabSpace}auto ret = CrossPLUtils::SafeCastCrossObject<${returnType.toCppString()}>(jenv.get(), jret);\n"
+      } else {
+        suffixContent += "${CrossTmplUtils.TabSpace}auto ret = CrossPLUtils::SafeCast$returnType(jenv.get(), jret);\n"
+      }
+      suffixContent += "${CrossTmplUtils.TabSpace}return ret;"
+    }
+    var content = "$prefixContent"
+    content += "${CrossTmplUtils.TabSpace}$retContent$funcContent($objContent, jmethod$methodName $argusContent);\n\n"
+    content += "$suffixContent"
+  
     return content
   }
 

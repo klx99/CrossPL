@@ -109,6 +109,27 @@ class CrossVariableType {
     return objcType!
   }
 
+  func toSwiftString() -> String {
+    let typeMap = [
+      Type.BOOLEAN: "Bool",
+      Type.INT32: "Int32",
+      Type.INT64: "Int64",
+      Type.DOUBLE: "Double",
+      Type.VOID: "Void",
+      
+      Type.STRING: "String",
+      Type.BYTEARRAY: "Data",
+      Type.FUNCTION: "---",
+      Type.STRINGBUFFER: "inout String",
+      Type.BYTEBUFFER: "inout Data",
+      Type.CROSSBASE: "CrossBase"
+    ]
+  
+    let swiftType = typeMap[type!]
+    
+    return swiftType!
+  }
+
   
   var type: Type?
 }

@@ -9,34 +9,34 @@
 /* Begin PBXBuildFile section */
 		DE1F52542320D5EA00A70F78 /* CrossClassInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52532320D5EA00A70F78 /* CrossClassInfo.swift */; };
 		DE1F52562320D64B00A70F78 /* CrossClassAnnoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52552320D64B00A70F78 /* CrossClassAnnoProcessor.swift */; };
-		DE1F525A2320DABE00A70F78 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52592320DABE00A70F78 /* test.swift */; };
-		DE1F525D2320DACC00A70F78 /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE1F525B2320DACC00A70F78 /* test.cpp */; };
-		DE1F525E2320DACC00A70F78 /* test.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE1F525C2320DACC00A70F78 /* test.hpp */; };
 		DE1F52602320F5F200A70F78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F525F2320F5F200A70F78 /* StringExtension.swift */; };
 		DE1F52622320F9FC00A70F78 /* CrossMethodInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52612320F9FC00A70F78 /* CrossMethodInfo.swift */; };
 		DE1F526423214A9400A70F78 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F526323214A9400A70F78 /* Annotation.swift */; };
 		DE1F52662321E43E00A70F78 /* CrossVariableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52652321E43E00A70F78 /* CrossVariableType.swift */; };
 		DE1F52692322076C00A70F78 /* CrossProxyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52682322076C00A70F78 /* CrossProxyGenerator.swift */; };
 		DE283ECF231FBD1800D9740C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE283ECE231FBD1800D9740C /* main.swift */; };
-		DE283ED7231FBE3900D9740C /* CrossBase.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE283ED5231FBE3900D9740C /* CrossBase.proxy.h */; };
-		DE283ED8231FBE3900D9740C /* CrossBase.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE283ED6231FBE3900D9740C /* CrossBase.proxy.mm */; };
 		DE35737F231F630600496E41 /* CrossBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE35737E231F630600496E41 /* CrossBase.swift */; };
 		DE357383231F642D00496E41 /* CrossBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE357381231F642D00496E41 /* CrossBase.cpp */; };
 		DE357384231F642D00496E41 /* CrossBase.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE357382231F642D00496E41 /* CrossBase.hpp */; };
 		DE35738D231F8A8200496E41 /* SwiftTestParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE35738C231F8A8200496E41 /* SwiftTestParams.swift */; };
-		DE357395231F914300496E41 /* CrossPL.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE357390231F914200496E41 /* CrossPL.proxy.h */; };
-		DE35739B231F917F00496E41 /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE35739A231F917F00496E41 /* experimental-span.hpp */; };
 		DE52CF0621915A9C002C2177 /* CrossPL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DED5255D218DF4C800619F59 /* CrossPL.framework */; };
 		DE52CF0721915A9C002C2177 /* CrossPL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DED5255D218DF4C800619F59 /* CrossPL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DE76DD5623262AF70041A703 /* CrossTmplUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD5523262AF70041A703 /* CrossTmplUtils.swift */; };
+		DE76DD5823287EF40041A703 /* CrossPLFactoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD5723287EF40041A703 /* CrossPLFactoryGenerator.swift */; };
+		DE76DD6A23289D640041A703 /* CrossPLUtilsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD6923289D640041A703 /* CrossPLUtilsGenerator.swift */; };
+		DE76DD742328A26B0041A703 /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD6C2328A26B0041A703 /* CrossPLFactory.mm */; };
+		DE76DD752328A26B0041A703 /* CrossBase.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD6E2328A26B0041A703 /* CrossBase.proxy.mm */; };
+		DE76DD762328A26B0041A703 /* CrossBase.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD6F2328A26B0041A703 /* CrossBase.proxy.h */; };
+		DE76DD772328A26B0041A703 /* CrossPLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD702328A26B0041A703 /* CrossPLUtils.cpp */; };
+		DE76DD782328A26B0041A703 /* CrossPLUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD712328A26B0041A703 /* CrossPLUtils.hpp */; };
+		DE76DD792328A26B0041A703 /* CrossPLFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD722328A26B0041A703 /* CrossPLFactory.h */; };
+		DE76DD7A2328A26B0041A703 /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD732328A26B0041A703 /* experimental-span.hpp */; };
 		DED8B18F231F44B80007C96A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED8B18E231F44B80007C96A /* StringExtension.swift */; };
 		DEDB2496218DF71C00F07F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB2495218DF71C00F07F42 /* AppDelegate.swift */; };
 		DEDB2498218DF71C00F07F42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB2497218DF71C00F07F42 /* ViewController.swift */; };
 		DEDB249B218DF71C00F07F42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEDB2499218DF71C00F07F42 /* Main.storyboard */; };
 		DEDB249D218DF71D00F07F42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEDB249C218DF71D00F07F42 /* Assets.xcassets */; };
 		DEDB24A0218DF71D00F07F42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEDB249E218DF71D00F07F42 /* LaunchScreen.storyboard */; };
-		DEF2B31C231F972C0035A44F /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DEF2B31A231F972C0035A44F /* CrossPLFactory.mm */; };
-		DEF2B31D231F972C0035A44F /* CrossPLFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DEF2B31B231F972C0035A44F /* CrossPLFactory.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,15 +86,20 @@
 		DE283ECC231FBD1800D9740C /* anno */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = anno; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE283ECE231FBD1800D9740C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		DE283ED4231FBE0400D9740C /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
-		DE283ED5231FBE3900D9740C /* CrossBase.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossBase.proxy.h; sourceTree = "<group>"; };
-		DE283ED6231FBE3900D9740C /* CrossBase.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossBase.proxy.mm; sourceTree = "<group>"; };
 		DE35737E231F630600496E41 /* CrossBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossBase.swift; sourceTree = "<group>"; };
 		DE357381231F642D00496E41 /* CrossBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossBase.cpp; sourceTree = "<group>"; };
 		DE357382231F642D00496E41 /* CrossBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CrossBase.hpp; sourceTree = "<group>"; };
 		DE35738C231F8A8200496E41 /* SwiftTestParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTestParams.swift; sourceTree = "<group>"; };
-		DE357390231F914200496E41 /* CrossPL.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPL.proxy.h; sourceTree = "<group>"; };
-		DE35739A231F917F00496E41 /* experimental-span.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "experimental-span.hpp"; sourceTree = "<group>"; };
 		DE76DD5523262AF70041A703 /* CrossTmplUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossTmplUtils.swift; sourceTree = "<group>"; };
+		DE76DD5723287EF40041A703 /* CrossPLFactoryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPLFactoryGenerator.swift; sourceTree = "<group>"; };
+		DE76DD6923289D640041A703 /* CrossPLUtilsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPLUtilsGenerator.swift; sourceTree = "<group>"; };
+		DE76DD6C2328A26B0041A703 /* CrossPLFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLFactory.mm; sourceTree = "<group>"; };
+		DE76DD6E2328A26B0041A703 /* CrossBase.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossBase.proxy.mm; sourceTree = "<group>"; };
+		DE76DD6F2328A26B0041A703 /* CrossBase.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossBase.proxy.h; sourceTree = "<group>"; };
+		DE76DD702328A26B0041A703 /* CrossPLUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossPLUtils.cpp; sourceTree = "<group>"; };
+		DE76DD712328A26B0041A703 /* CrossPLUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CrossPLUtils.hpp; sourceTree = "<group>"; };
+		DE76DD722328A26B0041A703 /* CrossPLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLFactory.h; sourceTree = "<group>"; };
+		DE76DD732328A26B0041A703 /* experimental-span.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "experimental-span.hpp"; sourceTree = "<group>"; };
 		DED5255D218DF4C800619F59 /* CrossPL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CrossPL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DED52561218DF4C800619F59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DED8B18E231F44B80007C96A /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -106,8 +111,6 @@
 		DEDB249C218DF71D00F07F42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEDB249F218DF71D00F07F42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEDB24A1218DF71D00F07F42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DEF2B31A231F972C0035A44F /* CrossPLFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLFactory.mm; sourceTree = "<group>"; };
-		DEF2B31B231F972C0035A44F /* CrossPLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLFactory.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				DE1F52682322076C00A70F78 /* CrossProxyGenerator.swift */,
+				DE76DD5723287EF40041A703 /* CrossPLFactoryGenerator.swift */,
+				DE76DD6923289D640041A703 /* CrossPLUtilsGenerator.swift */,
 			);
 			path = generator;
 			sourceTree = "<group>";
@@ -183,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				DE1F52582320DAB000A70F78 /* test */,
-				DE35737E231F630600496E41 /* CrossBase.swift */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -197,23 +201,33 @@
 			path = cpp;
 			sourceTree = "<group>";
 		};
-		DE35738E231F914200496E41 /* CrossPL */ = {
+		DE76DD59232889A60041A703 /* swift */ = {
 			isa = PBXGroup;
 			children = (
-				DE35738F231F914200496E41 /* proxy */,
-				DEF2B31B231F972C0035A44F /* CrossPLFactory.h */,
-				DEF2B31A231F972C0035A44F /* CrossPLFactory.mm */,
-				DE35739A231F917F00496E41 /* experimental-span.hpp */,
+				DE35737E231F630600496E41 /* CrossBase.swift */,
 			);
-			path = CrossPL;
+			path = swift;
 			sourceTree = "<group>";
 		};
-		DE35738F231F914200496E41 /* proxy */ = {
+		DE76DD6B2328A26B0041A703 /* crosspl */ = {
 			isa = PBXGroup;
 			children = (
-				DE283ED5231FBE3900D9740C /* CrossBase.proxy.h */,
-				DE283ED6231FBE3900D9740C /* CrossBase.proxy.mm */,
-				DE357390231F914200496E41 /* CrossPL.proxy.h */,
+				DE76DD702328A26B0041A703 /* CrossPLUtils.cpp */,
+				DE76DD712328A26B0041A703 /* CrossPLUtils.hpp */,
+				DE76DD6C2328A26B0041A703 /* CrossPLFactory.mm */,
+				DE76DD722328A26B0041A703 /* CrossPLFactory.h */,
+				DE76DD732328A26B0041A703 /* experimental-span.hpp */,
+				DE76DD6D2328A26B0041A703 /* proxy */,
+			);
+			name = crosspl;
+			path = build/tmp/crosspl;
+			sourceTree = "<group>";
+		};
+		DE76DD6D2328A26B0041A703 /* proxy */ = {
+			isa = PBXGroup;
+			children = (
+				DE76DD6E2328A26B0041A703 /* CrossBase.proxy.mm */,
+				DE76DD6F2328A26B0041A703 /* CrossBase.proxy.h */,
 			);
 			path = proxy;
 			sourceTree = "<group>";
@@ -241,9 +255,9 @@
 		DED5255F218DF4C800619F59 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				DE35738E231F914200496E41 /* CrossPL */,
+				DE76DD6B2328A26B0041A703 /* crosspl */,
 				DE357380231F642D00496E41 /* cpp */,
-				DE35737D231F630600496E41 /* swift */,
+				DE76DD59232889A60041A703 /* swift */,
 				DEDB2484218DF5F200F07F42 /* CrossPL-Bridging-Header.h */,
 				DED8B18E231F44B80007C96A /* StringExtension.swift */,
 				DED52561218DF4C800619F59 /* Info.plist */,
@@ -254,6 +268,7 @@
 		DEDB2494218DF71C00F07F42 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				DE35737D231F630600496E41 /* swift */,
 				DE35738C231F8A8200496E41 /* SwiftTestParams.swift */,
 				DEDB2495218DF71C00F07F42 /* AppDelegate.swift */,
 				DEDB2497218DF71C00F07F42 /* ViewController.swift */,
@@ -272,12 +287,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE1F525E2320DACC00A70F78 /* test.hpp in Headers */,
-				DE35739B231F917F00496E41 /* experimental-span.hpp in Headers */,
+				DE76DD7A2328A26B0041A703 /* experimental-span.hpp in Headers */,
+				DE76DD792328A26B0041A703 /* CrossPLFactory.h in Headers */,
+				DE76DD762328A26B0041A703 /* CrossBase.proxy.h in Headers */,
+				DE76DD782328A26B0041A703 /* CrossPLUtils.hpp in Headers */,
 				DE357384231F642D00496E41 /* CrossBase.hpp in Headers */,
-				DE357395231F914300496E41 /* CrossPL.proxy.h in Headers */,
-				DE283ED7231FBE3900D9740C /* CrossBase.proxy.h in Headers */,
-				DEF2B31D231F972C0035A44F /* CrossPLFactory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +302,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE283ED2231FBD1800D9740C /* Build configuration list for PBXNativeTarget "anno" */;
 			buildPhases = (
+				DE76DD5C23288A620041A703 /* ShellScript */,
 				DE283EC8231FBD1800D9740C /* Sources */,
 				DE283EC9231FBD1800D9740C /* Frameworks */,
 				DE283ECA231FBD1800D9740C /* CopyFiles */,
@@ -437,7 +452,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Current Workspace: $(pwd)\";\nANNO_SRCDIR=\"$(pwd)/anno/swift/\";\nLIB_SRCDIR=\"$(pwd)/lib/swift\";\nLIB_PROXYDIR=\"$(pwd)/lib/proxy\";\n#swiftc \"$ANNO_SRCDIR\"/*.swift \"$ANNO_SRCDIR\"/*/*.swift -o crosspl-anno;\n\"$ANNO_SRCDIR\"/crosspl-anno \"$LIB_SRCDIR\" \"$LIB_PROXYDIR\";\n";
+			shellScript = "echo \"Current Workspace: $(pwd)\";\necho \"ProductName: $PRODUCT_NAME\"\necho \"BundleId: $PRODUCT_BUNDLE_IDENTIFIER\"\n\n\nOUTPUT_DIR=\"$(pwd)/lib/build/tmp/\";\nmkdir -p \"$OUTPUT_DIR\";\n\nrm -f \"$OUTPUT_DIR\"/crosspl-anno;\nANNO_SRCDIR=\"$(pwd)/anno/swift/\";\nSDK_DIR=\"$(xcrun --show-sdk-path --sdk macosx)\";\nswiftc -sdk \"$SDK_DIR\" -o \"$OUTPUT_DIR\"/crosspl-anno \\\n       \"$ANNO_SRCDIR\"/*.swift \"$ANNO_SRCDIR\"/*/*.swift;\n\nANNO_RESDIR=\"$(pwd)/anno/resources/\";\n#PRODUCT_NAME=\"$PRODUCT_NAME\";\nBUNDLE_ID=\"$PRODUCT_BUNDLE_IDENTIFIER\";\nLIB_SRCDIR=\"$(pwd)/lib/swift/\";\n\"$OUTPUT_DIR\"/crosspl-anno \"$ANNO_RESDIR\" \"$PRODUCT_NAME\" \"$BUNDLE_ID\" \"$LIB_SRCDIR\" \"$OUTPUT_DIR\"/crosspl;\n";
+			showEnvVarsInLog = 0;
+		};
+		DE76DD5C23288A620041A703 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho ========== $SYSROOT\necho ++++++++++ ${@}\n\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -456,6 +489,8 @@
 				DE1F52542320D5EA00A70F78 /* CrossClassInfo.swift in Sources */,
 				DE76DD5623262AF70041A703 /* CrossTmplUtils.swift in Sources */,
 				DE1F52692322076C00A70F78 /* CrossProxyGenerator.swift in Sources */,
+				DE76DD6A23289D640041A703 /* CrossPLUtilsGenerator.swift in Sources */,
+				DE76DD5823287EF40041A703 /* CrossPLFactoryGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,13 +498,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE76DD772328A26B0041A703 /* CrossPLUtils.cpp in Sources */,
 				DED8B18F231F44B80007C96A /* StringExtension.swift in Sources */,
-				DE1F525A2320DABE00A70F78 /* test.swift in Sources */,
 				DE357383231F642D00496E41 /* CrossBase.cpp in Sources */,
 				DE35737F231F630600496E41 /* CrossBase.swift in Sources */,
-				DE283ED8231FBE3900D9740C /* CrossBase.proxy.mm in Sources */,
-				DE1F525D2320DACC00A70F78 /* test.cpp in Sources */,
-				DEF2B31C231F972C0035A44F /* CrossPLFactory.mm in Sources */,
+				DE76DD752328A26B0041A703 /* CrossBase.proxy.mm in Sources */,
+				DE76DD742328A26B0041A703 /* CrossPLFactory.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +729,7 @@
 				PRODUCT_NAME = CrossPL;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "lib/CrossPL-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -734,6 +769,7 @@
 				PRODUCT_NAME = CrossPL;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "lib/CrossPL-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 arm64e x86_64";

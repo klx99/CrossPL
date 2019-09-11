@@ -10,10 +10,10 @@ open class CrossProxyGenerator {
       return ret
     }
     
-//    ret = GenerateSource(proxyHeaderFile: proxySourceFile, classInfo: classInfo)
-//    if ret == false {
-//      return ret
-//    }
+    ret = GenerateSource(proxyFile: proxySourceFile, classInfo: classInfo)
+    if ret == false {
+      return ret
+    }
 
     
     return true
@@ -32,7 +32,16 @@ open class CrossProxyGenerator {
   
     let tmpl = CrossTmplUtils.ReadTmplContent(tmplName: CrossClassProxyHeaderTmpl)
     let content = classInfo.makeProxyDeclare(tmpl: tmpl)
-//    let content = "12345"
+    CrossTmplUtils.WriteContent(file: proxyFile, content: content)
+  
+    return true
+  }
+
+  private static func GenerateSource(proxyFile: URL, classInfo: CrossClassInfo) -> Bool {
+    print("Generate: \(proxyFile.path)")
+  
+    let tmpl = CrossTmplUtils.ReadTmplContent(tmplName: CrossClassProxySourceTmpl)
+    let content = classInfo.makeProxySource(tmpl: tmpl)
     CrossTmplUtils.WriteContent(file: proxyFile, content: content)
   
     return true

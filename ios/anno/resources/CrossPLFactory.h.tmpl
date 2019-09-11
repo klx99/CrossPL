@@ -1,4 +1,9 @@
+#ifndef _CROSSPL_CrossPLFactory_HPP_
+#define _CROSSPL_CrossPLFactory_HPP_
+
 #import <Foundation/Foundation.h>
+
+%IncludeProxyHeader%
 
 @interface CrossPLFactory : NSObject
 + (bool)onLoad;
@@ -7,3 +12,5 @@ int64_t createCppObject(const char* swiftClassName);
 int destroyCppObject(const char* swiftClassName, int64_t cppHandle);
 
 @end
+
+#endif /* _CROSSPL_CrossPLFactory_HPP_ */

@@ -3,7 +3,9 @@ import Foundation
 class CrossClassInfo {
   static func Parse(sourceFile: String, className: String,
                     sourceLines: [String], classIndex: Int,
-                    bundleId: String) -> CrossClassInfo {
+                    productName: String, bundleId: String) -> CrossClassInfo {
+    CrossClassInfo.ProductName = productName
+    
     let classInfo = CrossClassInfo()
     classInfo.cppInfo.className = className
     classInfo.swiftInfo.className = className
@@ -142,15 +144,60 @@ class CrossClassInfo {
     return content
   }
 
+  func makeProxySource(tmpl: String) -> String {
+    var nativeFuncList = ""
+    var platformFuncList = ""
+    var objcNativeMethodList = ""
+    methodInfoList.forEach { (it) in
+      let funcSource = it.makeProxySource(cppClassName: cppInfo.className!, javaClassPath: swiftInfo.classPath!)
+      if it.isNative! {
+        nativeFuncList += "+ \(funcSource)"
+  
+        let methodContent = makeObjcNativeMethod(methodInfo: it)
+        objcNativeMethodList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)\(methodContent),\n"
+      } else {
+        platformFuncList += "+ \(funcSource)"
+      }
+    }
+  
+    let content = tmpl
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyProductName, with: CrossClassInfo.ProductName!)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyClassName, with: cppInfo.className!)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyPlatformFunction, with: platformFuncList)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyNativeFunction, with: nativeFuncList)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyObjcNativeMethods, with: objcNativeMethodList)
+      .replacingOccurrences(of: CrossClassInfo.TmplKeyObjcSwiftClass, with: swiftInfo.classPath!)
+  
+    return content
+  }
+
   
   var cppInfo = CppInfo()
   var swiftInfo = SwiftInfo()
   private var methodInfoList = [CrossMethodInfo]()
   
+  private func makeObjcNativeMethod(methodInfo: CrossMethodInfo) -> String {
+    var funcType = "("
+    methodInfo.paramsType.forEach { (it) in
+      funcType += it.toSwiftString()
+    }
+    funcType += ")"
+    funcType += methodInfo.returnType!.toSwiftString()
+  
+    let methodContent = "{\"\(methodInfo.methodName)\", \"\(funcType)\", (void*)\(methodInfo.methodName)}"
+  
+    return methodContent
+  }
+
+  private static var ProductName: String?
   
   private static let CrossBaseClass = "org.elastos.tools.crosspl.CrossBase"
   
+  private static let TmplKeyProductName: String = "%ProductName%"
   private static let TmplKeyClassName: String = "%ClassName%"
   private static let TmplKeyPlatformFunction = "%PlatformFunction%"
   private static let TmplKeyNativeFunction = "%NativeFunction%"
+  
+  private static let TmplKeyObjcSwiftClass = "%ObjcSwiftClass%"
+  private static let TmplKeyObjcNativeMethods = "%ObjcNativeMethods%"
 }
