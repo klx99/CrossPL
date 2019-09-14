@@ -1,9 +1,12 @@
-//#include "CrossPLUtils.hpp"
+#include <Foundation/Foundation.h>
+#include "CrossPLUtils.h"
+
+
 //
 //#include <android/log.h>
 //#include <vector>
 //
-//namespace crosspl {
+namespace crosspl {
 //
 ///***********************************************/
 ///***** static variables initialize *************/
@@ -72,39 +75,39 @@
 //    return sJavaClassCache.at(className);
 //}
 //
-//void CrossPLUtils::EnsureRunOnThread(std::thread::id threadId)
-//{
-//    std::thread::id currThreadId = std::this_thread::get_id();
-//    if(currThreadId != threadId) {
-//        __android_log_print(ANDROID_LOG_FATAL, "crosspl", "Running on incorrect thread!!!");
-//        throw std::runtime_error("CrossPL: Running on incorrect thread");
-//    }
-//}
-//
-//std::shared_ptr<const char> CrossPLUtils::SafeCastString(JNIEnv* jenv, jstring jdata)
-//{
-//    std::shared_ptr<const char> ret;
-//    std::thread::id threadId = std::this_thread::get_id();
-//
-//    if(jdata == nullptr) {
-//        return ret; // nullptr
-//    }
-//
-//    auto creater = [=]() -> const char* {
-//        EnsureRunOnThread(threadId);
-//        const char* ptr = jenv->GetStringUTFChars(jdata, nullptr);
-//        return ptr;
-//    };
-//    auto deleter = [=](const char* ptr) -> void {
-//        EnsureRunOnThread(threadId);
-//        jenv->ReleaseStringUTFChars(jdata, ptr);
-//    };
-//
-//    ret = std::shared_ptr<const char>(creater(), deleter);
-//
-//    return ret;
-//}
-//
+void CrossPLUtils::EnsureRunOnThread(std::thread::id threadId)
+{
+    std::thread::id currThreadId = std::this_thread::get_id();
+    if(currThreadId != threadId) {
+      printf("CrossPL: Running on incorrect thread!!!");
+      throw std::runtime_error("CrossPL: Running on incorrect thread");
+    }
+}
+
+std::shared_ptr<const char> CrossPLUtils::SafeCastString(NSString* ocdata)
+{
+    std::shared_ptr<const char> ret;
+    std::thread::id threadId = std::this_thread::get_id();
+
+    if(ocdata == nullptr) {
+        return ret; // nullptr
+    }
+
+    auto creater = [=]() -> const char* {
+        EnsureRunOnThread(threadId);
+      
+        const char* ptr = [ocdata UTF8String];
+        return ptr;
+    };
+    auto deleter = [=](const char* ptr) -> void {
+        EnsureRunOnThread(threadId);
+    };
+
+    ret = std::shared_ptr<const char>(creater(), deleter);
+
+    return ret;
+}
+
 //std::shared_ptr<std::function<void()>> CrossPLUtils::SafeCastFunction(JNIEnv* jenv, jobject jdata)
 //{
 //    std::shared_ptr<std::function<void()>> ret;
@@ -461,4 +464,4 @@
 ///***********************************************/
 //
 //
-//} // namespace crosspl
+} // namespace crosspl

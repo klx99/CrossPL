@@ -139,14 +139,14 @@ class CrossMethodInfo {
       if isPrimitiveType == true {
         prefixContent += "\(CrossTmplUtils.TabSpace)\(type.toCppString()) var\(idx) = ocvar\(idx);\n"
       } else if type.type! == .CROSSBASE {
-        prefixContent += "\(CrossTmplUtils.TabSpace)auto var\(idx) = CrossPLUtils::SafeCastCrossObject<\(cppClassName)>(ocvar\(idx));\n"
+        prefixContent += "\(CrossTmplUtils.TabSpace)auto var\(idx) = crosspl::CrossPLUtils::SafeCastCrossObject<\(cppClassName)>(ocvar\(idx));\n"
       } else {
-        prefixContent += "\(CrossTmplUtils.TabSpace)auto var\(idx) = CrossPLUtils::SafeCast\(type.toString())(ocvar\(idx));\n"
+        prefixContent += "\(CrossTmplUtils.TabSpace)auto var\(idx) = crosspl::CrossPLUtils::SafeCast\(type.toString())(ocvar\(idx));\n"
       }
    
       if(type.type! == .STRINGBUFFER
       || type.type! == .BYTEBUFFER) {
-        suffixContent += "\(CrossTmplUtils.TabSpace)CrossPLUtils::SafeCopy\(type)ToJava(ocvar\(idx), var\(idx).get());\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)crosspl::CrossPLUtils::SafeCopy\(type)ToJava(ocvar\(idx), var\(idx).get());\n"
       }
     }
     prefixContent += "\n"
@@ -154,7 +154,7 @@ class CrossMethodInfo {
   
     var funcContent: String
     if self.isStatic == false {
-      prefixContent += "\(CrossTmplUtils.TabSpace)auto obj = CrossPLUtils::SafeCastCrossObject<::\(cppClassName)>(ocobj);\n"
+      prefixContent += "\(CrossTmplUtils.TabSpace)auto obj = crosspl::CrossPLUtils::SafeCastCrossObject<::\(cppClassName)>(nativeHandle);\n"
       funcContent = "obj->"
     } else {
       funcContent = "::\(cppClassName)::"
@@ -166,8 +166,8 @@ class CrossMethodInfo {
       let isPrimitiveType = type.isPrimitiveType()
       if isPrimitiveType == true {
         argusContent += "var\(idx), "
-      } else if type.type! == .STRING {
-        argusContent += "var\(idx).get(), "
+      } else if type.type! == .CROSSBASE {
+        argusContent += "var\(idx), "
       } else {
         argusContent += "var\(idx).get(), "
       }
@@ -188,13 +188,13 @@ class CrossMethodInfo {
         suffixContent += "\(CrossTmplUtils.TabSpace)\(returnType!.toObjcString()) ocret = ret;\n"
         suffixContent += "\(CrossTmplUtils.TabSpace)return ocret;"
       } else if returnType!.type == .STRING {
-        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = CrossPLUtils::SafeCast\(returnType!.toCppString())(ret);\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = crosspl::CrossPLUtils::SafeCast\(returnType!.toCppString())(ret);\n"
         suffixContent += "\(CrossTmplUtils.TabSpace)return ocret.get();"
       } else if returnType!.type == .CROSSBASE {
-        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = CrossPLUtils::SafeCastCrossObject<\(cppClassName)>(ret);\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = crosspl::CrossPLUtils::SafeCastCrossObject<\(cppClassName)>(ret);\n"
         suffixContent += "\(CrossTmplUtils.TabSpace)return ocret.get();"
       } else {
-        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = CrossPLUtils::SafeCast\(returnType!)(&ret);\n"
+        suffixContent += "\(CrossTmplUtils.TabSpace)auto ocret = crosspl::CrossPLUtils::SafeCast\(returnType!)(&ret);\n"
         suffixContent += "\(CrossTmplUtils.TabSpace)return ocret.get();"
       }
     }
@@ -209,7 +209,7 @@ class CrossMethodInfo {
     var prefixContent = ""
     var suffixContent = ""
   
-    prefixContent += "${CrossTmplUtils.TabSpace}auto jenv = CrossPLUtils::SafeGetEnv();\n"
+    prefixContent += "${CrossTmplUtils.TabSpace}auto jenv = crosspl::CrossPLUtils::SafeGetEnv();\n"
     prefixContent += "${CrossTmplUtils.TabSpace}auto jobj = reinterpret_cast<jobject>(platformHandle);\n"
     for idx in 0..<paramsType.count {
       let type = paramsType[idx]
@@ -217,20 +217,20 @@ class CrossMethodInfo {
       if isPrimitiveType == true {
         prefixContent += "${CrossTmplUtils.TabSpace}${type.toJniString()} jvar$idx = var$idx;\n"
       } else if type.type! == .CROSSBASE {
-        prefixContent += "${CrossTmplUtils.TabSpace}auto jvar$idx = CrossPLUtils::SafeCastCrossObject<${type.toCppString()}>(jenv.get(), var$idx);\n"
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jvar$idx = crosspl::CrossPLUtils::SafeCastCrossObject<${type.toCppString()}>(jenv.get(), var$idx);\n"
       } else {
-        prefixContent += "${CrossTmplUtils.TabSpace}auto jvar$idx = CrossPLUtils::SafeCast$type(jenv.get(), var$idx);\n"
+        prefixContent += "${CrossTmplUtils.TabSpace}auto jvar$idx = crosspl::CrossPLUtils::SafeCast$type(jenv.get(), var$idx);\n"
       }
   
       if(type.type! == .STRINGBUFFER
       || type.type! == .BYTEBUFFER) {
-        suffixContent += "${CrossTmplUtils.TabSpace}CrossPLUtils::SafeCopy${type}ToCpp(jenv.get(), const_cast<${type.toCppString()}*>(var$idx), jvar$idx.get());\n"
+        suffixContent += "${CrossTmplUtils.TabSpace}crosspl::CrossPLUtils::SafeCopy${type}ToCpp(jenv.get(), const_cast<${type.toCppString()}*>(var$idx), jvar$idx.get());\n"
       }
     }
     prefixContent += "\n"
     suffixContent += "\n"
   
-    prefixContent += "${CrossTmplUtils.TabSpace}auto jclazz = CrossPLUtils::FindJavaClass(jenv.get(), \"$javaClassPath\");\n"
+    prefixContent += "${CrossTmplUtils.TabSpace}auto jclazz = crosspl::CrossPLUtils::FindJavaClass(jenv.get(), \"$javaClassPath\");\n"
   
     var jniSigContent = "("
     for idx in 0..<paramsType.count {
@@ -281,9 +281,9 @@ class CrossMethodInfo {
       if isPrimitiveType == true {
         suffixContent += "${CrossTmplUtils.TabSpace}${returnType.toJniString()} ret = jret;\n"
       } else if returnType!.type! == .CROSSBASE {
-        suffixContent += "${CrossTmplUtils.TabSpace}auto ret = CrossPLUtils::SafeCastCrossObject<${returnType.toCppString()}>(jenv.get(), jret);\n"
+        suffixContent += "${CrossTmplUtils.TabSpace}auto ret = crosspl::CrossPLUtils::SafeCastCrossObject<${returnType.toCppString()}>(jenv.get(), jret);\n"
       } else {
-        suffixContent += "${CrossTmplUtils.TabSpace}auto ret = CrossPLUtils::SafeCast$returnType(jenv.get(), jret);\n"
+        suffixContent += "${CrossTmplUtils.TabSpace}auto ret = crosspl::CrossPLUtils::SafeCast$returnType(jenv.get(), jret);\n"
       }
       suffixContent += "${CrossTmplUtils.TabSpace}return ret;"
     }

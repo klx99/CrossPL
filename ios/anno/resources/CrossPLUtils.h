@@ -23,7 +23,7 @@ public:
 //    static std::unique_ptr<JNIEnv, std::function<void(JNIEnv*)>> SafeGetEnv();
 //    static jclass FindJavaClass(JNIEnv* jenv, const char* className);
 //
-//    static std::shared_ptr<const char> SafeCastString(JNIEnv* jenv, jstring jdata);
+    static std::shared_ptr<const char> SafeCastString(NSString* ocdata);
 //    static std::shared_ptr<std::span<int8_t>> SafeCastByteArray(JNIEnv* jenv, jbyteArray jdata);
 //    static std::shared_ptr<std::function<void()>> SafeCastFunction(JNIEnv* jenv, jobject jdata);
 //    static std::shared_ptr<std::stringstream> SafeCastStringBuffer(JNIEnv* jenv, jobject jdata);
@@ -41,11 +41,18 @@ public:
 //    static int SafeCopyStringBufferToJava(JNIEnv* jenv, jobject jcopyTo, const std::stringstream* data);
 //    static int SafeCopyByteBufferToJava(JNIEnv* jenv, jobject jcopyTo, const std::vector<int8_t>* data);
 
-//    template <class T>
-//    static T* SafeCastCrossObject(JNIEnv* jenv, jobject jdata) {
-//      void* ret = SafeCastCrossObject(jenv, jdata);
-//      return reinterpret_cast<T*>(ret);
-//    }
+    template <class T>
+    static int64_t SafeCastCrossObject(NSObject* ocdata) {
+//      void* ret = SafeCastCrossObject(ocdata);
+      auto ptr = (__bridge class CrossBase *)(ocdata);
+      return reinterpret_cast<int64_t>(ptr);
+    }
+  
+    template <class T>
+    static T* SafeCastCrossObject(int64_t handle) {
+      return reinterpret_cast<T*>(handle);
+    }
+  
 //
 //    template <class T>
 //    static jobject SafeCastCrossObject(JNIEnv* jenv, const T* data) {
@@ -59,9 +66,9 @@ private:
     /*** type define ***/
 
     /*** static function and variable ***/
-//    static void EnsureRunOnThread(std::thread::id threadId);
+    static void EnsureRunOnThread(std::thread::id threadId);
 
-//    static void* SafeCastCrossObject(JNIEnv* jenv, jobject jdata);
+//    static void* SafeCastCrossObject(NSObject* ocdata);
 
 //        static const char* JavaClassNameBoolean;
 //        static const char* JavaClassNameInteger;

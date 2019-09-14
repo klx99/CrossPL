@@ -18,11 +18,11 @@ open class CrossBase : NSObject {
   }
   
   func bind() {
-    CrossBase.BindPlatformHandle(thisObj: self)
+    bindPlatformHandle(thisObj: self)
   }
   
   func unbind() {
-    CrossBase.UnbindPlatformHandle(thisObj: self)
+    unbindPlatformHandle(thisObj: self)
   }
   
   private let className: String
@@ -45,13 +45,13 @@ open class CrossBase : NSObject {
   }
   
   /* @CrossNativeInterface */
-  private static func BindPlatformHandle(thisObj: CrossBase) {
-    CrossBaseProxy.bindPlatformHandle(thisObj)
+  private func bindPlatformHandle(thisObj: CrossBase) {
+    CrossBaseProxy.bindPlatformHandle(nativeHandle, thisObj)
   }
   
   /* @CrossNativeInterface */
-  private static func UnbindPlatformHandle(thisObj: CrossBase) {
-    CrossBaseProxy.unbindPlatformHandle(thisObj)
+  private func unbindPlatformHandle(thisObj: CrossBase) {
+    CrossBaseProxy.unbindPlatformHandle(nativeHandle, thisObj)
   }
 
 }

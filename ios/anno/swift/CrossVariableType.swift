@@ -49,7 +49,25 @@ class CrossVariableType {
   }
   
   func toString() -> String {
-    return "\(type!)"
+    let typeMap = [
+      Type.BOOLEAN: "Bool",
+      Type.INT32: "Int32",
+      Type.INT64: "Int64",
+      Type.DOUBLE: "Double",
+      Type.VOID: "Void",
+      
+      Type.STRING: "String",
+      Type.BYTEARRAY: "ByteArray",
+      Type.FUNCTION: "Function",
+      Type.STRINGBUFFER: "StringBuffer",
+      Type.BYTEBUFFER: "ByteBuffer",
+      Type.CROSSBASE: "CrossBase"
+    ]
+    
+    //  var cppType = toString(primitiveTypeMap, classTypeMap, isConst)
+    let strType = typeMap[type!]
+    
+    return strType!
   }
   
   func isPrimitiveType() -> Bool {

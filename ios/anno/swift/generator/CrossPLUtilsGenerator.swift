@@ -44,7 +44,7 @@ class CrossPLUtilsGenerator {
     return crossplDir.appendingPathComponent(fileName)
   }
   
-  private static let CrossPLUtilsHeaderTmpl = "/CrossPLUtils.hpp"
-  private static let CrossPLUtilsSourceTmpl = "/CrossPLUtils.cpp"
+  private static let CrossPLUtilsHeaderTmpl = "/CrossPLUtils.h"
+  private static let CrossPLUtilsSourceTmpl = "/CrossPLUtils.mm"
   private static let ExperimentalSpanTmpl = "/experimental-span.hpp"
 }
