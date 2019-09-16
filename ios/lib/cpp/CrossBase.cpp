@@ -47,6 +47,9 @@ void RegDestroyswiftObjFunc(int(*func)(const char*,int64_t))
     gDestroyswiftObjFuncList.push_back(func);
 }
 
+namespace crosspl {
+namespace native {
+
 int64_t CrossBase::CreateNativeObject(const char* swiftClassName)
 {
 //    __android_log_print(ANDROID_LOG_DEBUG, "crosspl", "%s", __PRETTY_FUNCTION__);
@@ -164,3 +167,6 @@ int64_t CrossBase::getPlatformHandle() const
 /***********************************************/
 /***** class private function implement  *******/
 /***********************************************/
+
+} // namespace native
+} // namespace crosspl

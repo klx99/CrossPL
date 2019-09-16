@@ -17,7 +17,6 @@ class CrossTmplUtils {
 
   static func WriteContent(file: URL, content: String) {
     do {
-      try FileManager.default.createDirectory(atPath: file.lastPathComponent, withIntermediateDirectories: true)
       try content.write(to: file, atomically: false, encoding: .utf8)
     } catch {
       print("CrossTmplUtils.WriteContent() Failed to write to url: \(file.path)")

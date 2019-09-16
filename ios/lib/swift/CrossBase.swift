@@ -34,24 +34,24 @@ open class CrossBase : NSObject {
   
   /* @CrossNativeInterface */
   private static func CreateNativeObject(swiftClassName: String) -> Int64{
-    return CrossBaseProxy.createNativeObject(swiftClassName)
+    return crosspl_Proxy_CrossBase_CreateNativeObject(swiftClassName)
 //    return 0
   }
   
   /* @CrossNativeInterface */
   private static func DestroyNativeObject(swiftClassName: String, nativeHandle: Int64) {
-    CrossBaseProxy.destroyNativeObject(swiftClassName, nativeHandle)
+    crosspl_Proxy_CrossBase_DestroyNativeObject(swiftClassName, nativeHandle)
 //    return
   }
   
   /* @CrossNativeInterface */
   private func bindPlatformHandle(thisObj: CrossBase) {
-    CrossBaseProxy.bindPlatformHandle(nativeHandle, thisObj)
+    crosspl_Proxy_CrossBase_bindPlatformHandle(nativeHandle, thisObj)
   }
   
   /* @CrossNativeInterface */
   private func unbindPlatformHandle(thisObj: CrossBase) {
-    CrossBaseProxy.unbindPlatformHandle(nativeHandle, thisObj)
+    crosspl_Proxy_CrossBase_unbindPlatformHandle(nativeHandle, thisObj)
   }
 
 }

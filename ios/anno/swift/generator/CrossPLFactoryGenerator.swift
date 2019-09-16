@@ -32,7 +32,7 @@ class CrossPLFactoryGenerator {
   
     var includeProxyList = ""
     headerFileList.forEach { (it) in
-      includeProxyList += "#import <\(it.lastPathComponent)>\n"
+      includeProxyList += "#import \"\(it.lastPathComponent)\"\n"
     }
     content = content.replacingOccurrences(of: TmplKeyIncludeProxyHeader, with: includeProxyList)
     
@@ -46,13 +46,13 @@ class CrossPLFactoryGenerator {
   
     var includeProxyList = ""
     headerFileList.forEach { (it) in
-      includeProxyList += "#import <\(it.lastPathComponent)>\n"
+      includeProxyList += "#import \"\(it.lastPathComponent)\"\n"
     }
     content = content.replacingOccurrences(of: TmplKeyIncludeProxyHeader, with: includeProxyList)
     
     var includeCppList = ""
     classInfoList.forEach { (it) in
-      includeCppList += "#import <\(it.cppInfo.className!).hpp>\n"
+      includeCppList += "#import \"\(it.cppInfo.className!).hpp\"\n"
     }
     content = content.replacingOccurrences(of: TmplKeyIncludeCppHeader, with: includeCppList)
   
@@ -67,11 +67,11 @@ class CrossPLFactoryGenerator {
     var getJavaClassPathList = ""
     classInfoList.forEach { (it) in
       createCppObjectList += "\(CrossTmplUtils.TabSpace)if(std::strcmp(swiftClassName, \"\(it.swiftInfo.className!)\") == 0) {\n"
-      createCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)ptr = new \(it.swiftInfo.className!)();\n"
+      createCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)ptr = new crosspl::native::\(it.swiftInfo.className!)();\n"
       createCppObjectList += "\(CrossTmplUtils.TabSpace)}\n"
     
       destroyCppObjectList += "\(CrossTmplUtils.TabSpace)if(std::strcmp(swiftClassName, \"\(it.swiftInfo.className!)\") == 0) {\n"
-      destroyCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)delete reinterpret_cast<\(it.cppInfo.className!)*>(cppHandle);\n"
+      destroyCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)delete reinterpret_cast<crosspl::native::\(it.cppInfo.className!)*>(cppHandle);\n"
       destroyCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)return 0;\n"
       destroyCppObjectList += "\(CrossTmplUtils.TabSpace)}\n"
     

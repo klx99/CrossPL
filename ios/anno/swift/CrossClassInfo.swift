@@ -127,12 +127,12 @@ class CrossClassInfo {
     var nativeFuncList = ""
     var platformFuncList = ""
     methodInfoList.forEach { (it) in
-      let functionDeclare = it.makeProxyDeclare()
+      let functionDeclare = it.makeProxyDeclare(cppClassName: cppInfo.className!)
       
       if it.isNative! {
-        nativeFuncList += "+ \(functionDeclare);\n"
+        nativeFuncList += "\(functionDeclare);\n"
       } else {
-        platformFuncList += "+ \(functionDeclare);\n"
+        platformFuncList += "\(functionDeclare);\n"
       }
     }
   
@@ -151,12 +151,12 @@ class CrossClassInfo {
     methodInfoList.forEach { (it) in
       let funcSource = it.makeProxySource(cppClassName: cppInfo.className!, javaClassPath: swiftInfo.classPath!)
       if it.isNative! {
-        nativeFuncList += "+ \(funcSource)"
+        nativeFuncList += "\(funcSource)"
   
         let methodContent = makeObjcNativeMethod(methodInfo: it)
         objcNativeMethodList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)\(methodContent),\n"
       } else {
-        platformFuncList += "+ \(funcSource)"
+        platformFuncList += "\(funcSource)"
       }
     }
   

@@ -35,11 +35,11 @@ class CrossMethodInfo {
     return methodInfo
   }
   
-  func makeProxyDeclare() -> String {
+  func makeProxyDeclare(cppClassName: String) -> String {
     if self.isNative! == true {
-      return makeNativeFunctionDeclare(cppClassName: nil)
+      return makeNativeFunctionDeclare(cppClassName: cppClassName)
     } else {
-      return makePlatformFunctionDeclare(cppClassName: nil)
+      return makePlatformFunctionDeclare(cppClassName: cppClassName)
     }
   }
 
@@ -87,19 +87,21 @@ class CrossMethodInfo {
   var isStatic: Bool?
   var isNative: Bool?
   
-  private func makeNativeFunctionDeclare(cppClassName: String?) -> String {
-    let className = ((cppClassName != nil) ? "\(cppClassName!)::" : "")
+  private func makeNativeFunctionDeclare(cppClassName: String) -> String {
     let returnType = self.returnType!.toObjcString(isConst: false)
-    var content = "(\(returnType)) \(self.methodName!)\(CrossMethodInfo.TmplKeyArguments)"
+    var content = "\(returnType) crosspl_Proxy_\(cppClassName)_\(self.methodName!)(\(CrossMethodInfo.TmplKeyArguments))"
     
     var arguments = ""
     if isStatic == false {
-      arguments += ": (int64_t)nativeHandle"
+      arguments += "int64_t nativeHandle, "
     }
 
     for idx in 0..<paramsType.count {
+      if idx != 0 {
+        arguments += ", "
+      }
       let type = paramsType[idx].toObjcString()
-      arguments += ": (\(type))ocvar\(idx)"
+      arguments += "\(type) ocvar\(idx)"
     }
     content = content.replacingOccurrences(of: CrossMethodInfo.TmplKeyArguments, with: arguments)
     
@@ -154,10 +156,10 @@ class CrossMethodInfo {
   
     var funcContent: String
     if self.isStatic == false {
-      prefixContent += "\(CrossTmplUtils.TabSpace)auto obj = crosspl::CrossPLUtils::SafeCastCrossObject<::\(cppClassName)>(nativeHandle);\n"
+      prefixContent += "\(CrossTmplUtils.TabSpace)auto obj = crosspl::CrossPLUtils::SafeCastCrossObject<crosspl::native::\(cppClassName)>(nativeHandle);\n"
       funcContent = "obj->"
     } else {
-      funcContent = "::\(cppClassName)::"
+      funcContent = "crosspl::native::\(cppClassName)::"
     }
   
     var argusContent = ""

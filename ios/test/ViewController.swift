@@ -8,7 +8,7 @@
 
 import UIKit
 
-import CrossPL
+//import CrossPL
 
 class ViewController: UIViewController {
 
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 //    testCosignTxData()
 //    testCrypto()
     
-    let base = SwiftTestParams()
+//    let base = SwiftTestParams()
   }
 
 
