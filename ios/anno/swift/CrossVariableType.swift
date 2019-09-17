@@ -116,8 +116,8 @@ class CrossVariableType {
       Type.STRING: "NSString*",
       Type.BYTEARRAY: "NSData*",
       Type.FUNCTION: "---",
-      Type.STRINGBUFFER: "inout NSString*",
-      Type.BYTEBUFFER: "inout NSData*",
+      Type.STRINGBUFFER: "NSString**",
+      Type.BYTEBUFFER: "NSData**",
       Type.CROSSBASE: "NSObject*"
     ]
     

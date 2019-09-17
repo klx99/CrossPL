@@ -5,12 +5,14 @@
 
 %IncludeProxyHeader%
 
-@interface CrossPLFactory : NSObject
-+ (bool)onLoad;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-int64_t createCppObject(const char* swiftClassName);
-int destroyCppObject(const char* swiftClassName, int64_t cppHandle);
+bool crosspl_Factory_OnLoad();
 
-@end
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif /* _CROSSPL_CrossPLFactory_HPP_ */

@@ -8,7 +8,7 @@
 
 import UIKit
 
-//import CrossPL
+import testlib
 
 class ViewController: UIViewController {
 
@@ -23,7 +23,17 @@ class ViewController: UIViewController {
 //    testCosignTxData()
 //    testCrypto()
     
-//    let base = SwiftTestParams()
+    let base = ExternalTest()
+    
+    ExternalTest.externalTestFuncNoArgs()
+    
+    let msg = "String from viewDidLoad()"
+    var h = msg
+    var i = String.ToData(from: msg)!
+    base.externalTestFunc(a: true, b: 1, c: 100, d: 1.001, e: msg, f: String.ToData(from: msg)!, h: &h, i: &i)
+    
+    print("return h=\(h)")
+    print("return i=\(Data.ToString(from: i) ?? nil)")
   }
 
 

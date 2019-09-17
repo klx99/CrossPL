@@ -1,15 +1,17 @@
 import Foundation
 
+import CrossPL
+
 /* @CrossClass */
-open class ExternalTest
+@objc open class ExternalTest: CrossBase
 {
   /* @CrossNativeInterface */
   public static func externalTestFuncNoArgs() {
-    return;
+    crosspl_Proxy_ExternalTest_externalTestFuncNoArgs();
   }
   
   /* @CrossNativeInterface */
-  func externalTestFunc(a: Bool,
+  public func externalTestFunc(a: Bool,
                         b: Int32,
                         c: Int64,
                         d: Double,
@@ -17,9 +19,7 @@ open class ExternalTest
                         f: Data,
                         
                         h: inout String,
-                        i: inout Data,
-    
-                        j: CrossBase) -> Void {
+                        i: inout Data) -> Void {
     return;
   }
   
@@ -28,10 +28,10 @@ open class ExternalTest
   }
   
   /* @CrossClass */
-  open class InternalTest
+  @objc open class InternalTest: CrossBase
   {
     /* @CrossPlatformInterface */
-    func internalTestFunc(aaa: Int32) -> Int32 {
+    @objc public func internalTestFunc(_ aaa: Int32) -> Int32 {
       return 0;
     }
     

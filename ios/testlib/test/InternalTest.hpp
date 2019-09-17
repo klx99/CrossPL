@@ -9,6 +9,14 @@
 #ifndef InternalTest_hpp
 #define InternalTest_hpp
 
-#include <stdio.h>
+namespace crosspl {
+namespace native {
+
+class InternalTest {
+      
+}; // class InternalTest
+
+} //namespace native
+} //namespace crosspl
 
 #endif /* InternalTest_hpp */

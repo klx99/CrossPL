@@ -1,7 +1,6 @@
 #ifndef _CROSSPL_CrossPLUtils_HPP_
 #define _CROSSPL_CrossPLUtils_HPP_
 
-//#include <jni.h>
 #include <functional>
 #include <map>
 #include <memory>
@@ -9,8 +8,9 @@
 #include <sstream>
 #include <thread>
 #include <vector>
+#include <type_traits>
 
-#include <experimental-span.hpp>
+#include "experimental-span.hpp"
 
 namespace crosspl {
 
@@ -24,10 +24,10 @@ public:
 //    static jclass FindJavaClass(JNIEnv* jenv, const char* className);
 //
     static std::shared_ptr<const char> SafeCastString(NSString* ocdata);
-//    static std::shared_ptr<std::span<int8_t>> SafeCastByteArray(JNIEnv* jenv, jbyteArray jdata);
+    static std::shared_ptr<std::span<int8_t>> SafeCastByteArray(NSData* ocdata);
 //    static std::shared_ptr<std::function<void()>> SafeCastFunction(JNIEnv* jenv, jobject jdata);
-//    static std::shared_ptr<std::stringstream> SafeCastStringBuffer(JNIEnv* jenv, jobject jdata);
-//    static std::shared_ptr<std::vector<int8_t>> SafeCastByteBuffer(JNIEnv* jenv, jobject jdata);
+    static std::shared_ptr<std::stringstream> SafeCastStringBuffer(NSString** ocdata);
+    static std::shared_ptr<std::vector<int8_t>> SafeCastByteBuffer(NSData** ocdata);
 //
 //    static std::shared_ptr<_jstring> SafeCastString(JNIEnv* jenv, const char* data);
 //    static std::shared_ptr<_jbyteArray> SafeCastByteArray(JNIEnv* jenv, const std::span<int8_t>* data);
@@ -38,19 +38,37 @@ public:
 //    static int SafeCopyStringBufferToCpp(JNIEnv* jenv, std::stringstream* copyTo, jobject jdata);
 //    static int SafeCopyByteBufferToCpp(JNIEnv* jenv, std::vector<int8_t>* copyTo, jobject jdata);
 //
-//    static int SafeCopyStringBufferToJava(JNIEnv* jenv, jobject jcopyTo, const std::stringstream* data);
-//    static int SafeCopyByteBufferToJava(JNIEnv* jenv, jobject jcopyTo, const std::vector<int8_t>* data);
+    static int SafeCopyStringBufferToSwift(NSString** occopyTo, const std::stringstream* data);
+    static int SafeCopyByteBufferToSwift(NSData** occopyTo, const std::vector<int8_t>* data);
 
-    template <class T>
-    static int64_t SafeCastCrossObject(NSObject* ocdata) {
-//      void* ret = SafeCastCrossObject(ocdata);
-      auto ptr = (__bridge class CrossBase *)(ocdata);
-      return reinterpret_cast<int64_t>(ptr);
-    }
+//    template <class T>
+//    static int64_t SafeCastCrossObject(T* ocdata);
+//    template <>
+//    static int64_t SafeCastCrossObject(NSObject* ocdata) {
+//      auto ptr = (__bridge class CrossBase *)(ocdata);
+//      int64_t handle = reinterpret_cast<int64_t>(ptr);
+//      return handle;
+//    }
   
     template <class T>
-    static T* SafeCastCrossObject(int64_t handle) {
-      return reinterpret_cast<T*>(handle);
+    static int64_t SafeCastCrossObjectToHandle(NSObject* ocdata) {
+//        auto ptr = (__bridge class CrossBase *)(ocdata);
+//        int64_t handle = reinterpret_cast<int64_t>(ptr);
+        int64_t handle = reinterpret_cast<int64_t>(ocdata);
+        return handle;
+    }
+  
+    //template <class T> static T* SafeCastCrossObject(int64_t handle);
+    template <class T>
+    static T* SafeCastCrossObjectToSwift(int64_t handle) {
+        void* ptr = reinterpret_cast<void*>(handle);
+        auto ocdata = (__bridge T *)(ptr);
+        return ocdata;
+    }
+    template <class T>
+    static T* SafeCastCrossObjectToCpp(int64_t handle) {
+        auto data = reinterpret_cast<T*>(handle);
+        return data;
     }
   
 //

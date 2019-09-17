@@ -1,11 +1,15 @@
 import Foundation
 
 /* @CrossClass */
-open class CrossBase : NSObject {
-  public init(className: String, nativeHandle: Int64) {
+@objc open class CrossBase : NSObject {
+  public init(className: String? = nil, nativeHandle: Int64 = 0) {
     CrossBase.initializer
     
-    self.className = className
+    if className != nil {
+      self.className = className!
+    } else {
+      self.className = String(describing: type(of: self))
+    }
     self.nativeHandle = nativeHandle
 
     if(self.nativeHandle == 0) {
@@ -29,7 +33,7 @@ open class CrossBase : NSObject {
   private var nativeHandle: Int64
 
   private static let initializer: Void = {
-    CrossPLFactory.onLoad()
+    crosspl_Factory_OnLoad()
   }()
   
   /* @CrossNativeInterface */
@@ -53,5 +57,4 @@ open class CrossBase : NSObject {
   private func unbindPlatformHandle(thisObj: CrossBase) {
     crosspl_Proxy_CrossBase_unbindPlatformHandle(nativeHandle, thisObj)
   }
-
 }

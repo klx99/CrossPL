@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		DE1F52542320D5EA00A70F78 /* CrossClassInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52532320D5EA00A70F78 /* CrossClassInfo.swift */; };
 		DE1F52562320D64B00A70F78 /* CrossClassAnnoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52552320D64B00A70F78 /* CrossClassAnnoProcessor.swift */; };
-		DE1F52602320F5F200A70F78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F525F2320F5F200A70F78 /* StringExtension.swift */; };
+		DE1F52602320F5F200A70F78 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F525F2320F5F200A70F78 /* FoundationExtensions.swift */; };
 		DE1F52622320F9FC00A70F78 /* CrossMethodInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52612320F9FC00A70F78 /* CrossMethodInfo.swift */; };
 		DE1F526423214A9400A70F78 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F526323214A9400A70F78 /* Annotation.swift */; };
 		DE1F52662321E43E00A70F78 /* CrossVariableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1F52652321E43E00A70F78 /* CrossVariableType.swift */; };
@@ -17,8 +17,27 @@
 		DE283ECF231FBD1800D9740C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE283ECE231FBD1800D9740C /* main.swift */; };
 		DE35737F231F630600496E41 /* CrossBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE35737E231F630600496E41 /* CrossBase.swift */; };
 		DE357383231F642D00496E41 /* CrossBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE357381231F642D00496E41 /* CrossBase.cpp */; };
-		DE357384231F642D00496E41 /* CrossBase.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE357382231F642D00496E41 /* CrossBase.hpp */; };
+		DE357384231F642D00496E41 /* CrossBase.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE357382231F642D00496E41 /* CrossBase.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE4DEFB1232F78FA006C4CAD /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFA7232F78F9006C4CAD /* CrossPLFactory.mm */; };
+		DE4DEFB2232F78FA006C4CAD /* InternalTest.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFA9232F78F9006C4CAD /* InternalTest.proxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE4DEFB3232F78FA006C4CAD /* ExternalTest.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFAA232F78F9006C4CAD /* ExternalTest.proxy.mm */; };
+		DE4DEFB4232F78FA006C4CAD /* ExternalTest.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFAB232F78F9006C4CAD /* ExternalTest.proxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE4DEFB5232F78FA006C4CAD /* InternalTest.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFAC232F78F9006C4CAD /* InternalTest.proxy.mm */; };
+		DE4DEFB6232F78FA006C4CAD /* CrossPLUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFAD232F78F9006C4CAD /* CrossPLUtils.mm */; };
+		DE4DEFB7232F78FA006C4CAD /* CrossPLFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFAE232F78F9006C4CAD /* CrossPLFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE4DEFB8232F78FA006C4CAD /* CrossPLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFAF232F78F9006C4CAD /* CrossPLUtils.h */; };
+		DE4DEFB9232F78FA006C4CAD /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFB0232F78F9006C4CAD /* experimental-span.hpp */; };
+		DE4DEFC0233073C1006C4CAD /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFBF233073C1006C4CAD /* FoundationExtensions.swift */; };
 		DE5961A7232F231200BDB4EE /* CrossBase.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE5961A6232F231200BDB4EE /* CrossBase.proxy.mm */; };
+		DE5961F3232F6F8100BDB4EE /* testlib.h in Headers */ = {isa = PBXBuildFile; fileRef = DE5961F1232F6F8100BDB4EE /* testlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DE5961F6232F6F8100BDB4EE /* testlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE5961EF232F6F8100BDB4EE /* testlib.framework */; };
+		DE5961F7232F6F8100BDB4EE /* testlib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DE5961EF232F6F8100BDB4EE /* testlib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DE5961FC232F702F00BDB4EE /* CrossPL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DED5255D218DF4C800619F59 /* CrossPL.framework */; };
+		DE596209232F712800BDB4EE /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE596204232F712800BDB4EE /* test.swift */; };
+		DE59620A232F712800BDB4EE /* InternalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE596205232F712800BDB4EE /* InternalTest.cpp */; };
+		DE59620B232F712800BDB4EE /* ExternalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE596206232F712800BDB4EE /* ExternalTest.cpp */; };
+		DE59620C232F712800BDB4EE /* ExternalTest.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE596207232F712800BDB4EE /* ExternalTest.hpp */; };
+		DE59620D232F712800BDB4EE /* InternalTest.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE596208232F712800BDB4EE /* InternalTest.hpp */; };
 		DE76DD5623262AF70041A703 /* CrossTmplUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD5523262AF70041A703 /* CrossTmplUtils.swift */; };
 		DE76DD5823287EF40041A703 /* CrossPLFactoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD5723287EF40041A703 /* CrossPLFactoryGenerator.swift */; };
 		DE76DD6A23289D640041A703 /* CrossPLUtilsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD6923289D640041A703 /* CrossPLUtilsGenerator.swift */; };
@@ -28,18 +47,22 @@
 		DE76DD7A2328A26B0041A703 /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD732328A26B0041A703 /* experimental-span.hpp */; };
 		DECA49C6232CA40D00C98A0D /* CrossPLUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DECA49C4232CA40D00C98A0D /* CrossPLUtils.mm */; };
 		DECA49C7232CA40D00C98A0D /* CrossPLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DECA49C5232CA40D00C98A0D /* CrossPLUtils.h */; };
-		DECA49E5232F1A1200C98A0D /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DECA49DB232F1A1200C98A0D /* CrossPLFactory.mm */; };
-		DECA49E6232F1A1200C98A0D /* ExternalTest.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DECA49DE232F1A1200C98A0D /* ExternalTest.proxy.mm */; };
-		DECA49E7232F1A1200C98A0D /* InternalTest.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DECA49E0232F1A1200C98A0D /* InternalTest.proxy.mm */; };
-		DECA49E8232F1A1200C98A0D /* CrossPLUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DECA49E1232F1A1200C98A0D /* CrossPLUtils.mm */; };
-		DECA49EB232F1ADC00C98A0D /* InternalTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DECA49E9232F1ADC00C98A0D /* InternalTest.cpp */; };
-		DED8B18F231F44B80007C96A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED8B18E231F44B80007C96A /* StringExtension.swift */; };
 		DEDB2496218DF71C00F07F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB2495218DF71C00F07F42 /* AppDelegate.swift */; };
 		DEDB2498218DF71C00F07F42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB2497218DF71C00F07F42 /* ViewController.swift */; };
 		DEDB249B218DF71C00F07F42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEDB2499218DF71C00F07F42 /* Main.storyboard */; };
 		DEDB249D218DF71D00F07F42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEDB249C218DF71D00F07F42 /* Assets.xcassets */; };
 		DEDB24A0218DF71D00F07F42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEDB249E218DF71D00F07F42 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DE5961F4232F6F8100BDB4EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DED52554218DF4C800619F59 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE5961EE232F6F8100BDB4EE;
+			remoteInfo = testlib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DE283ECA231FBD1800D9740C /* CopyFiles */ = {
@@ -51,15 +74,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		DE5961DD232F644400BDB4EE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DE5961F7232F6F8100BDB4EE /* testlib.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DE1F52532320D5EA00A70F78 /* CrossClassInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossClassInfo.swift; sourceTree = "<group>"; };
 		DE1F52552320D64B00A70F78 /* CrossClassAnnoProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossClassAnnoProcessor.swift; sourceTree = "<group>"; };
-		DE1F52592320DABE00A70F78 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		DE1F525B2320DACC00A70F78 /* ExternalTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExternalTest.cpp; sourceTree = "<group>"; };
-		DE1F525C2320DACC00A70F78 /* ExternalTest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ExternalTest.hpp; sourceTree = "<group>"; };
-		DE1F525F2320F5F200A70F78 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		DE1F525F2320F5F200A70F78 /* FoundationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
 		DE1F52612320F9FC00A70F78 /* CrossMethodInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossMethodInfo.swift; sourceTree = "<group>"; };
 		DE1F526323214A9400A70F78 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		DE1F52652321E43E00A70F78 /* CrossVariableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossVariableType.swift; sourceTree = "<group>"; };
@@ -70,7 +101,25 @@
 		DE35737E231F630600496E41 /* CrossBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossBase.swift; sourceTree = "<group>"; };
 		DE357381231F642D00496E41 /* CrossBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossBase.cpp; sourceTree = "<group>"; };
 		DE357382231F642D00496E41 /* CrossBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CrossBase.hpp; sourceTree = "<group>"; };
+		DE4DEFA7232F78F9006C4CAD /* CrossPLFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CrossPLFactory.mm; path = proxy/CrossPLFactory.mm; sourceTree = "<group>"; };
+		DE4DEFA9232F78F9006C4CAD /* InternalTest.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalTest.proxy.h; sourceTree = "<group>"; };
+		DE4DEFAA232F78F9006C4CAD /* ExternalTest.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExternalTest.proxy.mm; sourceTree = "<group>"; };
+		DE4DEFAB232F78F9006C4CAD /* ExternalTest.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalTest.proxy.h; sourceTree = "<group>"; };
+		DE4DEFAC232F78F9006C4CAD /* InternalTest.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InternalTest.proxy.mm; sourceTree = "<group>"; };
+		DE4DEFAD232F78F9006C4CAD /* CrossPLUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLUtils.mm; sourceTree = "<group>"; };
+		DE4DEFAE232F78F9006C4CAD /* CrossPLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLFactory.h; sourceTree = "<group>"; };
+		DE4DEFAF232F78F9006C4CAD /* CrossPLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLUtils.h; sourceTree = "<group>"; };
+		DE4DEFB0232F78F9006C4CAD /* experimental-span.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "experimental-span.hpp"; sourceTree = "<group>"; };
+		DE4DEFBF233073C1006C4CAD /* FoundationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
 		DE5961A6232F231200BDB4EE /* CrossBase.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossBase.proxy.mm; sourceTree = "<group>"; };
+		DE5961EF232F6F8100BDB4EE /* testlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = testlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE5961F1232F6F8100BDB4EE /* testlib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testlib.h; sourceTree = "<group>"; };
+		DE5961F2232F6F8100BDB4EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE596204232F712800BDB4EE /* test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		DE596205232F712800BDB4EE /* InternalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InternalTest.cpp; sourceTree = "<group>"; };
+		DE596206232F712800BDB4EE /* ExternalTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExternalTest.cpp; sourceTree = "<group>"; };
+		DE596207232F712800BDB4EE /* ExternalTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ExternalTest.hpp; sourceTree = "<group>"; };
+		DE596208232F712800BDB4EE /* InternalTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InternalTest.hpp; sourceTree = "<group>"; };
 		DE76DD5523262AF70041A703 /* CrossTmplUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossTmplUtils.swift; sourceTree = "<group>"; };
 		DE76DD5723287EF40041A703 /* CrossPLFactoryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPLFactoryGenerator.swift; sourceTree = "<group>"; };
 		DE76DD6923289D640041A703 /* CrossPLUtilsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPLUtilsGenerator.swift; sourceTree = "<group>"; };
@@ -80,20 +129,8 @@
 		DE76DD732328A26B0041A703 /* experimental-span.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "experimental-span.hpp"; sourceTree = "<group>"; };
 		DECA49C4232CA40D00C98A0D /* CrossPLUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLUtils.mm; sourceTree = "<group>"; };
 		DECA49C5232CA40D00C98A0D /* CrossPLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLUtils.h; sourceTree = "<group>"; };
-		DECA49DB232F1A1200C98A0D /* CrossPLFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLFactory.mm; sourceTree = "<group>"; };
-		DECA49DD232F1A1200C98A0D /* InternalTest.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalTest.proxy.h; sourceTree = "<group>"; };
-		DECA49DE232F1A1200C98A0D /* ExternalTest.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExternalTest.proxy.mm; sourceTree = "<group>"; };
-		DECA49DF232F1A1200C98A0D /* ExternalTest.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalTest.proxy.h; sourceTree = "<group>"; };
-		DECA49E0232F1A1200C98A0D /* InternalTest.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InternalTest.proxy.mm; sourceTree = "<group>"; };
-		DECA49E1232F1A1200C98A0D /* CrossPLUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLUtils.mm; sourceTree = "<group>"; };
-		DECA49E2232F1A1200C98A0D /* CrossPLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLFactory.h; sourceTree = "<group>"; };
-		DECA49E3232F1A1200C98A0D /* CrossPLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLUtils.h; sourceTree = "<group>"; };
-		DECA49E4232F1A1200C98A0D /* experimental-span.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "experimental-span.hpp"; sourceTree = "<group>"; };
-		DECA49E9232F1ADC00C98A0D /* InternalTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InternalTest.cpp; sourceTree = "<group>"; };
-		DECA49EA232F1ADC00C98A0D /* InternalTest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InternalTest.hpp; sourceTree = "<group>"; };
 		DED5255D218DF4C800619F59 /* CrossPL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CrossPL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DED52561218DF4C800619F59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DED8B18E231F44B80007C96A /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		DEDB2484218DF5F200F07F42 /* CrossPL-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossPL-Bridging-Header.h"; sourceTree = "<group>"; };
 		DEDB2493218DF71C00F07F42 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEDB2495218DF71C00F07F42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +149,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DE5961EC232F6F8100BDB4EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE5961FC232F702F00BDB4EE /* CrossPL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DED5255A218DF4C800619F59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -123,25 +168,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE5961F6232F6F8100BDB4EE /* testlib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DE1F52582320DAB000A70F78 /* test */ = {
-			isa = PBXGroup;
-			children = (
-				DECA49DA232F1A1200C98A0D /* crosspl */,
-				DE1F52592320DABE00A70F78 /* test.swift */,
-				DE1F525B2320DACC00A70F78 /* ExternalTest.cpp */,
-				DECA49E9232F1ADC00C98A0D /* InternalTest.cpp */,
-				DECA49EA232F1ADC00C98A0D /* InternalTest.hpp */,
-				DE1F525C2320DACC00A70F78 /* ExternalTest.hpp */,
-			);
-			path = test;
-			sourceTree = "<group>";
-		};
 		DE1F52672322072B00A70F78 /* generator */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +205,7 @@
 				DE1F52652321E43E00A70F78 /* CrossVariableType.swift */,
 				DE1F52552320D64B00A70F78 /* CrossClassAnnoProcessor.swift */,
 				DE1F526323214A9400A70F78 /* Annotation.swift */,
-				DE1F525F2320F5F200A70F78 /* StringExtension.swift */,
+				DE1F525F2320F5F200A70F78 /* FoundationExtensions.swift */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -184,6 +217,61 @@
 				DE357382231F642D00496E41 /* CrossBase.hpp */,
 			);
 			path = cpp;
+			sourceTree = "<group>";
+		};
+		DE4DEFA6232F78F9006C4CAD /* crosspl */ = {
+			isa = PBXGroup;
+			children = (
+				DE4DEFA8232F78F9006C4CAD /* proxy */,
+				DE4DEFA7232F78F9006C4CAD /* CrossPLFactory.mm */,
+				DE4DEFAD232F78F9006C4CAD /* CrossPLUtils.mm */,
+				DE4DEFAE232F78F9006C4CAD /* CrossPLFactory.h */,
+				DE4DEFAF232F78F9006C4CAD /* CrossPLUtils.h */,
+				DE4DEFB0232F78F9006C4CAD /* experimental-span.hpp */,
+			);
+			name = crosspl;
+			path = build/tmp/crosspl;
+			sourceTree = "<group>";
+		};
+		DE4DEFA8232F78F9006C4CAD /* proxy */ = {
+			isa = PBXGroup;
+			children = (
+				DE4DEFA9232F78F9006C4CAD /* InternalTest.proxy.h */,
+				DE4DEFAA232F78F9006C4CAD /* ExternalTest.proxy.mm */,
+				DE4DEFAB232F78F9006C4CAD /* ExternalTest.proxy.h */,
+				DE4DEFAC232F78F9006C4CAD /* InternalTest.proxy.mm */,
+			);
+			path = proxy;
+			sourceTree = "<group>";
+		};
+		DE5961DF232F647D00BDB4EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE5961F0232F6F8100BDB4EE /* testlib */ = {
+			isa = PBXGroup;
+			children = (
+				DE4DEFA6232F78F9006C4CAD /* crosspl */,
+				DE596203232F712800BDB4EE /* test */,
+				DE5961F1232F6F8100BDB4EE /* testlib.h */,
+				DE5961F2232F6F8100BDB4EE /* Info.plist */,
+			);
+			path = testlib;
+			sourceTree = "<group>";
+		};
+		DE596203232F712800BDB4EE /* test */ = {
+			isa = PBXGroup;
+			children = (
+				DE596204232F712800BDB4EE /* test.swift */,
+				DE596205232F712800BDB4EE /* InternalTest.cpp */,
+				DE596206232F712800BDB4EE /* ExternalTest.cpp */,
+				DE596207232F712800BDB4EE /* ExternalTest.hpp */,
+				DE596208232F712800BDB4EE /* InternalTest.hpp */,
+			);
+			path = test;
 			sourceTree = "<group>";
 		};
 		DE76DD59232889A60041A703 /* swift */ = {
@@ -217,38 +305,15 @@
 			path = proxy;
 			sourceTree = "<group>";
 		};
-		DECA49DA232F1A1200C98A0D /* crosspl */ = {
-			isa = PBXGroup;
-			children = (
-				DECA49DB232F1A1200C98A0D /* CrossPLFactory.mm */,
-				DECA49DC232F1A1200C98A0D /* proxy */,
-				DECA49E1232F1A1200C98A0D /* CrossPLUtils.mm */,
-				DECA49E2232F1A1200C98A0D /* CrossPLFactory.h */,
-				DECA49E3232F1A1200C98A0D /* CrossPLUtils.h */,
-				DECA49E4232F1A1200C98A0D /* experimental-span.hpp */,
-			);
-			name = crosspl;
-			path = test/build/tmp/crosspl;
-			sourceTree = SOURCE_ROOT;
-		};
-		DECA49DC232F1A1200C98A0D /* proxy */ = {
-			isa = PBXGroup;
-			children = (
-				DECA49DD232F1A1200C98A0D /* InternalTest.proxy.h */,
-				DECA49DE232F1A1200C98A0D /* ExternalTest.proxy.mm */,
-				DECA49DF232F1A1200C98A0D /* ExternalTest.proxy.h */,
-				DECA49E0232F1A1200C98A0D /* InternalTest.proxy.mm */,
-			);
-			path = proxy;
-			sourceTree = "<group>";
-		};
 		DED52553218DF4C800619F59 = {
 			isa = PBXGroup;
 			children = (
 				DE283ECD231FBD1800D9740C /* anno */,
 				DED5255F218DF4C800619F59 /* lib */,
+				DE5961F0232F6F8100BDB4EE /* testlib */,
 				DEDB2494218DF71C00F07F42 /* test */,
 				DED5255E218DF4C800619F59 /* Products */,
+				DE5961DF232F647D00BDB4EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -258,6 +323,7 @@
 				DED5255D218DF4C800619F59 /* CrossPL.framework */,
 				DEDB2493218DF71C00F07F42 /* test.app */,
 				DE283ECC231FBD1800D9740C /* anno */,
+				DE5961EF232F6F8100BDB4EE /* testlib.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -269,7 +335,6 @@
 				DE357380231F642D00496E41 /* cpp */,
 				DE76DD59232889A60041A703 /* swift */,
 				DEDB2484218DF5F200F07F42 /* CrossPL-Bridging-Header.h */,
-				DED8B18E231F44B80007C96A /* StringExtension.swift */,
 				DED52561218DF4C800619F59 /* Info.plist */,
 			);
 			path = lib;
@@ -278,13 +343,13 @@
 		DEDB2494218DF71C00F07F42 /* test */ = {
 			isa = PBXGroup;
 			children = (
-				DE1F52582320DAB000A70F78 /* test */,
 				DEDB2495218DF71C00F07F42 /* AppDelegate.swift */,
 				DEDB2497218DF71C00F07F42 /* ViewController.swift */,
 				DEDB2499218DF71C00F07F42 /* Main.storyboard */,
 				DEDB249C218DF71D00F07F42 /* Assets.xcassets */,
 				DEDB249E218DF71D00F07F42 /* LaunchScreen.storyboard */,
 				DEDB24A1218DF71D00F07F42 /* Info.plist */,
+				DE4DEFBF233073C1006C4CAD /* FoundationExtensions.swift */,
 			);
 			path = test;
 			sourceTree = "<group>";
@@ -292,15 +357,30 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		DE5961EA232F6F8100BDB4EE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE5961F3232F6F8100BDB4EE /* testlib.h in Headers */,
+				DE4DEFB7232F78FA006C4CAD /* CrossPLFactory.h in Headers */,
+				DE4DEFB9232F78FA006C4CAD /* experimental-span.hpp in Headers */,
+				DE4DEFB4232F78FA006C4CAD /* ExternalTest.proxy.h in Headers */,
+				DE4DEFB2232F78FA006C4CAD /* InternalTest.proxy.h in Headers */,
+				DE4DEFB8232F78FA006C4CAD /* CrossPLUtils.h in Headers */,
+				DE59620D232F712800BDB4EE /* InternalTest.hpp in Headers */,
+				DE59620C232F712800BDB4EE /* ExternalTest.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DED52558218DF4C800619F59 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE357384231F642D00496E41 /* CrossBase.hpp in Headers */,
 				DE76DD7A2328A26B0041A703 /* experimental-span.hpp in Headers */,
 				DE76DD792328A26B0041A703 /* CrossPLFactory.h in Headers */,
 				DE76DD762328A26B0041A703 /* CrossBase.proxy.h in Headers */,
 				DECA49C7232CA40D00C98A0D /* CrossPLUtils.h in Headers */,
-				DE357384231F642D00496E41 /* CrossBase.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +403,25 @@
 			productName = anno;
 			productReference = DE283ECC231FBD1800D9740C /* anno */;
 			productType = "com.apple.product-type.tool";
+		};
+		DE5961EE232F6F8100BDB4EE /* testlib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE5961F8232F6F8100BDB4EE /* Build configuration list for PBXNativeTarget "testlib" */;
+			buildPhases = (
+				DE5961FB232F701000BDB4EE /* Run Script */,
+				DE5961EA232F6F8100BDB4EE /* Headers */,
+				DE5961EB232F6F8100BDB4EE /* Sources */,
+				DE5961EC232F6F8100BDB4EE /* Frameworks */,
+				DE5961ED232F6F8100BDB4EE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testlib;
+			productName = testlib;
+			productReference = DE5961EF232F6F8100BDB4EE /* testlib.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		DED5255C218DF4C800619F59 /* lib */ = {
 			isa = PBXNativeTarget;
@@ -347,14 +446,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEDB24A2218DF71D00F07F42 /* Build configuration list for PBXNativeTarget "test" */;
 			buildPhases = (
-				DE283EDA231FC18700D9740C /* ShellScript */,
 				DEDB248F218DF71C00F07F42 /* Sources */,
 				DEDB2490218DF71C00F07F42 /* Frameworks */,
 				DEDB2491218DF71C00F07F42 /* Resources */,
+				DE5961DD232F644400BDB4EE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DE5961F5232F6F8100BDB4EE /* PBXTargetDependency */,
 			);
 			name = test;
 			productName = test;
@@ -372,6 +472,9 @@
 				ORGANIZATIONNAME = Elastos;
 				TargetAttributes = {
 					DE283ECB231FBD1800D9740C = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					DE5961EE232F6F8100BDB4EE = {
 						CreatedOnToolsVersion = 10.3;
 					};
 					DED5255C218DF4C800619F59 = {
@@ -398,12 +501,20 @@
 			targets = (
 				DE283ECB231FBD1800D9740C /* anno */,
 				DED5255C218DF4C800619F59 /* lib */,
+				DE5961EE232F6F8100BDB4EE /* testlib */,
 				DEDB2492218DF71C00F07F42 /* test */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DE5961ED232F6F8100BDB4EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DED5255B218DF4C800619F59 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -424,7 +535,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		DE283EDA231FC18700D9740C /* ShellScript */ = {
+		DE5961FB232F701000BDB4EE /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -433,6 +544,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -468,7 +580,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE1F52602320F5F200A70F78 /* StringExtension.swift in Sources */,
+				DE1F52602320F5F200A70F78 /* FoundationExtensions.swift in Sources */,
 				DE1F52562320D64B00A70F78 /* CrossClassAnnoProcessor.swift in Sources */,
 				DE1F52622320F9FC00A70F78 /* CrossMethodInfo.swift in Sources */,
 				DE283ECF231FBD1800D9740C /* main.swift in Sources */,
@@ -482,13 +594,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DE5961EB232F6F8100BDB4EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE4DEFB6232F78FA006C4CAD /* CrossPLUtils.mm in Sources */,
+				DE59620A232F712800BDB4EE /* InternalTest.cpp in Sources */,
+				DE596209232F712800BDB4EE /* test.swift in Sources */,
+				DE4DEFB5232F78FA006C4CAD /* InternalTest.proxy.mm in Sources */,
+				DE59620B232F712800BDB4EE /* ExternalTest.cpp in Sources */,
+				DE4DEFB3232F78FA006C4CAD /* ExternalTest.proxy.mm in Sources */,
+				DE4DEFB1232F78FA006C4CAD /* CrossPLFactory.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DED52559218DF4C800619F59 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				DECA49C6232CA40D00C98A0D /* CrossPLUtils.mm in Sources */,
 				DE5961A7232F231200BDB4EE /* CrossBase.proxy.mm in Sources */,
-				DED8B18F231F44B80007C96A /* StringExtension.swift in Sources */,
 				DE357383231F642D00496E41 /* CrossBase.cpp in Sources */,
 				DE35737F231F630600496E41 /* CrossBase.swift in Sources */,
 				DE76DD742328A26B0041A703 /* CrossPLFactory.mm in Sources */,
@@ -499,17 +624,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DECA49E8232F1A1200C98A0D /* CrossPLUtils.mm in Sources */,
-				DECA49E7232F1A1200C98A0D /* InternalTest.proxy.mm in Sources */,
-				DECA49EB232F1ADC00C98A0D /* InternalTest.cpp in Sources */,
-				DECA49E6232F1A1200C98A0D /* ExternalTest.proxy.mm in Sources */,
-				DECA49E5232F1A1200C98A0D /* CrossPLFactory.mm in Sources */,
 				DEDB2498218DF71C00F07F42 /* ViewController.swift in Sources */,
 				DEDB2496218DF71C00F07F42 /* AppDelegate.swift in Sources */,
+				DE4DEFC0233073C1006C4CAD /* FoundationExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DE5961F5232F6F8100BDB4EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE5961EE232F6F8100BDB4EE /* testlib */;
+			targetProxy = DE5961F4232F6F8100BDB4EE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DEDB2499218DF71C00F07F42 /* Main.storyboard */ = {
@@ -559,10 +688,69 @@
 			};
 			name = Release;
 		};
+		DE5961F9232F6F8100BDB4EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LFU7T9UYL5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = testlib/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.elastos.tools.crosspl.testlib;
+				PRODUCT_NAME = testlib;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e x86_64";
+			};
+			name = Debug;
+		};
+		DE5961FA232F6F8100BDB4EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LFU7T9UYL5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = testlib/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.elastos.tools.crosspl.testlib;
+				PRODUCT_NAME = testlib;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 arm64e x86_64";
+			};
+			name = Release;
+		};
 		DED52563218DF4C800619F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -627,6 +815,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -694,11 +883,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/frameworks",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = lib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -734,11 +919,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/frameworks",
-					"$(PROJECT_DIR)/build/Release-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = lib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -763,6 +944,7 @@
 		DEDB24A3218DF71D00F07F42 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LFU7T9UYL5;
@@ -787,6 +969,7 @@
 		DEDB24A4218DF71D00F07F42 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LFU7T9UYL5;
@@ -816,6 +999,15 @@
 			buildConfigurations = (
 				DE283ED0231FBD1800D9740C /* Debug */,
 				DE283ED1231FBD1800D9740C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE5961F8232F6F8100BDB4EE /* Build configuration list for PBXNativeTarget "testlib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE5961F9232F6F8100BDB4EE /* Debug */,
+				DE5961FA232F6F8100BDB4EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

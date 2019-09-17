@@ -18,7 +18,8 @@ class CrossClassInfo {
       let line = sourceLines[idx]
       if line.contains("{") {
         layer += 1
-      } else if line.contains("}") {
+      }
+      if line.contains("}") {
         layer -= 1
         if(layer == 0) {
           break;
@@ -184,7 +185,7 @@ class CrossClassInfo {
     funcType += ")"
     funcType += methodInfo.returnType!.toSwiftString()
   
-    let methodContent = "{\"\(methodInfo.methodName)\", \"\(funcType)\", (void*)\(methodInfo.methodName)}"
+    let methodContent = "{\"\(methodInfo.methodName!)\", \"\(funcType)\", (void*)\(methodInfo.methodName!)}"
   
     return methodContent
   }

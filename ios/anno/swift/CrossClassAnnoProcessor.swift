@@ -7,6 +7,7 @@ class CrossClassAnnoProcessor {
     do {
       for swiftSrc in swiftSrcList {
         let swiftContent = try String(contentsOfFile: swiftSrc, encoding: .utf8)
+//        print("Parse swift file: \(swiftSrc) ->\n\(swiftContent)")
         let contentLines = swiftContent.components(separatedBy: .newlines)
         for idx in contentLines.indices {
           let line = contentLines[idx]
