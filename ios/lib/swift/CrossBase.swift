@@ -3,8 +3,6 @@ import Foundation
 /* @CrossClass */
 @objc open class CrossBase : NSObject {
   public init(className: String? = nil, nativeHandle: Int64 = 0) {
-    CrossBase.initializer
-    
     if className != nil {
       self.className = className!
     } else {
@@ -19,33 +17,28 @@ import Foundation
   
   deinit {
     CrossBase.DestroyNativeObject(swiftClassName: self.className, nativeHandle: self.nativeHandle)
+    self.nativeHandle = 0
   }
   
-  func bind() {
+  public func bind() {
     bindPlatformHandle(thisObj: self)
   }
   
-  func unbind() {
+  public func unbind() {
     unbindPlatformHandle(thisObj: self)
   }
-  
-  private let className: String
-  private var nativeHandle: Int64
 
-  private static let initializer: Void = {
-    crosspl_Factory_OnLoad()
-  }()
+  public private(set) var nativeHandle: Int64
+  private let className: String
   
   /* @CrossNativeInterface */
   private static func CreateNativeObject(swiftClassName: String) -> Int64{
     return crosspl_Proxy_CrossBase_CreateNativeObject(swiftClassName)
-//    return 0
   }
   
   /* @CrossNativeInterface */
   private static func DestroyNativeObject(swiftClassName: String, nativeHandle: Int64) {
     crosspl_Proxy_CrossBase_DestroyNativeObject(swiftClassName, nativeHandle)
-//    return
   }
   
   /* @CrossNativeInterface */

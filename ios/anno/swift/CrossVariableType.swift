@@ -19,24 +19,32 @@ class CrossVariableType {
   }
   
   static func Parse(sourceContent: String) -> CrossVariableType {
-    let supportedTypeDeclared = ["Bool": Type.BOOLEAN,
-                                 "Int32": Type.INT32,
-                                 "Int64": Type.INT64,
-                                 "Double": Type.DOUBLE,
-                                 "Void": Type.VOID,
-                                 
-                                 "String": Type.STRING,
+    let supportedTypeKind = ["Bool": Type.BOOLEAN,
+                             "Int32": Type.INT32,
+                             "Int64": Type.INT64,
+                             "Double": Type.DOUBLE,
+                             "Void": Type.VOID]
+    
+    let supportedTypeDeclared = ["String": Type.STRING,
                                  "Data": Type.BYTEARRAY,
                                  "Function": Type.FUNCTION,
                                  
                                  "inout String": Type.STRINGBUFFER,
+                                 "inout NSString": Type.STRINGBUFFER,
                                  "inout Data": Type.BYTEBUFFER,
+                                 "inout NSData": Type.BYTEBUFFER,
                                  
                                  "CrossBase": Type.CROSSBASE]
     
-    let trimContent = sourceContent.trimmingCharacters(in: .whitespacesAndNewlines)
+    var trimContent = sourceContent.trimmingCharacters(in: .whitespacesAndNewlines)
    
     let varType = CrossVariableType()
+    varType.type = supportedTypeKind[trimContent]
+    if varType.type != nil {
+      return varType
+    }
+    
+    trimContent = trimContent.trimmingCharacters(in: CharacterSet(charactersIn: "?"))
     varType.type = supportedTypeDeclared[trimContent]
     if varType.type == nil {
       print("CrossVariableType.Parse() Unsupported variable type: \(trimContent)")

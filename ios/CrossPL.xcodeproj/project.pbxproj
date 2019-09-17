@@ -18,7 +18,6 @@
 		DE35737F231F630600496E41 /* CrossBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE35737E231F630600496E41 /* CrossBase.swift */; };
 		DE357383231F642D00496E41 /* CrossBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE357381231F642D00496E41 /* CrossBase.cpp */; };
 		DE357384231F642D00496E41 /* CrossBase.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE357382231F642D00496E41 /* CrossBase.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
-		DE4DEFB1232F78FA006C4CAD /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFA7232F78F9006C4CAD /* CrossPLFactory.mm */; };
 		DE4DEFB2232F78FA006C4CAD /* InternalTest.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFA9232F78F9006C4CAD /* InternalTest.proxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE4DEFB3232F78FA006C4CAD /* ExternalTest.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFAA232F78F9006C4CAD /* ExternalTest.proxy.mm */; };
 		DE4DEFB4232F78FA006C4CAD /* ExternalTest.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFAB232F78F9006C4CAD /* ExternalTest.proxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,6 +27,7 @@
 		DE4DEFB8232F78FA006C4CAD /* CrossPLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFAF232F78F9006C4CAD /* CrossPLUtils.h */; };
 		DE4DEFB9232F78FA006C4CAD /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE4DEFB0232F78F9006C4CAD /* experimental-span.hpp */; };
 		DE4DEFC0233073C1006C4CAD /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFBF233073C1006C4CAD /* FoundationExtensions.swift */; };
+		DE4DEFC223307BE7006C4CAD /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE4DEFC123307BE7006C4CAD /* CrossPLFactory.mm */; };
 		DE5961A7232F231200BDB4EE /* CrossBase.proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE5961A6232F231200BDB4EE /* CrossBase.proxy.mm */; };
 		DE5961F3232F6F8100BDB4EE /* testlib.h in Headers */ = {isa = PBXBuildFile; fileRef = DE5961F1232F6F8100BDB4EE /* testlib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE5961F6232F6F8100BDB4EE /* testlib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE5961EF232F6F8100BDB4EE /* testlib.framework */; };
@@ -42,11 +42,11 @@
 		DE76DD5823287EF40041A703 /* CrossPLFactoryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD5723287EF40041A703 /* CrossPLFactoryGenerator.swift */; };
 		DE76DD6A23289D640041A703 /* CrossPLUtilsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD6923289D640041A703 /* CrossPLUtilsGenerator.swift */; };
 		DE76DD742328A26B0041A703 /* CrossPLFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = DE76DD6C2328A26B0041A703 /* CrossPLFactory.mm */; };
-		DE76DD762328A26B0041A703 /* CrossBase.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD6F2328A26B0041A703 /* CrossBase.proxy.h */; };
-		DE76DD792328A26B0041A703 /* CrossPLFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD722328A26B0041A703 /* CrossPLFactory.h */; };
-		DE76DD7A2328A26B0041A703 /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD732328A26B0041A703 /* experimental-span.hpp */; };
+		DE76DD762328A26B0041A703 /* CrossBase.proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD6F2328A26B0041A703 /* CrossBase.proxy.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		DE76DD792328A26B0041A703 /* CrossPLFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD722328A26B0041A703 /* CrossPLFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		DE76DD7A2328A26B0041A703 /* experimental-span.hpp in Headers */ = {isa = PBXBuildFile; fileRef = DE76DD732328A26B0041A703 /* experimental-span.hpp */; settings = {ATTRIBUTES = (Private, ); }; };
 		DECA49C6232CA40D00C98A0D /* CrossPLUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DECA49C4232CA40D00C98A0D /* CrossPLUtils.mm */; };
-		DECA49C7232CA40D00C98A0D /* CrossPLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DECA49C5232CA40D00C98A0D /* CrossPLUtils.h */; };
+		DECA49C7232CA40D00C98A0D /* CrossPLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = DECA49C5232CA40D00C98A0D /* CrossPLUtils.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		DEDB2496218DF71C00F07F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB2495218DF71C00F07F42 /* AppDelegate.swift */; };
 		DEDB2498218DF71C00F07F42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDB2497218DF71C00F07F42 /* ViewController.swift */; };
 		DEDB249B218DF71C00F07F42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEDB2499218DF71C00F07F42 /* Main.storyboard */; };
@@ -101,7 +101,6 @@
 		DE35737E231F630600496E41 /* CrossBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossBase.swift; sourceTree = "<group>"; };
 		DE357381231F642D00496E41 /* CrossBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrossBase.cpp; sourceTree = "<group>"; };
 		DE357382231F642D00496E41 /* CrossBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CrossBase.hpp; sourceTree = "<group>"; };
-		DE4DEFA7232F78F9006C4CAD /* CrossPLFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CrossPLFactory.mm; path = proxy/CrossPLFactory.mm; sourceTree = "<group>"; };
 		DE4DEFA9232F78F9006C4CAD /* InternalTest.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalTest.proxy.h; sourceTree = "<group>"; };
 		DE4DEFAA232F78F9006C4CAD /* ExternalTest.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExternalTest.proxy.mm; sourceTree = "<group>"; };
 		DE4DEFAB232F78F9006C4CAD /* ExternalTest.proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalTest.proxy.h; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		DE4DEFAF232F78F9006C4CAD /* CrossPLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossPLUtils.h; sourceTree = "<group>"; };
 		DE4DEFB0232F78F9006C4CAD /* experimental-span.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "experimental-span.hpp"; sourceTree = "<group>"; };
 		DE4DEFBF233073C1006C4CAD /* FoundationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
+		DE4DEFC123307BE7006C4CAD /* CrossPLFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossPLFactory.mm; sourceTree = "<group>"; };
 		DE5961A6232F231200BDB4EE /* CrossBase.proxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CrossBase.proxy.mm; sourceTree = "<group>"; };
 		DE5961EF232F6F8100BDB4EE /* testlib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = testlib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5961F1232F6F8100BDB4EE /* testlib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testlib.h; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4DEFA8232F78F9006C4CAD /* proxy */,
-				DE4DEFA7232F78F9006C4CAD /* CrossPLFactory.mm */,
+				DE4DEFC123307BE7006C4CAD /* CrossPLFactory.mm */,
 				DE4DEFAD232F78F9006C4CAD /* CrossPLUtils.mm */,
 				DE4DEFAE232F78F9006C4CAD /* CrossPLFactory.h */,
 				DE4DEFAF232F78F9006C4CAD /* CrossPLUtils.h */,
@@ -598,13 +598,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE4DEFC223307BE7006C4CAD /* CrossPLFactory.mm in Sources */,
 				DE4DEFB6232F78FA006C4CAD /* CrossPLUtils.mm in Sources */,
 				DE59620A232F712800BDB4EE /* InternalTest.cpp in Sources */,
 				DE596209232F712800BDB4EE /* test.swift in Sources */,
 				DE4DEFB5232F78FA006C4CAD /* InternalTest.proxy.mm in Sources */,
 				DE59620B232F712800BDB4EE /* ExternalTest.cpp in Sources */,
 				DE4DEFB3232F78FA006C4CAD /* ExternalTest.proxy.mm in Sources */,
-				DE4DEFB1232F78FA006C4CAD /* CrossPLFactory.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

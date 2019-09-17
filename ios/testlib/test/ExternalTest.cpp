@@ -27,19 +27,24 @@ void ExternalTest::externalTestFunc(bool a,
                       std::stringstream* h,
                       std::vector<int8_t>* i)
 {
-    printf("%s a=%d,b=%d,c=%lld,d=%f,e=%s,f=%s(%d),h=%s,i=%s(%d)",
-           __PRETTY_FUNCTION__, a, b, c, d, e, f->data(), f->size(), h->str().c_str(), i->data(), i->size());
+    printf("%s a=%d,b=%d,c=%lld,d=%f,e=%s,f=%s(%lu),",
+           __PRETTY_FUNCTION__, a, b, c, d, e, f->data(), f->size());
     
     if(h != nullptr) {
+      printf("h=%s,", h->str().c_str());
       h->str("");
       (*h) << "new string from ExternalTest::externalTestFunc()";
+    } else {
+      printf("h=nullptr,");
     }
     
     if(i != nullptr) {
+      printf("i=%s(%lu)\n", i->data(), i->size());
       i->clear();
-      for(int idx = 0; idx < 256; idx+=5) {
-        i->push_back(idx);
-      }
+      auto tmp = std::vector<int8_t>(h->str().begin(), h->str().end());
+      i->swap(tmp);
+    } else {
+      printf("i=nullptr\n");
     }
 }
 

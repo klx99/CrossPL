@@ -64,7 +64,6 @@ class CrossPLFactoryGenerator {
   
     var createCppObjectList = ""
     var destroyCppObjectList = ""
-    var getJavaClassPathList = ""
     classInfoList.forEach { (it) in
       createCppObjectList += "\(CrossTmplUtils.TabSpace)if(std::strcmp(swiftClassName, \"\(it.swiftInfo.className!)\") == 0) {\n"
       createCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)ptr = new crosspl::native::\(it.swiftInfo.className!)();\n"
@@ -74,17 +73,12 @@ class CrossPLFactoryGenerator {
       destroyCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)delete reinterpret_cast<crosspl::native::\(it.cppInfo.className!)*>(cppHandle);\n"
       destroyCppObjectList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)return 0;\n"
       destroyCppObjectList += "\(CrossTmplUtils.TabSpace)}\n"
-    
-      getJavaClassPathList += "\(CrossTmplUtils.TabSpace)if(EndsWith(cppClassName, \"\(it.cppInfo.className!)\") == 0) {\n"
-      getJavaClassPathList += "\(CrossTmplUtils.TabSpace)\(CrossTmplUtils.TabSpace)return \"\(it.swiftInfo.className!)\";\n"
-      getJavaClassPathList += "\(CrossTmplUtils.TabSpace)}\n"
     }
     content = content
       .replacingOccurrences(of: TmplKeyCreateCppObject, with: createCppObjectList)
       .replacingOccurrences(of: TmplKeyDestroyCppObject, with: destroyCppObjectList)
-      .replacingOccurrences(of: TmplKeyGetJavaClassPath, with: getJavaClassPathList)
   
-    content = content.replacingOccurrences(of: TmplKeyJniOnLoad, with: "JNI_OnLoad")
+    content = content.replacingOccurrences(of: TmplKeyProductName, with: CrossClassInfo.ProductName!)
   
     CrossTmplUtils.WriteContent(file: sourceFile, content: content)
     return true
@@ -98,7 +92,6 @@ class CrossPLFactoryGenerator {
   private static let TmplKeyRegisterNativeMethods = "%RegisterNativeMethods%"
   private static let TmplKeyCreateCppObject = "%CreateCppObject%"
   private static let TmplKeyDestroyCppObject = "%DestroyCppObject%"
-  private static let TmplKeyGetJavaClassPath = "%GetJavaClassPath%"
-  private static let TmplKeyJniOnLoad = "%JniOnLoad%"
-  
+  private static let TmplKeyProductName: String = "%ProductName%"
+
 }

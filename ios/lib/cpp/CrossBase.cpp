@@ -158,6 +158,9 @@ int64_t CrossBase::getPlatformHandle() const
     return mPlatformHandle;
 }
 
+  __attribute__((constructor)) static void myinit() {
+    printf("=============== I'm initializing..\n");
+  }
 
 /***********************************************/
 /***** class protected function implement  *****/

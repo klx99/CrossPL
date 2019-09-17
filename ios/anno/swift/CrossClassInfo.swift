@@ -190,7 +190,7 @@ class CrossClassInfo {
     return methodContent
   }
 
-  private static var ProductName: String?
+  public static var ProductName: String?
   
   private static let CrossBaseClass = "org.elastos.tools.crosspl.CrossBase"
   

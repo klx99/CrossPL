@@ -31,14 +31,9 @@ static int destroyCppObject(const char* swiftClassName, int64_t cppHandle)
   return -1;
 }
 
-
-bool crosspl_Factory_OnLoad()
-{
-  printf("%s %d", __FUNCTION__, __LINE__);
-//  void* dylib  = dlopen("libcrosspl.so", RTLD_LAZY | RTLD_GLOBAL);
+__attribute__((constructor)) static void OnLoad() {
+  printf("%s %s\n", "%ProductName%", __PRETTY_FUNCTION__);
 
   RegCreateCppObjFunc(createCppObject);
   RegDestroyCppObjFunc(destroyCppObject);
-
-  return true;
 }

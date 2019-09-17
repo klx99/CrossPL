@@ -18,8 +18,16 @@ import CrossPL
                         e: String,
                         f: Data,
                         
-                        h: inout String,
-                        i: inout Data) -> Void {
+                        h: inout String?,
+                        i: inout Data?) -> Void {
+    var och = h as NSString?
+    var oci = i as NSData?
+    
+    crosspl_Proxy_ExternalTest_externalTestFunc(nativeHandle, a, b, c, d, e, f, &och, &oci)
+    
+    h = och as String?
+    i = oci as Data?
+    
     return;
   }
   
