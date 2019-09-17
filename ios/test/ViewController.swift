@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     base.externalTestFunc(a: true, b: 1, c: 100, d: 1.001, e: msg, f: String.ToData(from: msg)!, h: &h, i: &i)
     
     print("return h=\(h)")
-    print("return i=\(Data.ToString(from: i) ?? "nil")")
+    print("return i=\(Data.ToString(from: i))")
   }
 
 

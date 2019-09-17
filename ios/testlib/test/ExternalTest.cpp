@@ -41,8 +41,11 @@ void ExternalTest::externalTestFunc(bool a,
     if(i != nullptr) {
       printf("i=%s(%lu)\n", i->data(), i->size());
       i->clear();
-      auto tmp = std::vector<int8_t>(h->str().begin(), h->str().end());
+      auto ret = h->str();
+      auto tmp = std::vector<int8_t>(ret.begin(), ret.end());
+      printf("tmp=%s(%lu)\n", tmp.data(), tmp.size());
       i->swap(tmp);
+      printf("i=%s(%lu)\n", i->data(), i->size());
     } else {
       printf("i=nullptr\n");
     }
