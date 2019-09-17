@@ -30,7 +30,22 @@ class ViewController: UIViewController {
     let msg = "String from viewDidLoad()"
     var h: String? = msg
     var i = String.ToData(from: msg)
-    base.externalTestFunc(a: true, b: 1, c: 100, d: 1.001, e: msg, f: String.ToData(from: msg)!, h: &h, i: &i)
+    let j: ExternalTest.InternalTest = {
+      class InternalTestImpl : ExternalTest.InternalTest {
+        override public func internalTestFunc(_ aaa: Int32) -> Int32 {
+          print("\(#function) ====================")
+          
+          return 222
+        }
+      }
+      
+      let impl = InternalTestImpl()
+      impl.bind()
+      
+      return impl
+    }()
+    
+    base.externalTestFunc(a: true, b: 1, c: 100, d: 1.001, e: msg, f: String.ToData(from: msg)!, h: &h, i: &i, j: j)
     
     print("return h=\(h)")
     print("return i=\(Data.ToString(from: i))")

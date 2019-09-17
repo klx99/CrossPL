@@ -19,11 +19,13 @@ import CrossPL
                         f: Data,
                         
                         h: inout String?,
-                        i: inout Data?) -> Void {
+                        i: inout Data?,
+                        
+                        j: CrossBase) -> Void {
     var och = h as NSString?
     var oci = i as NSData?
     
-    crosspl_Proxy_ExternalTest_externalTestFunc(nativeHandle, a, b, c, d, e, f, &och, &oci)
+    crosspl_Proxy_ExternalTest_externalTestFunc(nativeHandle, a, b, c, d, e, f, &och, &oci, j)
     
     h = och as String?
     i = oci as Data?
@@ -38,9 +40,13 @@ import CrossPL
   /* @CrossClass */
   @objc open class InternalTest: CrossBase
   {
+    public init() {
+      super.init(className: String(describing: InternalTest.self))
+    }
+    
     /* @CrossPlatformInterface */
-    @objc public func internalTestFunc(_ aaa: Int32) -> Int32 {
-      return 0;
+    @objc open func internalTestFunc(_ aaa: Int32) -> Int32 {
+      fatalError("\(#function) not implementationed!")
     }
     
     func externalTestFunc(aaa: Int) -> Int {

@@ -8,6 +8,7 @@
 
 #include "ExternalTest.hpp"
 
+#include "InternalTest.proxy.h"
 
 namespace crosspl {
 namespace native {
@@ -25,7 +26,9 @@ void ExternalTest::externalTestFunc(bool a,
                       const std::span<int8_t>* f,
                       
                       std::stringstream* h,
-                      std::vector<int8_t>* i)
+                      std::vector<int8_t>* i,
+                                    
+                      int64_t internalTestHandle)
 {
     printf("%s a=%d,b=%d,c=%lld,d=%f,e=%s,f=%s(%lu),",
            __PRETTY_FUNCTION__, a, b, c, d, e, f->data(), f->size());
@@ -49,6 +52,11 @@ void ExternalTest::externalTestFunc(bool a,
     } else {
       printf("i=nullptr\n");
     }
+  
+  if(internalTestHandle != 0) {
+    crosspl_Proxy_InternalTest_internalTestFunc(internalTestHandle, 111);
+
+  }
 }
 
 

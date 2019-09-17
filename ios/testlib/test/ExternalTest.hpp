@@ -30,7 +30,9 @@ public:
                         const std::span<int8_t>* f,
                         
                         std::stringstream* h,
-                        std::vector<int8_t>* i);
+                        std::vector<int8_t>* i,
+                        
+                        int64_t platformHandle);
   
 }; // class ExternalTest
   
